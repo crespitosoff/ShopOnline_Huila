@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo isset($_GET['id']) ? 'Editar' : 'Nuevo'; ?> Cliente</title>
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../../assets/css/styles.css">
 </head>
 <body>
     <div class="container">
@@ -43,6 +43,6 @@
             </div>
         </form>
     </div>
-    <script src="../js/validations.js"></script>
+    <script src="../../assets/js/validations.js"></script>
 </body>
 </html>
