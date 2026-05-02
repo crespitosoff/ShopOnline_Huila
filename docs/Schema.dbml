@@ -1,0 +1,66 @@
+-- Tablas principales:
+
+-- clientes
+-- empleados
+-- categorias
+-- productos
+-- pedidos
+-- detalle_pedido
+-- pagos
+-- envios
+
+-- Relaciones clave:
+
+-- Un cliente → muchos pedidos
+-- Un pedido → muchos productos (detalle)
+-- Un pedido → un pago
+-- Un pedido → un envío
+-- Un producto → una categoría
+
+table clientes{
+  id int [pk, increment]
+}
+
+table empleados {
+  id int [pk, increment]
+  cargo varhcar(20) [not null]
+  salario varchar(20)
+  fecha_ingreso timestampz
+}
+
+table categorias{
+  id int
+  producto_id int [ref: > productos.id]
+}
+
+table productos{
+  id int
+  stock int [not null]
+}
+
+table pedidos{
+  id int
+  envio_id int [ref: > envios.id]
+  cliente_id int [ref: > clientes.id]
+}
+
+table detalle_pedido{
+  producto_id int [ref: > productos.id]
+  pedido_id int [ref: > pedidos.id]
+  cantidad int
+}
+
+table pagos{
+  id int
+  pedido_id integer [unique, not null, ref: - pedidos.id]
+}
+
+table envios{
+  id int
+  direccion varchar
+}
+
+table empleado_envio {
+  empleado_id int [ref: > empleados.id]
+  envio_id int [ref: > envios.id]
+}
