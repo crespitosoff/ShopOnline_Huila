@@ -1,64 +1,282 @@
-class FormValidator {
-    constructor(formId) {
-        this.form = document.getElementById(formId);
-        this.errors = {};
-        this.init();
-    }
-    init() {
-        this.form.addEventListener('submit', (e) => this.handleSubmit(e));
-        this.form.querySelectorAll('input, select').forEach(input => {
-            input.addEventListener('blur', (e) => this.validateField(e.target));
-            input.addEventListener('input', (e) => this.clearError(e.target));
-        });
-    }
-    validateField(field) {
-        const fieldName = field.name;
-        let isValid = true;
-        switch(fieldName) {
-            case 'nombre': case 'apellido': case 'cargo':
-                isValid = this.validateRequired(field.value) && field.value.trim().length >= 2;
-                break;
-            case 'cedula': case 'telefono':
-                isValid = this.validateRequired(field.value) && /^\d+$/.test(field.value) && field.value.length >= 5;
-                break;
-            case 'salario':
-                isValid = this.validateRequired(field.value) && /^\d+$/.test(field.value) && parseFloat(field.value) > 0;
-                break;
-            case 'fecha_ingreso':
-                isValid = this.validateRequired(field.value) && new Date(field.value) <= new Date();
-                break;
-            default:
-                isValid = this.validateRequired(field.value);
-        }
-        if (!isValid) this.setError(field, `${fieldName} inválido`);
-        return isValid;
-    }
-    validateRequired(value) { return value.trim() !== ''; }
-    setError(field, message) {
-        this.clearError(field);
-        const errorDiv = document.createElement('div');
-        errorDiv.className = 'alert alert-error';
-        errorDiv.textContent = message;
-        field.parentNode.appendChild(errorDiv);
-        field.style.borderColor = '#dc3545';
-    }
-    clearError(field) {
-        const error = field.parentNode.querySelector('.alert-error');
-        if (error) error.remove();
-        field.style.borderColor = '#e1e5e9';
-    }
-    handleSubmit(e) {
-        e.preventDefault();
-        let isValid = true;
-        this.form.querySelectorAll('[required]').forEach(field => {
-            if (!this.validateField(field)) isValid = false;
-        });
-        if (isValid) {
-            alert('✅ ¡Validado! Listo para backend');
-        }
-    }
-}
-document.addEventListener('DOMContentLoaded', function() {
-    if (document.getElementById('clienteForm')) new FormValidator('clienteForm');
-    if (document.getElementById('empleadoForm')) new FormValidator('empleadoForm');
+// ======================================
+// ShopOnline Huila - Frontend Validation
+// ======================================
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    initializeDeleteButtons();
+
+    initializeClienteForm();
+
+    initializeEmpleadoForm();
+
 });
+
+// ======================================
+// CLIENTES
+// ======================================
+
+function initializeClienteForm() {
+
+    const form = document.getElementById('clienteForm');
+
+    if (!form) return;
+
+    form.addEventListener('submit', (event) => {
+
+        event.preventDefault();
+
+        clearErrors();
+
+        let isValid = true;
+
+        const nombre = form.nombre;
+
+        const email = form.email;
+
+        // Nombre
+        if (nombre.value.trim() === '') {
+
+            showError(nombre, 'El nombre es obligatorio');
+
+            isValid = false;
+        }
+
+        // Email
+        if (email.value.trim() === '') {
+
+            showError(email, 'El correo es obligatorio');
+
+            isValid = false;
+
+        } else if (!validateEmail(email.value)) {
+
+            showError(email, 'Ingrese un correo válido');
+
+            isValid = false;
+        }
+
+        if (!isValid) return;
+
+        const submitButton = form.querySelector('button[type="submit"]');
+
+        submitButton.disabled = true;
+
+        submitButton.innerText = 'Guardando...';
+
+        setTimeout(() => {
+
+            showNotification(
+                'Cliente guardado correctamente',
+                'success'
+            );
+
+            submitButton.disabled = false;
+
+            submitButton.innerText = 'Guardar Cliente';
+
+            form.reset();
+
+        }, 1000);
+
+    });
+
+}
+
+// ======================================
+// EMPLEADOS
+// ======================================
+
+function initializeEmpleadoForm() {
+
+    const form = document.getElementById('empleadoForm');
+
+    if (!form) return;
+
+    form.addEventListener('submit', (event) => {
+
+        event.preventDefault();
+
+        clearErrors();
+
+        let isValid = true;
+
+        const nombre = form.nombre;
+
+        const salario = form.salario;
+
+        const fecha = form.fecha_ingreso;
+
+        const cargo = form.id_cargo;
+
+        // Nombre
+        if (nombre.value.trim() === '') {
+
+            showError(nombre, 'El nombre es obligatorio');
+
+            isValid = false;
+        }
+
+        // Cargo
+        if (cargo.value === '') {
+
+            showError(cargo, 'Seleccione un cargo');
+
+            isValid = false;
+        }
+
+        // Salario
+        if (salario.value === '') {
+
+            showError(salario, 'El salario es obligatorio');
+
+            isValid = false;
+
+        } else if (
+            isNaN(salario.value) ||
+            Number(salario.value) <= 0
+        ) {
+
+            showError(
+                salario,
+                'Ingrese un salario válido'
+            );
+
+            isValid = false;
+        }
+
+        // Fecha
+        if (fecha.value === '') {
+
+            showError(
+                fecha,
+                'La fecha es obligatoria'
+            );
+
+            isValid = false;
+        }
+
+        if (!isValid) return;
+
+        const submitButton = form.querySelector('button[type="submit"]');
+
+        submitButton.disabled = true;
+
+        submitButton.innerText = 'Guardando...';
+
+        setTimeout(() => {
+
+            showNotification(
+                'Empleado guardado correctamente',
+                'success'
+            );
+
+            submitButton.disabled = false;
+
+            submitButton.innerText = 'Guardar Empleado';
+
+            form.reset();
+
+        }, 1000);
+
+    });
+
+}
+
+// ======================================
+// DELETE BUTTONS
+// ======================================
+
+function initializeDeleteButtons() {
+
+    const deleteButtons = document.querySelectorAll('.btn-danger');
+
+    deleteButtons.forEach((button) => {
+
+        button.addEventListener('click', () => {
+
+            const confirmDelete = confirm(
+                '¿Está seguro de eliminar este registro?'
+            );
+
+            if (confirmDelete) {
+
+                showNotification(
+                    'Registro eliminado correctamente',
+                    'success'
+                );
+            }
+
+        });
+
+    });
+
+}
+
+// ======================================
+// UTILITIES
+// ======================================
+
+function validateEmail(email) {
+
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+}
+
+function showError(input, message) {
+
+    input.classList.add('input-error');
+
+    const error = document.createElement('small');
+
+    error.className = 'error-message';
+
+    error.innerText = message;
+
+    input.parentElement.appendChild(error);
+
+}
+
+function clearErrors() {
+
+    document
+        .querySelectorAll('.error-message')
+        .forEach(error => error.remove());
+
+    document
+        .querySelectorAll('.input-error')
+        .forEach(input => {
+            input.classList.remove('input-error');
+        });
+
+}
+
+function showNotification(message, type) {
+
+    const notification = document.createElement('div');
+
+    notification.className = `notification ${type}`;
+
+    notification.innerText = message;
+
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+
+        notification.classList.add('show');
+
+    }, 100);
+
+    setTimeout(() => {
+
+        notification.classList.remove('show');
+
+        setTimeout(() => {
+
+            notification.remove();
+
+        }, 300);
+
+    }, 3000);
+
+}
