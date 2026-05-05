@@ -12,7 +12,3 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
-views/
-docs/
-controllers/Clientes_Controller.php
-controllers/Empleados_Controller.php
