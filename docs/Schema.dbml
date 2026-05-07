@@ -1,66 +1,139 @@
--- Tablas principales:
 
--- clientes
--- empleados
--- categorias
--- productos
--- pedidos
--- detalle_pedido
--- pagos
--- envios
-
--- Relaciones clave:
-
--- Un cliente → muchos pedidos
--- Un pedido → muchos productos (detalle)
--- Un pedido → un pago
--- Un pedido → un envío
--- Un producto → una categoría
-
-table clientes{
-  id int [pk, increment]
+Table "estado_pedido" {
+  "id_estado" INT [pk, increment]
+  "nombre" VARCHAR(20) [unique, not null]
+  "descripcion" TEXT
 }
 
-table empleados {
-  id int [pk, increment]
-  cargo varhcar(20) [not null]
-  salario varchar(20)
-  fecha_ingreso timestampz
+Table "estado_envio" {
+  "id_estado" INT [pk, increment]
+  "nombre" VARCHAR(20) [unique, not null]
 }
 
-table categorias{
-  id int
-  producto_id int [ref: > productos.id]
+Table "metodo_pago" {
+  "id_metodo" INT [pk, increment]
+  "nombre" VARCHAR(50) [unique, not null]
+  "activo" BOOLEAN [default: TRUE]
 }
 
-table productos{
-  id int
-  stock int [not null]
+Table "clientes" {
+  "id_cliente" INT [pk, increment]
+  "nombre" VARCHAR(100) [not null]
+  "email" VARCHAR(100) [unique, not null]
+  "telefono" VARCHAR(20)
 }
 
-table pedidos{
-  id int
-  envio_id int [ref: > envios.id]
-  cliente_id int [ref: > clientes.id]
+Table "cargos" {
+  "id_cargo" INT [pk, increment]
+  "nombre" VARCHAR(50) [not null]
 }
 
-table detalle_pedido{
-  producto_id int [ref: > productos.id]
-  pedido_id int [ref: > pedidos.id]
-  cantidad int
+Table "empleados" {
+  "id_empleado" INT [pk, increment]
+  "nombre" VARCHAR(100) [not null]
+  "id_cargo" INT [not null]
+  "salario" DECIMAL(10,2) [not null]
+  "fecha_ingreso" DATE [not null]
+
+  Indexes {
+    id_cargo [name: "idx_emp_cargo"]
+  }
 }
 
-table pagos{
-  id int
-  pedido_id integer [unique, not null, ref: - pedidos.id]
+Table "categorias" {
+  "id_categoria" INT [pk, increment]
+  "nombre" VARCHAR(50) [unique, not null]
 }
 
-table envios{
-  id int
-  direccion varchar
+Table "productos" {
+  "id_producto" INT [pk, increment]
+  "id_categoria" INT [not null]
+  "nombre" VARCHAR(100) [not null]
+  "precio" DECIMAL(10,2) [not null, check: `precio >= 0`, default: 0.0]
+  "stock" INT [not null, check: `stock >= 0`, default: 0]
+  "descripcion" TEXT
+  "imagen" VARCHAR(255)
+  "activo" BOOLEAN [default: TRUE]
+
+  Indexes {
+    id_categoria [name: "idx_prod_categoria"]
+  }
 }
 
-table empleado_envio {
-  empleado_id int [ref: > empleados.id]
-  envio_id int [ref: > envios.id]
+Table "pedidos" {
+  "id_pedido" INT [pk, increment]
+  "id_cliente" INT [not null]
+  "fecha_creacion" DATETIME [default: `CURRENT_TIMESTAMP`]
+  "total" DECIMAL(10,2) [not null]
+  "id_estado" INT [not null, default: 1]
+
+  Indexes {
+    id_cliente [name: "idx_ped_cliente"]
+    id_estado [name: "idx_ped_estado"]
+  }
 }
+
+Table "pagos" {
+  "id_pago" INT [pk, increment]
+  "id_pedido" INT [unique, not null]
+  "monto" DECIMAL(10,2) [not null, check: `monto > 0`]
+  "fecha_pago" DATETIME [default: `CURRENT_TIMESTAMP`]
+  "id_metodo" INT [not null]
+
+  Indexes {
+    id_pedido [name: "idx_pago_pedido"]
+    id_metodo [name: "idx_pago_metodo"]
+  }
+}
+
+Table "detalle_pedido" {
+  "id_pedido" INT [not null]
+  "id_producto" INT [not null]
+
+  "cantidad" INT [not null]
+  "precio_unitario" DECIMAL(10,2) [not null]
+
+  Indexes {
+    (id_pedido, id_producto) [pk]
+    id_producto [name: "idx_det_producto"]
+  }
+}
+
+Table "envios" {
+  "id_envio" INT [pk, increment]
+  "id_pedido" INT [not null]
+  "id_empleado" INT [not null]
+  "direccion_envio" TEXT [not null]
+  "fecha_envio" DATETIME [default: `CURRENT_TIMESTAMP`]
+  "fecha_entrega" DATETIME
+  "guia_rastreo" VARCHAR(100)
+  "id_estado" INT [not null, default: 1]
+
+  Indexes {
+    id_pedido [name: "idx_env_pedido"]
+    id_empleado [name: "idx_env_empleado"]
+    id_estado [name: "idx_env_estado"]
+  }
+}
+
+Ref "fk_emp_cargo":"cargos"."id_cargo" < "empleados"."id_cargo" [update: cascade, delete: restrict]
+
+Ref "fk_prod_cat":"categorias"."id_categoria" < "productos"."id_categoria"
+
+Ref "fk_ped_est":"estado_pedido"."id_estado" < "pedidos"."id_estado"
+
+Ref "fk_ped_cli":"clientes"."id_cliente" < "pedidos"."id_cliente" [update: cascade, delete: restrict]
+
+Ref "fk_pago_met":"metodo_pago"."id_metodo" < "pagos"."id_metodo"
+
+Ref "fk_pago_ped":"pedidos"."id_pedido" < "pagos"."id_pedido"
+
+Ref "fk_det_ped":"pedidos"."id_pedido" < "detalle_pedido"."id_pedido"
+
+Ref "fk_det_prod":"productos"."id_producto" < "detalle_pedido"."id_producto"
+
+Ref "fk_env_est":"estado_envio"."id_estado" < "envios"."id_estado"
+
+Ref "fk_env_ped":"pedidos"."id_pedido" < "envios"."id_pedido"
+
+Ref "fk_env_emp":"empleados"."id_empleado" < "envios"."id_empleado"
