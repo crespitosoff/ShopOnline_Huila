@@ -1,7 +1,6 @@
 <?php
 require_once '../config/conexion.php';
-//ola ii
-//an
+
 class Cliente
 {
     private $db;
