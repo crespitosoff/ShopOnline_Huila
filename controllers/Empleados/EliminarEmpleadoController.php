@@ -15,4 +15,3 @@ if ($objEmpleado->eliminar($id)) {
     header("Location: /ShopOnline_Huila/views/empleados/index.php?error=500");
 }
 exit;
-
