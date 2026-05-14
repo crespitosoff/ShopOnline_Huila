@@ -6,8 +6,12 @@ $clientes = $objCliente->obtenerTodos();
 
 if ($clientes === false) {
     http_response_code(500);
+    $_error = "Error al cargar clientes desde la base de datos";
     $clientes = [];
 } else {
     http_response_code(200);
 }
-// esto se debe continuar en views
+
+// ✅ Backend pasa control a la vista con los datos disponibles
+require_once '../../views/clientes_listar.php';
+?>
