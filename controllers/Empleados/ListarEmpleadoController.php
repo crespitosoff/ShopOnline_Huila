@@ -5,10 +5,13 @@ $objEmpleado = new Empleado();
 $empleados = $objEmpleado->obtenerTodos();
 
 if ($empleados === false) {
-    // Error 500: Algo falló en la consulta o la conexión
     http_response_code(500);
-    $empleados = []; // Evitamos errores en la vista enviando un arreglo vacío
+    $_error = "Error al cargar empleados desde la base de datos";
+    $empleados = [];
 } else {
-    // Código 200: La solicitud fue exitosa y los datos están listos
     http_response_code(200);
 }
+
+// ✅ Backend pasa control a la vista con los datos disponibles
+require_once '../../views/empleados_listar.php';
+?>
