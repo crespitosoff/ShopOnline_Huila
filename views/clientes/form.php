@@ -1,31 +1,23 @@
 <?php
 
-$isEdit = isset($_GET['id']);
+require_once '../../models/Cliente.php';
 
+$isEdit = isset($_GET['id']);
 $id = $_GET['id'] ?? null;
 
 $cliente = [
+    'id_cliente' => '',
     'nombre' => '',
     'email' => '',
     'telefono' => ''
 ];
 
-if ($id == 1) {
-
-    $cliente = [
-        'nombre' => 'María González',
-        'email' => 'maria@email.com',
-        'telefono' => '3001234567'
-    ];
-
-} elseif ($id == 2) {
-
-    $cliente = [
-        'nombre' => 'Carlos Ramírez',
-        'email' => 'carlos@email.com',
-        'telefono' => '3019876543'
-    ];
-
+if ($isEdit) {
+    $objCliente = new Cliente();
+    $data = $objCliente->obtenerPorId($id);
+    if ($data) {
+        $cliente = $data;
+    }
 }
 
 ?>
@@ -34,129 +26,79 @@ if ($id == 1) {
 <html lang="es">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
-
-    <title>
-        <?= $isEdit ? 'Editar Cliente' : 'Nuevo Cliente'; ?>
-    </title>
-
-    <link
-        rel="stylesheet"
-        href="/ShopOnline_Huila/assets/css/styles.css">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?= $isEdit ? 'Editar Cliente' : 'Nuevo Cliente' ?> | ShopOnline Huila</title>
+    <link rel="stylesheet" href="/ShopOnline_Huila/assets/css/styles.css">
 </head>
 
 <body>
 
-    <div class="layout">
+<div class="topbar">
+    <div class="topbar-inner">
+        <a href="/ShopOnline_Huila/" class="brand">
+            <span class="brand-icon">SH</span>
+            ShopOnline Huila
+        </a>
+        <nav class="topbar-nav">
+            <a href="/ShopOnline_Huila/views/clientes/index.php">Clientes</a>
+            <a href="/ShopOnline_Huila/views/empleados/index.php">Empleados</a>
+        </nav>
+    </div>
+</div>
 
-        <section class="form-card">
+<div class="layout">
 
-            <div class="form-header">
+    <a href="index.php" class="back-link">← Volver al listado</a>
 
-                <h1>
+    <section class="form-card">
 
-                    <?= $isEdit ? 'Editar Cliente' : 'Nuevo Cliente'; ?>
+        <div class="form-header">
+            <h1><?= $isEdit ? 'Editar Cliente' : 'Nuevo Cliente' ?></h1>
+            <p>Complete la información del cliente.</p>
+        </div>
 
-                </h1>
+        <form id="clienteForm" method="POST" action="../../controllers/Clientes/<?= $isEdit ? 'ActualizarClienteController.php' : 'CrearClienteController.php' ?>">
 
-                <p>
+            <?php if ($isEdit): ?>
+            <input type="hidden" name="id_cliente" value="<?= $cliente['id_cliente'] ?>">
+            <?php endif; ?>
 
-                    Complete la información del cliente.
-
-                </p>
-
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <div class="input-wrapper">
+                    <input type="text" id="nombre" name="nombre" placeholder="Ingrese el nombre" value="<?= htmlspecialchars($cliente['nombre']) ?>">
+                </div>
             </div>
 
-            <form
-                id="clienteForm"
-                method="POST"
-                action="../../controllers/ClienteController.php">
-
-                <div class="form-group">
-
-                    <label for="nombre">
-
-                        Nombre
-
-                    </label>
-
-                    <input
-                        type="text"
-                        id="nombre"
-                        name="nombre"
-                        placeholder="Ingrese el nombre"
-                        value="<?= $cliente['nombre']; ?>">
-
+            <div class="form-group">
+                <label for="email">Correo Electrónico</label>
+                <div class="input-wrapper">
+                    <input type="email" id="email" name="email" placeholder="correo@ejemplo.com" value="<?= htmlspecialchars($cliente['email']) ?>">
                 </div>
+            </div>
 
-                <div class="form-group">
-
-                    <label for="email">
-
-                        Correo Electrónico
-
-                    </label>
-
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        placeholder="correo@ejemplo.com"
-                        value="<?= $cliente['email']; ?>">
-
+            <div class="form-group">
+                <label for="telefono">Teléfono</label>
+                <div class="input-wrapper">
+                    <input type="text" id="telefono" name="telefono" placeholder="3001234567" value="<?= htmlspecialchars($cliente['telefono']) ?>">
                 </div>
+            </div>
 
-                <div class="form-group">
+            <div class="form-actions">
+                <a href="index.php" class="btn btn-secondary">Cancelar</a>
+                <button type="submit" class="btn btn-primary">
+                    <?= $isEdit ? 'Actualizar Cliente' : 'Guardar Cliente' ?>
+                </button>
+            </div>
 
-                    <label for="telefono">
+        </form>
 
-                        Teléfono
+    </section>
 
-                    </label>
+</div>
 
-                    <input
-                        type="text"
-                        id="telefono"
-                        name="telefono"
-                        placeholder="3001234567"
-                        value="<?= $cliente['telefono']; ?>">
-
-                </div>
-
-                <div class="form-actions">
-
-                    <a
-                        href="index.php"
-                        class="btn btn-secondary">
-
-                        Cancelar
-
-                    </a>
-
-                    <button
-                        type="submit"
-                        class="btn btn-primary">
-
-                        <?= $isEdit ? 'Actualizar Cliente' : 'Guardar Cliente'; ?>
-
-                    </button>
-
-                </div>
-
-            </form>
-
-        </section>
-
-    </div>
-
-    <script src="/ShopOnline_Huila/assets/js/validations.js"></script>
+<script src="/ShopOnline_Huila/assets/js/validations_v2.js"></script>
 
 </body>
-
 </html>

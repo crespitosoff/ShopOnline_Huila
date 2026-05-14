@@ -2,7 +2,7 @@
 class Conexion {
     public static function conectar() {
         $host = "localhost";
-        $db   = "shoponline"; // Asegúrate de usar el nuevo nombre de tu BD
+        $db   = "shoponline_jsj";
         $user = "root";
         $pass = "";
         $charset = "utf8mb4";

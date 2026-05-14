@@ -1,34 +1,31 @@
 <?php
 
-$isEdit = isset($_GET['id']);
+require_once '../../models/Empleado.php';
 
+$isEdit = isset($_GET['id']);
 $id = $_GET['id'] ?? null;
 
 $empleado = [
+    'id_empleado' => '',
     'nombre' => '',
-    'cargo' => '',
+    'id_cargo' => '',
     'salario' => '',
     'fecha_ingreso' => ''
 ];
 
-if ($id == 1) {
+if ($isEdit) {
+    $objEmpleado = new Empleado();
+    $data = $objEmpleado->obtenerPorId($id);
+    if ($data) {
+        $empleado = $data;
+    }
+}
 
-    $empleado = [
-        'nombre' => 'Laura Martínez',
-        'cargo' => '1',
-        'salario' => '3500000',
-        'fecha_ingreso' => '2025-05-01'
-    ];
-
-} elseif ($id == 2) {
-
-    $empleado = [
-        'nombre' => 'Carlos Pérez',
-        'cargo' => '2',
-        'salario' => '2100000',
-        'fecha_ingreso' => '2025-04-18'
-    ];
-
+$objCargos = new Empleado();
+$cargosList = $objCargos->obtenerCargos();
+$cargos = [];
+foreach ($cargosList as $c) {
+    $cargos[$c['id_cargo']] = $c['nombre'];
 }
 
 ?>
@@ -37,174 +34,93 @@ if ($id == 1) {
 <html lang="es">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
-
-    <title>
-        <?= $isEdit ? 'Editar Empleado' : 'Nuevo Empleado'; ?>
-    </title>
-
-    <link
-        rel="stylesheet"
-        href="/ShopOnline_Huila/assets/css/styles.css">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?= $isEdit ? 'Editar Empleado' : 'Nuevo Empleado' ?> | ShopOnline Huila</title>
+    <link rel="stylesheet" href="/ShopOnline_Huila/assets/css/styles.css">
 </head>
 
 <body>
 
-    <div class="layout">
+<div class="topbar">
+    <div class="topbar-inner">
+        <a href="/ShopOnline_Huila/" class="brand">
+            <span class="brand-icon">SH</span>
+            ShopOnline Huila
+        </a>
+        <nav class="topbar-nav">
+            <a href="/ShopOnline_Huila/views/clientes/index.php">Clientes</a>
+            <a href="/ShopOnline_Huila/views/empleados/index.php">Empleados</a>
+        </nav>
+    </div>
+</div>
 
-        <section class="form-card">
+<div class="layout">
 
-            <div class="form-header">
+    <a href="index.php" class="back-link">← Volver al listado</a>
 
-                <h1>
+    <section class="form-card">
 
-                    <?= $isEdit ? 'Editar Empleado' : 'Nuevo Empleado'; ?>
+        <div class="form-header">
+            <h1><?= $isEdit ? 'Editar Empleado' : 'Nuevo Empleado' ?></h1>
+            <p>Complete la información del empleado.</p>
+        </div>
 
-                </h1>
+        <form id="empleadoForm" method="POST" action="../../controllers/Empleados/<?= $isEdit ? 'ActualizarEmpleadoController.php' : 'CrearEmpledoController.php' ?>">
 
-                <p>
+            <?php if ($isEdit): ?>
+            <input type="hidden" name="id_empleado" value="<?= $empleado['id_empleado'] ?>">
+            <?php endif; ?>
 
-                    Complete la información del empleado.
-
-                </p>
-
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <div class="input-wrapper">
+                    <input type="text" id="nombre" name="nombre" placeholder="Ingrese el nombre" value="<?= htmlspecialchars($empleado['nombre']) ?>">
+                </div>
             </div>
 
-            <form
-                id="empleadoForm"
-                method="POST"
-                action="../../controllers/EmpleadoController.php">
-
-                <div class="form-group">
-
-                    <label for="nombre">
-
-                        Nombre
-
-                    </label>
-
-                    <input
-                        type="text"
-                        id="nombre"
-                        name="nombre"
-                        placeholder="Ingrese el nombre"
-                        value="<?= $empleado['nombre']; ?>">
-
-                </div>
-
-                <div class="form-group">
-
-                    <label for="id_cargo">
-
-                        Cargo
-
-                    </label>
-
-                    <select
-                        id="id_cargo"
-                        name="id_cargo">
-
-                        <option value="">
-
-                            Seleccione un cargo
-
+            <div class="form-group">
+                <label for="id_cargo">Cargo</label>
+                <div class="input-wrapper">
+                    <select id="id_cargo" name="id_cargo">
+                        <option value="">Seleccione un cargo</option>
+                        <?php foreach ($cargos as $val => $label): ?>
+                        <option value="<?= $val ?>" <?= $empleado['id_cargo'] == $val ? 'selected' : '' ?>>
+                            <?= $label ?>
                         </option>
-
-                        <option
-                            value="1"
-                            <?= $empleado['cargo'] == '1' ? 'selected' : ''; ?>>
-
-                            Administrador
-
-                        </option>
-
-                        <option
-                            value="2"
-                            <?= $empleado['cargo'] == '2' ? 'selected' : ''; ?>>
-
-                            Vendedor
-
-                        </option>
-
-                        <option
-                            value="3"
-                            <?= $empleado['cargo'] == '3' ? 'selected' : ''; ?>>
-
-                            Logística
-
-                        </option>
-
+                        <?php endforeach; ?>
                     </select>
-
                 </div>
+            </div>
 
-                <div class="form-group">
-
-                    <label for="salario">
-
-                        Salario
-
-                    </label>
-
-                    <input
-                        type="number"
-                        id="salario"
-                        name="salario"
-                        placeholder="Ingrese el salario"
-                        value="<?= $empleado['salario']; ?>">
-
+            <div class="form-group">
+                <label for="salario">Salario</label>
+                <div class="input-wrapper">
+                    <input type="number" id="salario" name="salario" placeholder="Ingrese el salario" value="<?= htmlspecialchars($empleado['salario']) ?>">
                 </div>
+            </div>
 
-                <div class="form-group">
-
-                    <label for="fecha_ingreso">
-
-                        Fecha de ingreso
-
-                    </label>
-
-                    <input
-                        type="date"
-                        id="fecha_ingreso"
-                        name="fecha_ingreso"
-                        value="<?= $empleado['fecha_ingreso']; ?>">
-
+            <div class="form-group">
+                <label for="fecha_ingreso">Fecha de ingreso</label>
+                <div class="input-wrapper">
+                    <input type="date" id="fecha_ingreso" name="fecha_ingreso" value="<?= htmlspecialchars($empleado['fecha_ingreso']) ?>">
                 </div>
+            </div>
 
-                <div class="form-actions">
+            <div class="form-actions">
+                <a href="index.php" class="btn btn-secondary">Cancelar</a>
+                <button type="submit" class="btn btn-primary">
+                    <?= $isEdit ? 'Actualizar Empleado' : 'Guardar Empleado' ?>
+                </button>
+            </div>
 
-                    <a
-                        href="index.php"
-                        class="btn btn-secondary">
+        </form>
 
-                        Cancelar
+    </section>
 
-                    </a>
+</div>
 
-                    <button
-                        type="submit"
-                        class="btn btn-primary">
-
-                        <?= $isEdit ? 'Actualizar Empleado' : 'Guardar Empleado'; ?>
-
-                    </button>
-
-                </div>
-
-            </form>
-
-        </section>
-
-    </div>
-
-    <script src="/ShopOnline_Huila/assets/js/validations.js"></script>
+<script src="/ShopOnline_Huila/assets/js/validations_v2.js"></script>
 
 </body>
-
 </html>
