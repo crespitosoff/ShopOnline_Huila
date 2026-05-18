@@ -8,15 +8,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $telefono = trim($_POST['telefono'] ?? '');
 
     if (empty($id) || empty($nombre) || empty($email) || empty($telefono)) {
-        header("Location: ../../views/clientes_editar.php?id=$id&error=campos_obligatorios");
+        header("Location: ../../views/clientes/form.php?id=$id&error=campos_obligatorios");
         exit;
     }
 
     $objCliente = new Cliente();
     if ($objCliente->actualizar($id, $nombre, $email, $telefono)) {
-        header("Location: ../../views/clientes_listar.php?success=update");
+        header("Location: ../../views/clientes/index.php?success=update");
     } else {
-        header("Location: ../../views/clientes_editar.php?id=$id&error=fallo_update");
+        header("Location: ../../views/clientes/form.php?id=$id&error=fallo_update");
     }
     exit;
 }

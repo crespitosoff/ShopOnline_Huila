@@ -4,7 +4,7 @@ require_once '../../models/Empleado.php';
 $id = $_GET['id'] ?? 0;
 
 if (empty($id)) {
-    header("Location: ../../views/empleados_listar.php?error=400");
+    header("Location: ../../views/empleados/index.php?error=400");
     exit;
 }
 
@@ -13,7 +13,8 @@ $empleado = $objEmpleado->obtenerPorId($id);
 $cargos = $objEmpleado->obtenerCargos();
 
 if (!$empleado) {
-    header("Location: ../../views/empleados_listar.php?error=404");
+    http_response_code(404);
+    header("Location: ../../views/empleados/index.php?error=404");
     exit;
 }
 
