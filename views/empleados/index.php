@@ -1,4 +1,9 @@
 <?php
+require_once __DIR__ . '/../../models/Empleado.php';
+$objEmpleado = new Empleado();
+$empleados = $objEmpleado->obtenerTodos();
+$cargos = $objEmpleado->obtenerCargos();
+
 $pageTitle = 'Directorio de Empleados - ShopOnline Huila';
 $activePage = 'empleados';
 $searchPlaceholder = 'Buscar empleados...';
@@ -17,6 +22,21 @@ include __DIR__ . '/../layouts/header.php';
     </button>
 </div>
 
+<!-- Alertas -->
+<?php if (isset($_GET['success'])): ?>
+<div class="mb-6 p-4 rounded-lg bg-primary-fixed text-on-primary-fixed border border-primary-fixed-dim flex items-center gap-3">
+    <span class="material-symbols-outlined">check_circle</span>
+    <p class="font-body-md text-body-md">Operación realizada con éxito.</p>
+</div>
+<?php endif; ?>
+
+<?php if (isset($_GET['error'])): ?>
+<div class="mb-6 p-4 rounded-lg bg-error-container text-on-error-container border border-error flex items-center gap-3">
+    <span class="material-symbols-outlined">error</span>
+    <p class="font-body-md text-body-md">Ha ocurrido un error (Código: <?= htmlspecialchars($_GET['error']) ?>).</p>
+</div>
+<?php endif; ?>
+
 <!-- Bento Grid Layout -->
 <div class="grid grid-cols-1 xl:grid-cols-12 gap-6">
     <!-- Quick Stats / Add Form Area (Left Column) -->
@@ -27,11 +47,11 @@ include __DIR__ . '/../layouts/header.php';
             <div class="grid grid-cols-2 gap-4">
                 <div class="bg-surface p-4 rounded-lg border border-outline-variant/30">
                     <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Personal Total</p>
-                    <p class="font-display-lg text-display-lg text-primary">42</p>
+                    <p class="font-display-lg text-display-lg text-primary"><?= count($empleados) ?></p>
                 </div>
                 <div class="bg-surface p-4 rounded-lg border border-outline-variant/30">
                     <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Entregas Activas</p>
-                    <p class="font-display-lg text-display-lg text-tertiary">128</p>
+                    <p class="font-display-lg text-display-lg text-tertiary">--</p>
                 </div>
             </div>
         </div>
@@ -42,7 +62,7 @@ include __DIR__ . '/../layouts/header.php';
                 <h3 class="font-headline-sm text-headline-sm text-on-background">Registro Rápido de Empleado</h3>
                 <span class="material-symbols-outlined text-primary">person_add</span>
             </div>
-            <form class="space-y-4" action="/ShopOnline_Huila/controllers/empleados/CrearEmpledoController.php" method="POST">
+            <form class="space-y-4" action="/ShopOnline_Huila/controllers/empleados/CrearEmpleadoController.php" method="POST">
                 <div>
                     <label class="block font-label-sm text-label-sm text-on-surface-variant mb-1">Nombre Completo</label>
                     <input name="nombre" class="w-full bg-surface-container-lowest border border-outline-variant rounded-md px-3 py-2 text-body-sm font-body-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" placeholder="ej. Maria Gonzalez" type="text" required>
@@ -59,10 +79,9 @@ include __DIR__ . '/../layouts/header.php';
                     <label class="block font-label-sm text-label-sm text-on-surface-variant mb-1">Cargo/Posición</label>
                     <select name="id_cargo" class="w-full bg-surface-container-lowest border border-outline-variant rounded-md px-3 py-2 text-body-sm font-body-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-on-surface" required>
                         <option value="">Seleccionar cargo...</option>
-                        <option value="1">Gerente de Almacén</option>
-                        <option value="2">Coordinador de Logística</option>
-                        <option value="3">Conductor de Entregas</option>
-                        <option value="4">Especialista de Inventario</option>
+                        <?php foreach ($cargos as $c): ?>
+                            <option value="<?= $c['id_cargo'] ?>"><?= htmlspecialchars($c['nombre']) ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="grid grid-cols-2 gap-4">
@@ -108,100 +127,51 @@ include __DIR__ . '/../layouts/header.php';
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-outline-variant/30 bg-surface-container-lowest">
-                    <tr class="hover:bg-surface/50 transition-colors group">
-                        <td class="py-4 px-6">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-full bg-tertiary-container text-on-tertiary-container flex items-center justify-center font-bold text-label-md">CP</div>
-                                <div>
-                                    <p class="font-table-data text-table-data font-medium text-on-background">Carlos Perez</p>
-                                    <p class="font-body-sm text-body-sm text-on-surface-variant/70 text-xs">ID: EMP-001</p>
+                    <?php if (empty($empleados)): ?>
+                        <tr><td colspan="6" class="text-center py-4 text-on-surface-variant">No hay empleados registrados.</td></tr>
+                    <?php else: ?>
+                        <?php foreach ($empleados as $e): 
+                            $iniciales = strtoupper(substr($e['nombre'], 0, 2));
+                        ?>
+                        <tr class="hover:bg-surface/50 transition-colors group">
+                            <td class="py-4 px-6">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-label-md"><?= $iniciales ?></div>
+                                    <div>
+                                        <p class="font-table-data text-table-data font-medium text-on-background"><?= htmlspecialchars($e['nombre']) ?></p>
+                                        <p class="font-body-sm text-body-sm text-on-surface-variant/70 text-xs">ID: EMP-<?= str_pad($e['id_empleado'], 3, '0', STR_PAD_LEFT) ?></p>
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                        <td class="py-4 px-6">
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-label-sm text-label-sm bg-secondary-container text-on-secondary-container">Coordinador de Logística</span>
-                        </td>
-                        <td class="py-4 px-6 font-table-data text-table-data text-right text-on-surface">$ 3.200.000</td>
-                        <td class="py-4 px-6 font-table-data text-table-data text-on-surface-variant">12 Mar 2021</td>
-                        <td class="py-4 px-6 text-center">
-                            <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-surface-variant text-on-surface-variant font-label-sm text-label-sm">45</span>
-                        </td>
-                        <td class="py-4 px-6 text-right">
-                            <button class="text-on-surface-variant hover:text-primary transition-colors p-1"><span class="material-symbols-outlined text-[20px]">more_vert</span></button>
-                        </td>
-                    </tr>
-                    <tr class="bg-surface/30 hover:bg-surface/50 transition-colors group">
-                        <td class="py-4 px-6">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-label-md">AR</div>
-                                <div>
-                                    <p class="font-table-data text-table-data font-medium text-on-background">Ana Rodriguez</p>
-                                    <p class="font-body-sm text-body-sm text-on-surface-variant/70 text-xs">ID: EMP-014</p>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="py-4 px-6">
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-label-sm text-label-sm bg-tertiary-container/30 text-tertiary">Conductor de Entregas</span>
-                        </td>
-                        <td class="py-4 px-6 font-table-data text-table-data text-right text-on-surface">$ 1.800.000</td>
-                        <td class="py-4 px-6 font-table-data text-table-data text-on-surface-variant">05 Jan 2023</td>
-                        <td class="py-4 px-6 text-center">
-                            <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-surface-variant text-on-surface-variant font-label-sm text-label-sm">112</span>
-                        </td>
-                        <td class="py-4 px-6 text-right">
-                            <button class="text-on-surface-variant hover:text-primary transition-colors p-1"><span class="material-symbols-outlined text-[20px]">more_vert</span></button>
-                        </td>
-                    </tr>
-                    <tr class="hover:bg-surface/50 transition-colors group">
-                        <td class="py-4 px-6">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-full bg-error-container text-on-error-container flex items-center justify-center font-bold text-label-md">JG</div>
-                                <div>
-                                    <p class="font-table-data text-table-data font-medium text-on-background">Jorge Gomez</p>
-                                    <p class="font-body-sm text-body-sm text-on-surface-variant/70 text-xs">ID: EMP-008</p>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="py-4 px-6">
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-label-sm text-label-sm bg-tertiary-container/30 text-tertiary">Conductor de Entregas</span>
-                        </td>
-                        <td class="py-4 px-6 font-table-data text-table-data text-right text-on-surface">$ 1.800.000</td>
-                        <td class="py-4 px-6 font-table-data text-table-data text-on-surface-variant">18 Aug 2022</td>
-                        <td class="py-4 px-6 text-center">
-                            <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-surface-variant text-on-surface-variant font-label-sm text-label-sm">98</span>
-                        </td>
-                        <td class="py-4 px-6 text-right">
-                            <button class="text-on-surface-variant hover:text-primary transition-colors p-1"><span class="material-symbols-outlined text-[20px]">more_vert</span></button>
-                        </td>
-                    </tr>
-                    <tr class="bg-surface/30 hover:bg-surface/50 transition-colors group">
-                        <td class="py-4 px-6">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-label-md">LM</div>
-                                <div>
-                                    <p class="font-table-data text-table-data font-medium text-on-background">Laura Martinez</p>
-                                    <p class="font-body-sm text-body-sm text-on-surface-variant/70 text-xs">ID: EMP-002</p>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="py-4 px-6">
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-label-sm text-label-sm bg-secondary-container text-on-secondary-container">Gerente de Almacén</span>
-                        </td>
-                        <td class="py-4 px-6 font-table-data text-table-data text-right text-on-surface">$ 4.500.000</td>
-                        <td class="py-4 px-6 font-table-data text-table-data text-on-surface-variant">01 Feb 2020</td>
-                        <td class="py-4 px-6 text-center">
-                            <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-surface-variant text-on-surface-variant font-label-sm text-label-sm">0</span>
-                        </td>
-                        <td class="py-4 px-6 text-right">
-                            <button class="text-on-surface-variant hover:text-primary transition-colors p-1"><span class="material-symbols-outlined text-[20px]">more_vert</span></button>
-                        </td>
-                    </tr>
+                            </td>
+                            <td class="py-4 px-6">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-label-sm text-label-sm bg-secondary-container text-on-secondary-container"><?= htmlspecialchars($e['nombre_cargo']) ?></span>
+                            </td>
+                            <td class="py-4 px-6 font-table-data text-table-data text-right text-on-surface">$ <?= number_format($e['salario'], 0, ',', '.') ?></td>
+                            <td class="py-4 px-6 font-table-data text-table-data text-on-surface-variant"><?= date('d M Y', strtotime($e['fecha_ingreso'])) ?></td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-surface-variant text-on-surface-variant font-label-sm text-label-sm">--</span>
+                            </td>
+                            <td class="py-4 px-6 text-right whitespace-nowrap">
+                                <a href="/ShopOnline_Huila/views/empleados/editar.php?id=<?= $e['id_empleado'] ?>" class="text-tertiary hover:text-tertiary-container transition-colors p-1" title="Editar">
+                                    <span class="material-symbols-outlined text-[20px]">edit</span>
+                                </a>
+                                
+                                <form action="/ShopOnline_Huila/controllers/empleados/EliminarEmpleadoController.php" method="POST" class="inline" onsubmit="return confirm('¿Seguro que deseas eliminar este empleado?');">
+                                    <input type="hidden" name="id" value="<?= $e['id_empleado'] ?>">
+                                    <button type="submit" class="text-error hover:text-error-container transition-colors p-1" title="Eliminar">
+                                        <span class="material-symbols-outlined text-[20px]">delete</span>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </tbody>
             </table>
         </div>
         <!-- Pagination Footer -->
         <div class="p-4 border-t border-outline-variant/50 bg-surface-container-lowest flex items-center justify-between mt-auto">
-            <p class="font-body-sm text-body-sm text-on-surface-variant">Mostrando 1 a 4 de 42 registros</p>
+            <p class="font-body-sm text-body-sm text-on-surface-variant">Total registrados: <?= count($empleados) ?></p>
             <div class="flex gap-1">
                 <button class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant text-on-surface-variant hover:bg-surface-container-low disabled:opacity-50" disabled>
                     <span class="material-symbols-outlined text-[18px]">chevron_left</span>

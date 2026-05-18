@@ -53,7 +53,7 @@ include __DIR__ . '/../layouts/header.php';
         <div class="flex justify-between items-start">
             <div>
                 <p class="font-label-md text-label-md text-on-surface-variant mb-1">Total Clientes</p>
-                <h3 class="font-headline-lg text-headline-lg text-on-surface">2,450</h3>
+                <h3 class="font-headline-lg text-headline-lg text-on-surface"><?= count($clientes) ?></h3>
             </div>
             <div class="p-2 bg-primary-fixed rounded-lg text-primary-container">
                 <span class="material-symbols-outlined">group</span>
@@ -155,7 +155,7 @@ include __DIR__ . '/../layouts/header.php';
     </div>
     <!-- Pagination -->
     <div class="p-4 border-t border-surface-container-high flex items-center justify-between bg-surface-bright">
-        <span class="font-body-sm text-body-sm text-on-surface-variant">Mostrando 1 a 5 de 2,450 clientes</span>
+        <span class="font-body-sm text-body-sm text-on-surface-variant">Total registrados: <?= count($clientes) ?></span>
         <div class="flex items-center gap-2">
             <button class="px-3 py-1 border border-outline-variant rounded-md text-on-surface-variant hover:bg-surface-container-low disabled:opacity-50" disabled>
                 <span class="material-symbols-outlined text-[18px] align-middle">chevron_left</span>

@@ -11,8 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Validaciones básicas
     if (empty($nombre) || empty($email) || empty($telefono) || empty($password)) {
-        http_response_code(400);
-        // 2. Ajustamos la ruta de redirección a la vista
+// 2. Ajustamos la ruta de redirección a la vista
         header("Location: /ShopOnline_Huila/views/clientes/?error=campos_obligatorios");
         exit;
     }
@@ -20,12 +19,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $objCliente = new Cliente();
 
     if ($objCliente->registrar($nombre, $email, $password, $telefono)) {
-        http_response_code(201);
-        header("Location: /ShopOnline_Huila/views/clientes/?success=1");
+header("Location: /ShopOnline_Huila/views/clientes/?success=1");
         exit; // Siempre pon exit después de un header Location
     } else {
-        http_response_code(500);
-        header("Location: /ShopOnline_Huila/views/clientes/?error=error_tecnico");
+header("Location: /ShopOnline_Huila/views/clientes/?error=error_tecnico");
         exit;
     }
 }

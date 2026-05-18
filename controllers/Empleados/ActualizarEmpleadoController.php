@@ -8,17 +8,14 @@ $id_cargo = (float) ($_POST['id_cargo'] ?? '');
 $salario = trim($_POST['salario'] ?? '');
 
 if (empty($id) || empty($nombre) || empty($id_cargo) || !is_numeric($salario)) {
-    http_response_code(400);
-    header("Location: /ShopOnline_Huila/views/empleados/editar.php?id=$id&error=400");
+header("Location: /ShopOnline_Huila/views/empleados/editar.php?id=$id&error=400");
     exit;
 }
 
 $objEmpleado = new Empleado();
 if ($objEmpleado->actualizar($id, $nombre, $email, $id_cargo, $salario)) {
-    http_response_code(200);
-    header("Location: /ShopOnline_Huila/views/empleados/?success=update");
+header("Location: /ShopOnline_Huila/views/empleados/?success=update");
 } else {
-    http_response_code(500);
-    header("Location: /ShopOnline_Huila/views/empleados/editar.php?id=$id&error=1");
+header("Location: /ShopOnline_Huila/views/empleados/editar.php?id=$id&error=1");
 }
 exit;
