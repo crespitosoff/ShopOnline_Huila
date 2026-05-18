@@ -5,7 +5,7 @@ $id = $_GET['id'] ?? 0;
 
 if (empty($id)) {
     http_response_code(400);
-    header("Location: ../../views/clientes_listar.php?error=400");
+    header("Location: /ShopOnline_Huila/views/clientes/?error=400");
     exit;
 }
 
@@ -14,7 +14,7 @@ $cliente = $objCliente->obtenerPorId($id);
 
 if (!$cliente) {
     http_response_code(404);
-    header("Location: ../../views/clientes_listar.php?error=no_encontrado");
+    header("Location: /ShopOnline_Huila/views/clientes/?error=no_encontrado");
     exit;
 }
 

@@ -3,6 +3,10 @@
  * Gestión de Clientes
  * Accesible desde: Sidebar > "Clientes"
  */
+require_once __DIR__ . '/../../models/Cliente.php';
+$objCliente = new Cliente();
+$clientes = $objCliente->obtenerTodos();
+
 $pageTitle = 'Gestión de Clientes - ShopOnline Huila';
 $activePage = 'clientes';
 $searchPlaceholder = 'Buscar clientes...';
@@ -21,11 +25,26 @@ include __DIR__ . '/../layouts/header.php';
         <h2 class="font-headline-lg text-headline-lg text-on-surface">Directorio de Clientes</h2>
         <p class="font-body-md text-body-md text-on-surface-variant mt-1">Gestione la información y el historial de pedidos de sus clientes.</p>
     </div>
-    <button class="bg-primary text-on-primary font-label-md text-label-md px-6 py-3 rounded-lg hover:bg-primary-container transition-colors flex items-center justify-center shadow-sm">
+    <a href="/ShopOnline_Huila/views/clientes/crear.php" class="bg-primary text-on-primary font-label-md text-label-md px-6 py-3 rounded-lg hover:bg-primary-container transition-colors flex items-center justify-center shadow-sm">
         <span class="material-symbols-outlined mr-2 text-[18px]">add</span>
         Añadir Cliente
-    </button>
+    </a>
 </div>
+
+<!-- Alertas -->
+<?php if (isset($_GET['success'])): ?>
+<div class="mb-6 p-4 rounded-lg bg-primary-fixed text-on-primary-fixed border border-primary-fixed-dim flex items-center gap-3">
+    <span class="material-symbols-outlined">check_circle</span>
+    <p class="font-body-md text-body-md">Operación realizada con éxito.</p>
+</div>
+<?php endif; ?>
+
+<?php if (isset($_GET['error'])): ?>
+<div class="mb-6 p-4 rounded-lg bg-error-container text-on-error-container border border-error flex items-center gap-3">
+    <span class="material-symbols-outlined">error</span>
+    <p class="font-body-md text-body-md">Ha ocurrido un error (Código: <?= htmlspecialchars($_GET['error']) ?>).</p>
+</div>
+<?php endif; ?>
 
 <!-- KPI Cards -->
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-lg">
@@ -110,66 +129,27 @@ include __DIR__ . '/../layouts/header.php';
                 </tr>
             </thead>
             <tbody class="font-table-data text-table-data text-on-surface divide-y divide-surface-container-high">
-                <tr class="hover:bg-primary/5 transition-colors group cursor-pointer bg-surface-container-lowest">
-                    <td class="px-6 py-4 whitespace-nowrap text-on-surface-variant">#CLI-001</td>
-                    <td class="px-6 py-4 whitespace-nowrap font-medium">Ana María Rodríguez</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-on-surface-variant">ana.rodriguez@email.com</td>
-                    <td class="px-6 py-4 whitespace-nowrap">+57 300 123 4567</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-right font-medium">24</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-right">
-                        <button class="text-on-surface-variant hover:text-primary opacity-0 group-hover:opacity-100 transition-opacity">
-                            <span class="material-symbols-outlined">chevron_right</span>
-                        </button>
-                    </td>
-                </tr>
-                <tr class="hover:bg-primary/5 transition-colors group cursor-pointer bg-surface-bright">
-                    <td class="px-6 py-4 whitespace-nowrap text-on-surface-variant">#CLI-002</td>
-                    <td class="px-6 py-4 whitespace-nowrap font-medium">Carlos Eduardo Gómez</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-on-surface-variant">carlos.gomez@email.com</td>
-                    <td class="px-6 py-4 whitespace-nowrap">+57 311 987 6543</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-right font-medium">12</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-right">
-                        <button class="text-on-surface-variant hover:text-primary opacity-0 group-hover:opacity-100 transition-opacity">
-                            <span class="material-symbols-outlined">chevron_right</span>
-                        </button>
-                    </td>
-                </tr>
-                <tr class="hover:bg-primary/5 transition-colors group cursor-pointer bg-surface-container-lowest">
-                    <td class="px-6 py-4 whitespace-nowrap text-on-surface-variant">#CLI-003</td>
-                    <td class="px-6 py-4 whitespace-nowrap font-medium">Diana Marcela López</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-on-surface-variant">diana.lopez@email.com</td>
-                    <td class="px-6 py-4 whitespace-nowrap">+57 320 456 7890</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-right font-medium">8</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-right">
-                        <button class="text-on-surface-variant hover:text-primary opacity-0 group-hover:opacity-100 transition-opacity">
-                            <span class="material-symbols-outlined">chevron_right</span>
-                        </button>
-                    </td>
-                </tr>
-                <tr class="hover:bg-primary/5 transition-colors group cursor-pointer bg-surface-bright">
-                    <td class="px-6 py-4 whitespace-nowrap text-on-surface-variant">#CLI-004</td>
-                    <td class="px-6 py-4 whitespace-nowrap font-medium">Luis Fernando Torres</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-on-surface-variant">luis.torres@email.com</td>
-                    <td class="px-6 py-4 whitespace-nowrap">+57 315 789 0123</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-right font-medium">45</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-right">
-                        <button class="text-on-surface-variant hover:text-primary opacity-0 group-hover:opacity-100 transition-opacity">
-                            <span class="material-symbols-outlined">chevron_right</span>
-                        </button>
-                    </td>
-                </tr>
-                <tr class="hover:bg-primary/5 transition-colors group cursor-pointer bg-surface-container-lowest">
-                    <td class="px-6 py-4 whitespace-nowrap text-on-surface-variant">#CLI-005</td>
-                    <td class="px-6 py-4 whitespace-nowrap font-medium">Valentina Silva</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-on-surface-variant">valentina.silva@email.com</td>
-                    <td class="px-6 py-4 whitespace-nowrap">+57 318 234 5678</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-right font-medium">3</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-right">
-                        <button class="text-on-surface-variant hover:text-primary opacity-0 group-hover:opacity-100 transition-opacity">
-                            <span class="material-symbols-outlined">chevron_right</span>
-                        </button>
-                    </td>
-                </tr>
+                <?php if (empty($clientes)): ?>
+                    <tr><td colspan="6" class="text-center py-4 text-on-surface-variant">No hay clientes registrados o activos.</td></tr>
+                <?php else: ?>
+                    <?php foreach ($clientes as $c): ?>
+                    <tr class="hover:bg-primary/5 transition-colors group bg-surface-container-lowest">
+                        <td class="px-6 py-4 whitespace-nowrap text-on-surface-variant">#CLI-<?= str_pad($c['id_cliente'], 3, '0', STR_PAD_LEFT) ?></td>
+                        <td class="px-6 py-4 whitespace-nowrap font-medium"><?= htmlspecialchars($c['nombre']) ?></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-on-surface-variant"><?= htmlspecialchars($c['email']) ?></td>
+                        <td class="px-6 py-4 whitespace-nowrap"><?= htmlspecialchars($c['telefono']) ?></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right font-medium">--</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right">
+                            <a href="/ShopOnline_Huila/views/clientes/editar.php?id=<?= $c['id_cliente'] ?>" class="text-tertiary hover:text-tertiary-container transition-colors p-1" title="Editar"><span class="material-symbols-outlined text-[20px]">edit</span></a>
+                            
+                            <form action="/ShopOnline_Huila/controllers/clientes/EliminarClienteController.php" method="POST" class="inline" onsubmit="return confirm('¿Seguro que deseas eliminar este cliente?');">
+                                <input type="hidden" name="id" value="<?= $c['id_cliente'] ?>">
+                                <button type="submit" class="text-error hover:text-error-container transition-colors p-1" title="Eliminar"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+                            </form>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </tbody>
         </table>
     </div>

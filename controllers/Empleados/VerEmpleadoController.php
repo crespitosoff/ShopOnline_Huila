@@ -5,7 +5,7 @@ $id = $_GET['id'] ?? 0;
 
 if (empty($id)) {
     http_response_code(400);
-    header("Location: ../../views/empleados_listar.php?error=id_requerido");
+    header("Location: /ShopOnline_Huila/views/empleados/?error=id_requerido");
     exit;
 }
 
@@ -14,7 +14,7 @@ $empleado = $objEmpleado->obtenerPorId($id);
 
 if (!$empleado) {
     http_response_code(404);
-    header("Location: ../../views/empleados_listar.php?error=no_encontrado");
+    header("Location: /ShopOnline_Huila/views/empleados/?error=no_encontrado");
     exit;
 }
 http_response_code(200);
