@@ -1,4 +1,13 @@
 <?php
+require_once __DIR__ . '/../../models/Despacho.php';
+require_once __DIR__ . '/../../models/Empleado.php';
+
+$objDespacho = new Despacho();
+$despachos = $objDespacho->obtenerTodos();
+
+$objEmpleado = new Empleado();
+$empleados = $objEmpleado->obtenerTodos();
+
 $pageTitle = 'Centro de Despachos - ShopOnline Huila';
 $activePage = 'despachos';
 $searchPlaceholder = 'Buscar pedidos, rastreo...';
@@ -16,12 +25,23 @@ include __DIR__ . '/../layouts/header.php';
             <span class="material-symbols-outlined text-[18px]">download</span>
             Exportar Manifiesto
         </button>
-        <button class="bg-primary text-on-primary font-label-md text-label-md px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-primary-container hover:text-on-primary-container transition-colors shadow-sm">
-            <span class="material-symbols-outlined text-[18px]">add_box</span>
-            Despacho por Lote
-        </button>
     </div>
 </div>
+
+<!-- Alertas -->
+<?php if (isset($_GET['success'])): ?>
+<div class="mb-6 p-4 rounded-lg bg-primary-fixed text-on-primary-fixed border border-primary-fixed-dim flex items-center gap-3">
+    <span class="material-symbols-outlined">check_circle</span>
+    <p class="font-body-md text-body-md">Logística actualizada correctamente.</p>
+</div>
+<?php endif; ?>
+
+<?php if (isset($_GET['error'])): ?>
+<div class="mb-6 p-4 rounded-lg bg-error-container text-on-error-container border border-error flex items-center gap-3">
+    <span class="material-symbols-outlined">error</span>
+    <p class="font-body-md text-body-md">Ha ocurrido un error (Código: <?= htmlspecialchars($_GET['error']) ?>).</p>
+</div>
+<?php endif; ?>
 
 <!-- Bento Grid Metrics -->
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-lg">
@@ -32,8 +52,13 @@ include __DIR__ . '/../layouts/header.php';
             </div>
             <span class="font-label-sm text-label-sm text-primary bg-primary-fixed py-1 px-2 rounded-full">Alta Prioridad</span>
         </div>
+        <?php
+            $pendientes = count(array_filter($despachos, fn($d) => $d['id_estado'] == 1));
+            $enTransito = count(array_filter($despachos, fn($d) => $d['id_estado'] == 2));
+            $entregados = count(array_filter($despachos, fn($d) => $d['id_estado'] == 3));
+        ?>
         <div>
-            <p class="font-display-lg text-display-lg text-on-surface">42</p>
+            <p class="font-display-lg text-display-lg text-on-surface"><?= $pendientes ?></p>
             <p class="font-body-md text-body-md text-on-surface-variant">Pendientes de Despacho</p>
         </div>
     </div>
@@ -44,19 +69,19 @@ include __DIR__ . '/../layouts/header.php';
             </div>
         </div>
         <div>
-            <p class="font-display-lg text-display-lg text-on-surface">128</p>
-            <p class="font-body-md text-body-md text-on-surface-variant">En Tránsito Hoy</p>
+            <p class="font-display-lg text-display-lg text-on-surface"><?= $enTransito ?></p>
+            <p class="font-body-md text-body-md text-on-surface-variant">En Tránsito</p>
         </div>
     </div>
     <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 flex flex-col justify-between">
         <div class="flex justify-between items-start mb-4">
             <div class="p-2 bg-surface-variant text-on-surface-variant rounded-lg">
-                <span class="material-symbols-outlined">timer</span>
+                <span class="material-symbols-outlined">inventory_2</span>
             </div>
         </div>
         <div>
-            <p class="font-display-lg text-display-lg text-on-surface">1.2<span class="text-headline-md font-normal text-on-surface-variant ml-1">días</span></p>
-            <p class="font-body-md text-body-md text-on-surface-variant">Tiempo Promedio de Entrega</p>
+            <p class="font-display-lg text-display-lg text-on-surface"><?= $entregados ?></p>
+            <p class="font-body-md text-body-md text-on-surface-variant">Total Entregados</p>
         </div>
     </div>
 </div>
@@ -83,109 +108,73 @@ include __DIR__ . '/../layouts/header.php';
                 </tr>
             </thead>
             <tbody class="font-table-data text-table-data text-on-surface divide-y divide-surface-variant">
-                <!-- Row 1 -->
-                <tr class="hover:bg-primary-fixed/10 transition-colors group">
-                    <td class="py-4 px-6 font-medium text-primary">#ORD-8821</td>
-                    <td class="py-4 px-6">
-                        <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface-variant font-bold text-xs">MA</div>
-                            <span>Maria Arango</span>
-                        </div>
-                    </td>
-                    <td class="py-4 px-6 text-on-surface-variant truncate max-w-[200px]">Calle 10 # 5-42, Neiva, Huila</td>
-                    <td class="py-4 px-6 text-on-surface-variant">Oct 24, 09:30 AM</td>
-                    <td class="py-4 px-6">
-                        <select class="bg-surface-container border border-outline-variant text-on-surface text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2 outline-none">
-                            <option disabled selected value="">Asignar Mensajero...</option>
-                            <option value="1">Carlos Diaz (Van 1)</option>
-                            <option value="2">Luis Gomez (Moto 3)</option>
-                            <option value="3">Ana Rios (Van 2)</option>
-                        </select>
-                    </td>
-                    <td class="py-4 px-6">
-                        <span class="inline-flex items-center px-2.5 py-1 rounded-full font-label-sm text-label-sm bg-surface-variant text-on-surface-variant">Procesando</span>
-                    </td>
-                    <td class="py-4 px-6 text-right space-x-2">
-                        <button class="p-2 rounded-lg border border-outline-variant text-on-surface-variant hover:bg-surface-container-low transition-colors" title="Imprimir etiqueta">
-                            <span class="material-symbols-outlined text-[18px]">print</span>
-                        </button>
-                        <button class="bg-primary text-on-primary px-3 py-1.5 rounded-lg font-label-sm text-label-sm hover:bg-primary-container hover:text-on-primary-container transition-colors">Confirmar</button>
-                    </td>
-                </tr>
-                <!-- Row 2 -->
-                <tr class="bg-surface-container-lowest hover:bg-primary-fixed/10 transition-colors group">
-                    <td class="py-4 px-6 font-medium text-primary">#ORD-8822</td>
-                    <td class="py-4 px-6">
-                        <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface-variant font-bold text-xs">JP</div>
-                            <span>Juan Perez</span>
-                        </div>
-                    </td>
-                    <td class="py-4 px-6 text-on-surface-variant truncate max-w-[200px]">Cra 7 # 14-22, Garzón, Huila</td>
-                    <td class="py-4 px-6 text-on-surface-variant">Oct 24, 10:15 AM</td>
-                    <td class="py-4 px-6">
-                        <select class="bg-surface-container border border-outline-variant text-on-surface text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2 outline-none">
-                            <option selected value="1">Carlos Diaz (Van 1)</option>
-                            <option value="2">Luis Gomez (Moto 3)</option>
-                            <option value="3">Ana Rios (Van 2)</option>
-                        </select>
-                    </td>
-                    <td class="py-4 px-6">
-                        <span class="inline-flex items-center px-2.5 py-1 rounded-full font-label-sm text-label-sm bg-primary-fixed text-on-primary-fixed">Listo</span>
-                    </td>
-                    <td class="py-4 px-6 text-right space-x-2">
-                        <button class="p-2 rounded-lg border border-outline-variant text-on-surface-variant hover:bg-surface-container-low transition-colors" title="Imprimir etiqueta">
-                            <span class="material-symbols-outlined text-[18px]">print</span>
-                        </button>
-                        <button class="bg-primary text-on-primary px-3 py-1.5 rounded-lg font-label-sm text-label-sm hover:bg-primary-container hover:text-on-primary-container transition-colors">Despachar</button>
-                    </td>
-                </tr>
-                <!-- Row 3 -->
-                <tr class="hover:bg-primary-fixed/10 transition-colors group">
-                    <td class="py-4 px-6 font-medium text-primary">#ORD-8819</td>
-                    <td class="py-4 px-6">
-                        <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface-variant font-bold text-xs">CR</div>
-                            <span>Camila Rojas</span>
-                        </div>
-                    </td>
-                    <td class="py-4 px-6 text-on-surface-variant truncate max-w-[200px]">Avenida La Toma # 2-80, Neiva, Huila</td>
-                    <td class="py-4 px-6 text-on-surface-variant">Oct 23, 04:45 PM</td>
-                    <td class="py-4 px-6">
-                        <select class="bg-surface-container-low border border-transparent text-on-surface-variant text-sm rounded-lg block w-full p-2 outline-none appearance-none cursor-not-allowed" disabled>
-                            <option selected value="2">Luis Gomez (Moto 3)</option>
-                        </select>
-                    </td>
-                    <td class="py-4 px-6">
-                        <span class="inline-flex items-center px-2.5 py-1 rounded-full font-label-sm text-label-sm bg-tertiary-container text-on-tertiary-container">En Tránsito</span>
-                    </td>
-                    <td class="py-4 px-6 text-right space-x-2">
-                        <button class="text-tertiary font-label-sm text-label-sm px-3 py-1.5 hover:underline">Rastrear</button>
-                    </td>
-                </tr>
-                <!-- Row 4 -->
-                <tr class="bg-surface-container-lowest hover:bg-primary-fixed/10 transition-colors group">
-                    <td class="py-4 px-6 font-medium text-primary">#ORD-8815</td>
-                    <td class="py-4 px-6">
-                        <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface-variant font-bold text-xs">SM</div>
-                            <span>Santiago Mora</span>
-                        </div>
-                    </td>
-                    <td class="py-4 px-6 text-on-surface-variant truncate max-w-[200px]">Barrio Quirinal Mz C Casa 4, Neiva</td>
-                    <td class="py-4 px-6 text-on-surface-variant">Oct 23, 02:10 PM</td>
-                    <td class="py-4 px-6">
-                        <select class="bg-surface-container-low border border-transparent text-on-surface-variant text-sm rounded-lg block w-full p-2 outline-none appearance-none cursor-not-allowed" disabled>
-                            <option selected value="3">Ana Rios (Van 2)</option>
-                        </select>
-                    </td>
-                    <td class="py-4 px-6">
-                        <span class="inline-flex items-center px-2.5 py-1 rounded-full font-label-sm text-label-sm bg-secondary-container text-on-secondary-container opacity-80">Entregado</span>
-                    </td>
-                    <td class="py-4 px-6 text-right space-x-2">
-                        <button class="text-secondary font-label-sm text-label-sm px-3 py-1.5 hover:underline">Ver POD</button>
-                    </td>
-                </tr>
+                <?php if (empty($despachos)): ?>
+                    <tr><td colspan="7" class="text-center py-4 text-on-surface-variant">No hay envíos registrados.</td></tr>
+                <?php else: ?>
+                    <?php foreach ($despachos as $d): 
+                        $estadoId = (int)$d['id_estado'];
+                        $estadoClass = 'bg-surface-variant text-on-surface-variant';
+                        $estadoLabel = 'En Preparación';
+                        
+                        if ($estadoId == 2) {
+                            $estadoClass = 'bg-tertiary-container text-on-tertiary-container';
+                            $estadoLabel = 'En Camino';
+                        } elseif ($estadoId == 3) {
+                            $estadoClass = 'bg-secondary-container text-on-secondary-container opacity-80';
+                            $estadoLabel = 'Entregado';
+                        }
+                        
+                        // Generar iniciales del cliente
+                        $iniciales = strtoupper(substr($d['nombre_cliente'], 0, 2));
+                    ?>
+                    <tr class="hover:bg-primary-fixed/10 transition-colors group <?= $estadoId == 1 ? 'bg-surface-container-lowest' : '' ?>">
+                        <td class="py-4 px-6 font-medium text-primary">#ORD-<?= str_pad($d['id_pedido'], 4, '0', STR_PAD_LEFT) ?></td>
+                        <td class="py-4 px-6">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface-variant font-bold text-xs"><?= $iniciales ?></div>
+                                <span class="whitespace-nowrap"><?= htmlspecialchars($d['nombre_cliente']) ?></span>
+                            </div>
+                        </td>
+                        <td class="py-4 px-6 text-on-surface-variant truncate max-w-[200px]" title="<?= htmlspecialchars($d['direccion_envio']) ?>"><?= htmlspecialchars($d['direccion_envio']) ?></td>
+                        <td class="py-4 px-6 text-on-surface-variant whitespace-nowrap"><?= date('d M, h:i A', strtotime($d['fecha_envio'])) ?></td>
+                        
+                        <td class="py-4 px-6">
+                            <?php if ($estadoId == 1): ?>
+                            <form id="form-despacho-<?= $d['id_envio'] ?>" action="/ShopOnline_Huila/controllers/despachos/AvanzarDespachoController.php" method="POST" class="m-0">
+                                <input type="hidden" name="id_envio" value="<?= $d['id_envio'] ?>">
+                                <input type="hidden" name="accion" value="despachar">
+                                <select name="id_empleado" class="bg-surface-container border border-outline-variant text-on-surface text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2 outline-none">
+                                    <?php foreach ($empleados as $emp): ?>
+                                        <option value="<?= $emp['id_empleado'] ?>"><?= htmlspecialchars($emp['nombre']) ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </form>
+                            <?php else: ?>
+                                <span class="text-sm font-medium text-on-surface-variant"><?= htmlspecialchars($d['nombre_empleado']) ?></span>
+                                <div class="text-xs text-outline mt-1 font-mono tracking-widest"><?= htmlspecialchars($d['guia_rastreo']) ?></div>
+                            <?php endif; ?>
+                        </td>
+                        
+                        <td class="py-4 px-6">
+                            <span class="inline-flex items-center px-2.5 py-1 rounded-full font-label-sm text-label-sm <?= $estadoClass ?> whitespace-nowrap"><?= $estadoLabel ?></span>
+                        </td>
+                        
+                        <td class="py-4 px-6 text-right space-x-2 whitespace-nowrap">
+                            <?php if ($estadoId == 1): ?>
+                                <button type="submit" form="form-despacho-<?= $d['id_envio'] ?>" class="bg-primary text-on-primary px-3 py-1.5 rounded-lg font-label-sm text-label-sm hover:bg-primary-container hover:text-on-primary-container transition-colors">Despachar</button>
+                            <?php elseif ($estadoId == 2): ?>
+                                <form action="/ShopOnline_Huila/controllers/despachos/AvanzarDespachoController.php" method="POST" class="inline m-0">
+                                    <input type="hidden" name="id_envio" value="<?= $d['id_envio'] ?>">
+                                    <input type="hidden" name="accion" value="confirmar_entrega">
+                                    <button type="submit" class="bg-secondary text-on-secondary px-3 py-1.5 rounded-lg font-label-sm text-label-sm hover:bg-secondary-container hover:text-on-secondary-container transition-colors">Entregar</button>
+                                </form>
+                            <?php elseif ($estadoId == 3): ?>
+                                <span class="text-secondary font-label-sm text-label-sm px-3 py-1.5"><?= date('d M, h:i A', strtotime($d['fecha_entrega'])) ?></span>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </tbody>
         </table>
     </div>

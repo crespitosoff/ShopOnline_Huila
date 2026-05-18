@@ -1,4 +1,8 @@
 <?php
+require_once __DIR__ . '/../../models/Producto.php';
+$objProducto = new Producto();
+$productos = $objProducto->obtenerTodos();
+
 $pageTitle = 'Inventario de Productos - ShopOnline Huila';
 $activePage = 'inventario';
 $searchPlaceholder = 'Buscar inventario...';
@@ -11,11 +15,26 @@ include __DIR__ . '/../layouts/header.php';
         <h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-background">Inventario de Productos</h2>
         <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Administrar inventario, actualizar precios y clasificar productos.</p>
     </div>
-    <button class="bg-primary hover:bg-primary/90 text-on-primary font-label-md text-label-md px-6 py-2.5 rounded-lg flex items-center gap-2 transition-colors shadow-sm">
+    <a href="/ShopOnline_Huila/views/productos/crear.php" class="bg-primary hover:bg-primary/90 text-on-primary font-label-md text-label-md px-6 py-2.5 rounded-lg flex items-center gap-2 transition-colors shadow-sm">
         <span class="material-symbols-outlined text-sm">add</span>
         Agregar Producto
-    </button>
+    </a>
 </div>
+
+<!-- Alertas -->
+<?php if (isset($_GET['success'])): ?>
+<div class="mb-6 p-4 rounded-lg bg-primary-fixed text-on-primary-fixed border border-primary-fixed-dim flex items-center gap-3">
+    <span class="material-symbols-outlined">check_circle</span>
+    <p class="font-body-md text-body-md">Operación realizada con éxito.</p>
+</div>
+<?php endif; ?>
+
+<?php if (isset($_GET['error'])): ?>
+<div class="mb-6 p-4 rounded-lg bg-error-container text-on-error-container border border-error flex items-center gap-3">
+    <span class="material-symbols-outlined">error</span>
+    <p class="font-body-md text-body-md">Ha ocurrido un error (Código: <?= htmlspecialchars($_GET['error']) ?>).</p>
+</div>
+<?php endif; ?>
 
 <!-- Filters & Controls Card -->
 <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 mb-6">
@@ -69,77 +88,53 @@ include __DIR__ . '/../layouts/header.php';
                 </tr>
             </thead>
             <tbody class="font-table-data text-table-data text-on-surface">
-                <tr class="border-b border-surface-variant hover:bg-primary/5 transition-colors">
-                    <td class="px-6 py-4 font-medium">PRD-1042</td>
-                    <td class="px-6 py-4">Huila Supremo Coffee Beans 500g</td>
-                    <td class="px-6 py-4 text-on-surface-variant">Café Premium</td>
-                    <td class="px-6 py-4">$45,000</td>
-                    <td class="px-6 py-4">124</td>
-                    <td class="px-6 py-4">
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-fixed text-on-primary-fixed-variant border border-primary-fixed-dim">Disponible</span>
-                    </td>
-                    <td class="px-6 py-4 text-right">
-                        <button class="text-tertiary hover:text-tertiary-container transition-colors p-1"><span class="material-symbols-outlined text-sm">edit</span></button>
-                    </td>
-                </tr>
-                <tr class="border-b border-surface-variant bg-surface-container-lowest hover:bg-primary/5 transition-colors">
-                    <td class="px-6 py-4 font-medium">PRD-2091</td>
-                    <td class="px-6 py-4">Organic Raw Cacao Nibs 250g</td>
-                    <td class="px-6 py-4 text-on-surface-variant">Productos de Cacao</td>
-                    <td class="px-6 py-4">$28,500</td>
-                    <td class="px-6 py-4 text-error font-medium">0</td>
-                    <td class="px-6 py-4">
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-error-container text-on-error-container border border-error/20">Agotado</span>
-                    </td>
-                    <td class="px-6 py-4 text-right">
-                        <button class="text-tertiary hover:text-tertiary-container transition-colors p-1"><span class="material-symbols-outlined text-sm">edit</span></button>
-                    </td>
-                </tr>
-                <tr class="border-b border-surface-variant hover:bg-primary/5 transition-colors">
-                    <td class="px-6 py-4 font-medium">PRD-1045</td>
-                    <td class="px-6 py-4">San Agustín Medium Roast 1kg</td>
-                    <td class="px-6 py-4 text-on-surface-variant">Café Premium</td>
-                    <td class="px-6 py-4">$85,000</td>
-                    <td class="px-6 py-4 text-yellow-600 font-medium">12</td>
-                    <td class="px-6 py-4">
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 border border-yellow-200">Stock Bajo</span>
-                    </td>
-                    <td class="px-6 py-4 text-right">
-                        <button class="text-tertiary hover:text-tertiary-container transition-colors p-1"><span class="material-symbols-outlined text-sm">edit</span></button>
-                    </td>
-                </tr>
-                <tr class="border-b border-surface-variant bg-surface-container-lowest hover:bg-primary/5 transition-colors">
-                    <td class="px-6 py-4 font-medium">PRD-3011</td>
-                    <td class="px-6 py-4">Pitalito Wildflower Honey 500ml</td>
-                    <td class="px-6 py-4 text-on-surface-variant">Miel Local</td>
-                    <td class="px-6 py-4">$32,000</td>
-                    <td class="px-6 py-4">58</td>
-                    <td class="px-6 py-4">
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-fixed text-on-primary-fixed-variant border border-primary-fixed-dim">Disponible</span>
-                    </td>
-                    <td class="px-6 py-4 text-right">
-                        <button class="text-tertiary hover:text-tertiary-container transition-colors p-1"><span class="material-symbols-outlined text-sm">edit</span></button>
-                    </td>
-                </tr>
-                <tr class="hover:bg-primary/5 transition-colors">
-                    <td class="px-6 py-4 font-medium">PRD-4005</td>
-                    <td class="px-6 py-4">Handwoven Chiva Bus Miniature</td>
-                    <td class="px-6 py-4 text-on-surface-variant">Artesanías</td>
-                    <td class="px-6 py-4">$55,000</td>
-                    <td class="px-6 py-4">34</td>
-                    <td class="px-6 py-4">
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-fixed text-on-primary-fixed-variant border border-primary-fixed-dim">Disponible</span>
-                    </td>
-                    <td class="px-6 py-4 text-right">
-                        <button class="text-tertiary hover:text-tertiary-container transition-colors p-1"><span class="material-symbols-outlined text-sm">edit</span></button>
-                    </td>
-                </tr>
+                <?php if (empty($productos)): ?>
+                    <tr><td colspan="7" class="text-center py-4 text-on-surface-variant">No hay productos registrados.</td></tr>
+                <?php else: ?>
+                    <?php foreach ($productos as $p): 
+                        // Determine stock status
+                        $stockClass = 'bg-primary-fixed text-on-primary-fixed-variant border-primary-fixed-dim';
+                        $stockLabel = 'Disponible';
+                        $stockTextClass = '';
+                        if ($p['stock'] == 0) {
+                            $stockClass = 'bg-error-container text-on-error-container border-error/20';
+                            $stockLabel = 'Agotado';
+                            $stockTextClass = 'text-error font-medium';
+                        } elseif ($p['stock'] < 20) {
+                            $stockClass = 'bg-yellow-100 text-yellow-800 border-yellow-200';
+                            $stockLabel = 'Stock Bajo';
+                            $stockTextClass = 'text-yellow-600 font-medium';
+                        }
+                    ?>
+                    <tr class="border-b border-surface-variant hover:bg-primary/5 transition-colors">
+                        <td class="px-6 py-4 font-medium">PRD-<?= str_pad($p['id_producto'], 4, '0', STR_PAD_LEFT) ?></td>
+                        <td class="px-6 py-4"><?= htmlspecialchars($p['nombre']) ?></td>
+                        <td class="px-6 py-4 text-on-surface-variant"><?= htmlspecialchars($p['nombre_categoria']) ?></td>
+                        <td class="px-6 py-4">$ <?= number_format($p['precio'], 0, ',', '.') ?></td>
+                        <td class="px-6 py-4 <?= $stockTextClass ?>"><?= $p['stock'] ?></td>
+                        <td class="px-6 py-4">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border <?= $stockClass ?>"><?= $stockLabel ?></span>
+                        </td>
+                        <td class="px-6 py-4 text-right whitespace-nowrap flex gap-2 justify-end">
+                            <a href="/ShopOnline_Huila/views/productos/editar.php?id=<?= $p['id_producto'] ?>" class="text-tertiary hover:text-tertiary-container transition-colors p-1" title="Editar">
+                                <span class="material-symbols-outlined text-[20px]">edit</span>
+                            </a>
+                            <form action="/ShopOnline_Huila/controllers/productos/EliminarProductoController.php" method="POST" class="inline" onsubmit="return confirm('¿Seguro que deseas eliminar este producto?');">
+                                <input type="hidden" name="id" value="<?= $p['id_producto'] ?>">
+                                <button type="submit" class="text-error hover:text-error-container transition-colors p-1" title="Eliminar">
+                                    <span class="material-symbols-outlined text-[20px]">delete</span>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </tbody>
         </table>
     </div>
     <!-- Pagination -->
     <div class="border-t border-outline-variant bg-surface px-6 py-4 flex items-center justify-between">
-        <span class="font-body-sm text-body-sm text-on-surface-variant">Mostrando 1 a 5 de 248 registros</span>
+        <span class="font-body-sm text-body-sm text-on-surface-variant">Total registrados: <?= count($productos) ?></span>
         <div class="flex items-center gap-2">
             <button class="px-3 py-1 border border-outline-variant rounded bg-surface-container-lowest text-on-surface-variant hover:bg-surface-container-low transition-colors disabled:opacity-50" disabled>Anterior</button>
             <button class="px-3 py-1 border border-primary bg-primary text-on-primary rounded font-medium">1</button>
