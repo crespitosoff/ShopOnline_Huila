@@ -1,11 +1,10 @@
 <?php
 /**
  * Gestión de Clientes
- * Accesible desde: Reportes > "Pedidos por Cliente"
- * NO aparece en el sidebar de navegación principal.
+ * Accesible desde: Sidebar > "Clientes"
  */
 $pageTitle = 'Gestión de Clientes - ShopOnline Huila';
-$activePage = 'reportes'; // Highlight "Reportes" in the sidebar since Clientes is a sub-view
+$activePage = 'clientes';
 $searchPlaceholder = 'Buscar clientes...';
 include __DIR__ . '/../layouts/header.php';
 ?>

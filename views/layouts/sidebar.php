@@ -13,8 +13,9 @@ $activePage = $activePage ?? '';
 $navItems = [
     ['key' => 'dashboard',  'icon' => 'dashboard',      'label' => 'Panel de Control', 'href' => '/ShopOnline_Huila/views/dashboard/'],
     ['key' => 'inventario', 'icon' => 'inventory_2',     'label' => 'Inventario',       'href' => '/ShopOnline_Huila/views/productos/'],
-    ['key' => 'pedidos',    'icon' => 'shopping_cart',    'label' => 'Pedidos',          'href' => '#'],
+    ['key' => 'pedidos',    'icon' => 'shopping_cart',    'label' => 'Pedidos',          'href' => '/ShopOnline_Huila/views/pedidos/'],
     ['key' => 'despachos',  'icon' => 'local_shipping',   'label' => 'Despachos',        'href' => '/ShopOnline_Huila/views/despachos/'],
+    ['key' => 'clientes',   'icon' => 'group',            'label' => 'Clientes',         'href' => '/ShopOnline_Huila/views/clientes/'],
     ['key' => 'empleados',  'icon' => 'badge',            'label' => 'Empleados',        'href' => '/ShopOnline_Huila/views/empleados/'],
     ['key' => 'reportes',   'icon' => 'bar_chart',        'label' => 'Reportes',         'href' => '/ShopOnline_Huila/views/reportes/'],
 ];
