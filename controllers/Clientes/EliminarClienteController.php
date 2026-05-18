@@ -1,5 +1,5 @@
 <?php
-require_once '../../models/Cliente.php';
+require_once __DIR__ . '/../../models/Cliente.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = $_POST['id'] ?? 0;

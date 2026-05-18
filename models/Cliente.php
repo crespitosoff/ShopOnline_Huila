@@ -1,5 +1,5 @@
 <?php
-require_once '../config/conexion.php';
+require_once __DIR__ . '/../config/conexion.php';
 
 class Cliente
 {
@@ -11,14 +11,15 @@ class Cliente
         $this->db = Conexion::conectar();
     }
 
-    public function registrar($nombre, $email, $telefono)
+    public function registrar($nombre, $email, $password, $telefono)
     {
         try {
-            // 1. Preparamos la plantilla SQL con marcadores (?)
-            $sql = "INSERT INTO clientes (nombre, email, telefono) VALUES (:nombre, :email, :telefono)";
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            $sql = "INSERT INTO clientes (nombre, email, password, telefono) VALUES (:nombre, :email, :password, :telefono)";
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(':nombre', $nombre);
             $stmt->bindParam(':email', $email);
+            $stmt->bindParam(':password', $hashed_password);
             $stmt->bindParam(':telefono', $telefono);
 
             return $stmt->execute();
@@ -31,7 +32,7 @@ class Cliente
     public function obtenerTodos()
     {
         try {
-            $sql = "SELECT id_cliente, nombre, email, telefono FROM clientes";
+            $sql = "SELECT id_cliente, nombre, email, telefono FROM clientes WHERE activo = 1";
 
             $stmt = $this->db->prepare($sql);
             $stmt->execute();
@@ -77,7 +78,7 @@ class Cliente
     public function eliminar($id)
     {
         try {
-            $sql = "DELETE FROM clientes WHERE id_cliente = :id";
+            $sql = "UPDATE clientes SET activo = 0 WHERE id_cliente = :id";
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             return $stmt->execute();

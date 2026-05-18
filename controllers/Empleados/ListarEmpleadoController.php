@@ -1,5 +1,5 @@
 <?php
-require_once '../../models/Empleado.php';
+require_once __DIR__ . '/../../models/Empleado.php';
 
 $objEmpleado = new Empleado();
 $empleados = $objEmpleado->obtenerTodos();

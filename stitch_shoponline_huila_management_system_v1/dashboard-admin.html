@@ -1,0 +1,514 @@
+<!DOCTYPE html><html class="light" lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>ShopOnline Huila - Panel de Control</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary-fixed-variant": "#004b74",
+                      "inverse-on-surface": "#eff1f3",
+                      "background": "#f7f9fb",
+                      "on-background": "#191c1e",
+                      "error": "#ba1a1a",
+                      "on-primary-fixed": "#002116",
+                      "on-primary-container": "#8bd6b7",
+                      "surface-container-low": "#f2f4f6",
+                      "surface-variant": "#e0e3e5",
+                      "surface-container-lowest": "#ffffff",
+                      "on-error": "#ffffff",
+                      "on-surface-variant": "#3f4944",
+                      "on-secondary": "#ffffff",
+                      "surface-container-highest": "#e0e3e5",
+                      "on-secondary-fixed-variant": "#3f465c",
+                      "on-primary-fixed-variant": "#00513b",
+                      "on-tertiary": "#ffffff",
+                      "surface-dim": "#d8dadc",
+                      "surface-container-high": "#e6e8ea",
+                      "surface": "#f7f9fb",
+                      "primary-fixed-dim": "#8bd6b6",
+                      "on-tertiary-container": "#97cdff",
+                      "outline-variant": "#bec9c2",
+                      "surface-container": "#eceef0",
+                      "secondary": "#565e74",
+                      "on-primary": "#ffffff",
+                      "primary-container": "#065f46",
+                      "tertiary-fixed": "#cde5ff",
+                      "on-tertiary-fixed": "#001d32",
+                      "on-secondary-container": "#5c647a",
+                      "secondary-container": "#dae2fd",
+                      "on-secondary-fixed": "#131b2e",
+                      "tertiary-fixed-dim": "#94ccff",
+                      "surface-tint": "#1b6b51",
+                      "primary-fixed": "#a6f2d1",
+                      "on-surface": "#191c1e",
+                      "primary": "#004532",
+                      "surface-bright": "#f7f9fb",
+                      "secondary-fixed": "#dae2fd",
+                      "on-error-container": "#93000a",
+                      "tertiary-container": "#005888",
+                      "inverse-surface": "#2d3133",
+                      "tertiary": "#004065",
+                      "secondary-fixed-dim": "#bec6e0",
+                      "inverse-primary": "#8bd6b6",
+                      "outline": "#6f7973",
+                      "error-container": "#ffdad6"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "margin-mobile": "16px",
+                      "2xl": "48px",
+                      "sm": "8px",
+                      "lg": "24px",
+                      "gutter": "24px",
+                      "md": "16px",
+                      "margin-desktop": "32px",
+                      "base": "4px",
+                      "xs": "4px",
+                      "xl": "32px"
+              },
+              "fontFamily": {
+                      "headline-sm": [
+                              "Inter"
+                      ],
+                      "body-sm": [
+                              "Inter"
+                      ],
+                      "table-data": [
+                              "Inter"
+                      ],
+                      "label-sm": [
+                              "Inter"
+                      ],
+                      "label-md": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Inter"
+                      ],
+                      "headline-lg": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "display-lg": [
+                              "Inter"
+                      ],
+                      "headline-lg-mobile": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "headline-sm": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "table-data": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+</head>
+<body class="bg-background text-on-background antialiased flex">
+<!-- SideNavBar (Desktop Only) -->
+<nav class="hidden md:flex bg-secondary dark:bg-secondary-container docked left-0 h-full w-64 shadow-md dark:shadow-none fixed left-0 top-0 h-full flex flex-col pt-8 pb-4 z-50 shrink-0">
+<div class="px-lg mb-xl flex items-center gap-sm">
+<img alt="ShopOnline Huila Corporate Logo" class="w-10 h-10 rounded-lg object-cover" data-alt="A clean, minimalist logo mark featuring an abstract leaf or geometric shape in deep emerald green, conveying growth and reliability in a corporate e-commerce setting. High contrast, sharp edges, professional lighting on a pristine white background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTnJbWd2m9S_F-KD--YmBrCTOZRnLQuIAMJgjWmWJeDgiNoe-o4GitdUubNus0N4QGNgZjgyaWF_HPSwPbiq8PwKiEP66BUpR8ZbvlnGC_FG4w9q5GHUI5t6xxor3YBEAqulzqjj7aK_OGqBq6LiMCeP45-kRhGFOW-fZAVE3bBKJkXmC6OcNF9umpZjic_Q04Svd5KlnVwKqPeyrU7iwS34yXZ79TX274Gth61A3kIir3NUACo1BJKXKJNHreo9yO-igZ3636-i2O">
+<div>
+<h1 class="font-headline-sm text-headline-sm font-black text-on-primary-fixed">ShopOnline Huila</h1>
+<p class="font-label-sm text-label-sm text-primary-fixed-dim">Portal de Gestión</p>
+</div>
+</div>
+<ul class="flex flex-col flex-grow gap-xs">
+<li>
+<a class="bg-primary-container text-on-primary-container border-l-4 border-primary-fixed flex items-center px-4 py-3 font-bold gap-sm" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="font-label-md text-label-md">Panel de Control</span>
+</a>
+</li>
+<li>
+<a class="text-on-secondary flex items-center px-4 py-3 opacity-80 hover:bg-primary/20 transition-all gap-sm" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-md text-label-md">Inventario</span>
+</a>
+</li>
+<li>
+<a class="text-on-secondary flex items-center px-4 py-3 opacity-80 hover:bg-primary/20 transition-all gap-sm" href="#">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="font-label-md text-label-md">Pedidos</span>
+</a>
+</li>
+<li>
+<a class="text-on-secondary flex items-center px-4 py-3 opacity-80 hover:bg-primary/20 transition-all gap-sm" href="#">
+<span class="material-symbols-outlined">local_shipping</span>
+<span class="font-label-md text-label-md">Despachos</span>
+</a>
+</li>
+<li>
+<a class="text-on-secondary flex items-center px-4 py-3 opacity-80 hover:bg-primary/20 transition-all gap-sm" href="#">
+<span class="material-symbols-outlined">badge</span>
+<span class="font-label-md text-label-md">Empleados</span>
+</a>
+</li>
+<li>
+<a class="text-on-secondary flex items-center px-4 py-3 opacity-80 hover:bg-primary/20 transition-all gap-sm" href="#">
+<span class="material-symbols-outlined">bar_chart</span>
+<span class="font-label-md text-label-md">Reportes</span>
+</a>
+</li>
+</ul>
+<div class="mt-auto px-4">
+<ul class="flex flex-col gap-xs border-t border-outline/30 pt-4">
+<li>
+<a class="text-on-secondary flex items-center px-4 py-2 opacity-80 hover:bg-primary/20 transition-all gap-sm rounded-lg" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-md text-label-md">Centro de Ayuda</span>
+</a>
+</li>
+<li>
+<a class="text-on-secondary flex items-center px-4 py-2 opacity-80 hover:bg-primary/20 transition-all gap-sm rounded-lg" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-md text-label-md">Cerrar Sesión</span>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col min-h-screen md:ml-64 w-full">
+<!-- TopNavBar -->
+<header class="bg-surface-container-lowest docked full-width top-0 border-b border-outline-variant shadow-sm flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-16 sticky top-0 z-40">
+<div class="flex items-center gap-md">
+<!-- Mobile Menu Toggle (Visible only on mobile) -->
+<button class="md:hidden text-on-surface hover:bg-surface-container-low p-2 rounded-full transition-colors">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h2 class="md:hidden font-headline-sm text-headline-sm font-bold text-primary">ShopOnline Huila</h2>
+<div class="hidden md:flex relative w-64 lg:w-96">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-lg pl-10 pr-4 py-2 font-body-sm text-body-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" placeholder="Buscar pedidos, inventario..." type="text">
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors hidden sm:block">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-primary-container overflow-hidden border border-outline-variant ml-sm">
+<img alt="Administrator profile photo" class="w-full h-full object-cover" data-alt="A professional headshot of a smiling male executive in a corporate setting. He is wearing a crisp white shirt and a navy blazer. The lighting is soft and natural, emphasizing approachability and competence, fitting for an e-commerce platform administrator." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCopM3Nz5rB1_IGxZ9N1mmP97Cs_46SjhQVi359C0xUYK0emzKEe937Cz9SJpD5TxoDzy1PT3Ge-pf6gcvJ4fNHp9-z2nm3QtW1UF_XvFqO0QY5J4jgziwFUk6VAqiyv3uSJ7LZJvYHWmwHDcMS9nk20ioB9W8FdhCEqFVObuNZP14EJFjvuQrp_UVPk6wrAqheXNfN5a7dSqIx8aIEaMxXkc5678T73ruqEIrfoxlpJI0VRWO5-mZUYsxPjLsMXmD5LuR1qZwbN-iA">
+</div>
+</div>
+</header>
+<!-- Dashboard Canvas -->
+<main class="flex-1 p-margin-mobile md:p-margin-desktop bg-background overflow-y-auto">
+<div class="mb-lg">
+<h1 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-background">Vista General</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-sm">Bienvenido de nuevo. Aquí hay un resumen de sus operaciones de comercio electrónico.</p>
+</div>
+<!-- Bento Grid: Summary Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-md md:gap-lg mb-xl">
+<!-- Total Revenue -->
+<div class="bg-surface-container-lowest rounded-xl p-lg border border-outline-variant/50 shadow-[0px_4px_6px_rgba(15,23,42,0.05)] flex flex-col justify-between h-32 relative overflow-hidden group hover:border-primary/30 transition-colors">
+<div class="flex justify-between items-start z-10">
+<p class="font-label-md text-label-md text-on-surface-variant">Ingresos Totales</p>
+<span class="material-symbols-outlined text-primary-container p-2 bg-primary/10 rounded-lg">payments</span>
+</div>
+<div class="z-10">
+<h3 class="font-headline-md text-headline-md text-on-background">$124,500</h3>
+<p class="font-label-sm text-label-sm text-primary flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span> +12.5% este mes
+                        </p>
+</div>
+<!-- Decorative subtle background -->
+<div class="absolute -right-6 -bottom-6 w-24 h-24 bg-primary/5 rounded-full blur-2xl group-hover:bg-primary/10 transition-colors"></div>
+</div>
+<!-- Total Orders -->
+<div class="bg-surface-container-lowest rounded-xl p-lg border border-outline-variant/50 shadow-[0px_4px_6px_rgba(15,23,42,0.05)] flex flex-col justify-between h-32 relative overflow-hidden group hover:border-primary/30 transition-colors">
+<div class="flex justify-between items-start z-10">
+<p class="font-label-md text-label-md text-on-surface-variant">Pedidos Totales</p>
+<span class="material-symbols-outlined text-secondary p-2 bg-secondary/10 rounded-lg">shopping_bag</span>
+</div>
+<div class="z-10">
+<h3 class="font-headline-md text-headline-md text-on-background">1,842</h3>
+<p class="font-label-sm text-label-sm text-primary flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span> +5.2% este mes
+                        </p>
+</div>
+<div class="absolute -right-6 -bottom-6 w-24 h-24 bg-secondary/5 rounded-full blur-2xl group-hover:bg-secondary/10 transition-colors"></div>
+</div>
+<!-- Active Customers -->
+<div class="bg-surface-container-lowest rounded-xl p-lg border border-outline-variant/50 shadow-[0px_4px_6px_rgba(15,23,42,0.05)] flex flex-col justify-between h-32 relative overflow-hidden group hover:border-primary/30 transition-colors">
+<div class="flex justify-between items-start z-10">
+<p class="font-label-md text-label-md text-on-surface-variant">Clientes Activos</p>
+<span class="material-symbols-outlined text-tertiary p-2 bg-tertiary/10 rounded-lg">group</span>
+</div>
+<div class="z-10">
+<h3 class="font-headline-md text-headline-md text-on-background">3,490</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-[14px]">horizontal_rule</span> Estable
+                        </p>
+</div>
+<div class="absolute -right-6 -bottom-6 w-24 h-24 bg-tertiary/5 rounded-full blur-2xl group-hover:bg-tertiary/10 transition-colors"></div>
+</div>
+<!-- Low Stock Alerts -->
+<div class="bg-surface-container-lowest rounded-xl p-lg border border-error/20 shadow-[0px_4px_6px_rgba(15,23,42,0.05)] flex flex-col justify-between h-32 relative overflow-hidden group hover:border-error/40 transition-colors">
+<div class="flex justify-between items-start z-10">
+<p class="font-label-md text-label-md text-error">Alertas de Stock Bajo</p>
+<span class="material-symbols-outlined text-error p-2 bg-error/10 rounded-lg">warning</span>
+</div>
+<div class="z-10">
+<h3 class="font-headline-md text-headline-md text-on-background">14</h3>
+<p class="font-label-sm text-label-sm text-error flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-[14px]">arrow_downward</span> Requiere atención
+                        </p>
+</div>
+<div class="absolute -right-6 -bottom-6 w-24 h-24 bg-error/5 rounded-full blur-2xl group-hover:bg-error/10 transition-colors"></div>
+</div>
+</div>
+<!-- Bento Grid: Main Content Area -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-lg">
+<!-- Recent Orders Table (Takes up 2 columns on large screens) -->
+<div class="lg:col-span-2 bg-surface-container-lowest rounded-xl border border-outline-variant/50 shadow-sm overflow-hidden flex flex-col">
+<div class="p-lg border-b border-outline-variant/50 flex justify-between items-center bg-surface-container-lowest">
+<h2 class="font-headline-sm text-headline-sm text-on-background">Pedidos Recientes</h2>
+<button class="font-label-md text-label-md text-primary hover:text-primary-container transition-colors flex items-center gap-xs">
+                            Ver Todo <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+<div class="overflow-x-auto flex-1">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant/50">
+<th class="p-4 font-label-md text-label-md text-on-surface-variant font-semibold">Nombre del Cliente</th>
+<th class="p-4 font-label-md text-label-md text-on-surface-variant font-semibold">Fecha de Pedido</th>
+<th class="p-4 font-label-md text-label-md text-on-surface-variant font-semibold text-right">Monto Total</th>
+<th class="p-4 font-label-md text-label-md text-on-surface-variant font-semibold text-center">Estado</th>
+<th class="p-4 font-label-md text-label-md text-on-surface-variant font-semibold text-center">Acción</th>
+</tr>
+</thead>
+<tbody class="font-table-data text-table-data">
+<!-- Row 1 -->
+<tr class="border-b border-outline-variant/30 hover:bg-primary/5 transition-colors group">
+<td class="p-4 flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-sm">MC</div>
+<span class="text-on-background font-medium">Maria Camila</span>
+</td>
+<td class="p-4 text-on-surface-variant">24 Oct, 2023</td>
+<td class="p-4 text-right font-medium">$340.50</td>
+<td class="p-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-label-sm text-label-sm bg-primary/10 text-primary-container border border-primary/20">
+                                            Enviado
+                                        </span>
+</td>
+<td class="p-4 text-center">
+<button class="text-secondary hover:text-primary transition-colors opacity-0 group-hover:opacity-100">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 (Zebra) -->
+<tr class="bg-surface-container-lowest border-b border-outline-variant/30 hover:bg-primary/5 transition-colors group">
+<td class="p-4 flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-tertiary-container text-on-tertiary-container flex items-center justify-center font-bold text-sm">JR</div>
+<span class="text-on-background font-medium">Juan Restrepo</span>
+</td>
+<td class="p-4 text-on-surface-variant">24 Oct, 2023</td>
+<td class="p-4 text-right font-medium">$1,250.00</td>
+<td class="p-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-label-sm text-label-sm bg-surface-variant text-on-surface-variant border border-outline-variant/50">
+                                            Pendiente
+                                        </span>
+</td>
+<td class="p-4 text-center">
+<button class="text-secondary hover:text-primary transition-colors opacity-0 group-hover:opacity-100">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="border-b border-outline-variant/30 hover:bg-primary/5 transition-colors group">
+<td class="p-4 flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-sm">AP</div>
+<span class="text-on-background font-medium">Ana Perez</span>
+</td>
+<td class="p-4 text-on-surface-variant">23 Oct, 2023</td>
+<td class="p-4 text-right font-medium">$85.20</td>
+<td class="p-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-label-sm text-label-sm bg-secondary-container/50 text-secondary border border-secondary/20">
+                                            Pagado
+                                        </span>
+</td>
+<td class="p-4 text-center">
+<button class="text-secondary hover:text-primary transition-colors opacity-0 group-hover:opacity-100">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 (Zebra) -->
+<tr class="bg-surface-container-lowest border-b border-outline-variant/30 hover:bg-primary/5 transition-colors group">
+<td class="p-4 flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-tertiary-container text-on-tertiary-container flex items-center justify-center font-bold text-sm">LG</div>
+<span class="text-on-background font-medium">Luis Gomez</span>
+</td>
+<td class="p-4 text-on-surface-variant">23 Oct, 2023</td>
+<td class="p-4 text-right font-medium">$450.00</td>
+<td class="p-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-label-sm text-label-sm bg-primary/10 text-primary-container border border-primary/20">
+                                            Enviado
+                                        </span>
+</td>
+<td class="p-4 text-center">
+<button class="text-secondary hover:text-primary transition-colors opacity-0 group-hover:opacity-100">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Sales Trend Graph Placeholder (Takes up 1 column on large screens) -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant/50 shadow-sm p-lg flex flex-col h-full min-h-[300px]">
+<div class="flex justify-between items-center mb-md">
+<h2 class="font-headline-sm text-headline-sm text-on-background">Tendencia de Ventas</h2>
+<button class="p-1 text-on-surface-variant hover:bg-surface-container-low rounded">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-lg">Rendimiento de los últimos 30 días</p>
+<!-- Abstract Chart Representation using CSS -->
+<div class="flex-1 w-full flex items-end justify-between gap-2 pt-4 relative">
+<!-- Y-axis lines -->
+<div class="absolute inset-0 flex flex-col justify-between pointer-events-none pb-8">
+<div class="border-b border-outline-variant/30 w-full h-0"></div>
+<div class="border-b border-outline-variant/30 w-full h-0"></div>
+<div class="border-b border-outline-variant/30 w-full h-0"></div>
+<div class="border-b border-outline-variant/30 w-full h-0"></div>
+</div>
+<!-- Bars -->
+<div class="w-1/6 bg-primary/20 hover:bg-primary/40 rounded-t-sm h-[30%] transition-all relative group cursor-pointer">
+<div class="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-xs py-1 px-2 rounded pointer-events-none transition-opacity">S1</div>
+</div>
+<div class="w-1/6 bg-primary/40 hover:bg-primary/60 rounded-t-sm h-[50%] transition-all relative group cursor-pointer">
+<div class="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-xs py-1 px-2 rounded pointer-events-none transition-opacity">S2</div>
+</div>
+<div class="w-1/6 bg-primary/60 hover:bg-primary/80 rounded-t-sm h-[40%] transition-all relative group cursor-pointer">
+<div class="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-xs py-1 px-2 rounded pointer-events-none transition-opacity">S3</div>
+</div>
+<div class="w-1/6 bg-primary hover:bg-primary-fixed-dim rounded-t-sm h-[80%] transition-all relative group cursor-pointer">
+<div class="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-xs py-1 px-2 rounded pointer-events-none transition-opacity">S4</div>
+</div>
+<div class="w-1/6 bg-primary-container hover:bg-primary-fixed rounded-t-sm h-[65%] transition-all relative group cursor-pointer">
+<div class="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-xs py-1 px-2 rounded pointer-events-none transition-opacity">S5</div>
+</div>
+</div>
+<!-- X-axis labels -->
+<div class="flex justify-between mt-2 font-label-sm text-label-sm text-on-surface-variant px-1">
+<span>S1</span>
+<span>S2</span>
+<span>S3</span>
+<span>S4</span>
+<span>S5</span>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

@@ -1,5 +1,5 @@
 <?php
-require_once '../config/conexion.php';
+require_once __DIR__ . '/../config/conexion.php';
 class Empleado
 {
     private $db;
@@ -11,17 +11,18 @@ class Empleado
     }
 
 
-    public function registrar($nombre, $id_cargo, $salario, $fecha_ingreso)
+    public function registrar($nombre, $email, $password, $id_cargo, $salario, $fecha_ingreso)
     {
         try {
-            // El SQL ahora pide id_cargo porque es una relación con la tabla cargos
-            $sql = "INSERT INTO empleados (nombre, id_cargo, salario, fecha_ingreso) 
-                    VALUES (:nombre, :id_cargo, :salario, :fecha_ingreso)";
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            $sql = "INSERT INTO empleados (nombre, email, password, id_cargo, salario, fecha_ingreso) 
+                    VALUES (:nombre, :email, :password, :id_cargo, :salario, :fecha_ingreso)";
 
             $stmt = $this->db->prepare($sql);
 
-            // Vinculamos los parámetros usando PDO para mayor seguridad
             $stmt->bindParam(':nombre', $nombre);
+            $stmt->bindParam(':email', $email);
+            $stmt->bindParam(':password', $hashed_password);
             $stmt->bindParam(':id_cargo', $id_cargo, PDO::PARAM_INT);
             $stmt->bindParam(':salario', $salario);
             $stmt->bindParam(':fecha_ingreso', $fecha_ingreso);
@@ -39,10 +40,10 @@ class Empleado
     public function obtenerTodos()
     {
         try {
-            // Usamos INNER JOIN para unir la tabla empleados con cargos
             $sql = "SELECT e.*, c.nombre as nombre_cargo 
                 FROM empleados e 
-                INNER JOIN cargos c ON e.id_cargo = c.id_cargo";
+                INNER JOIN cargos c ON e.id_cargo = c.id_cargo
+                WHERE e.activo = 1";
 
             $stmt = $this->db->prepare($sql);
             $stmt->execute();
@@ -70,13 +71,14 @@ class Empleado
             return null;
         }
     }
-    public function actualizar($id, $nombre, $id_cargo, $salario)
+    public function actualizar($id, $nombre, $email, $id_cargo, $salario)
     {
         try {
-            $sql = "UPDATE empleados SET nombre = :nom, id_cargo = :car, salario = :sal 
+            $sql = "UPDATE empleados SET nombre = :nom, email = :email, id_cargo = :car, salario = :sal 
                 WHERE id_empleado = :id";
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(':nom', $nombre);
+            $stmt->bindParam(':email', $email);
             $stmt->bindParam(':car', $id_cargo, PDO::PARAM_INT);
             $stmt->bindParam(':sal', $salario);
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
@@ -89,7 +91,7 @@ class Empleado
     public function eliminar($id)
     {
         try {
-            $sql = "DELETE FROM empleados WHERE id_empleado = :id";
+            $sql = "UPDATE empleados SET activo = 0 WHERE id_empleado = :id";
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             return $stmt->execute();
