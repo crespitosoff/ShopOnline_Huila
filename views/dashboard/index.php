@@ -1,4 +1,18 @@
 <?php
+require_once __DIR__ . '/../../models/Reporte.php';
+require_once __DIR__ . '/../../models/Pedido.php';
+require_once __DIR__ . '/../../models/Cliente.php';
+require_once __DIR__ . '/../../models/Producto.php';
+
+$kpis = (new Reporte())->obtenerMapeoKPIs();
+$pedidosModel = new Pedido();
+$todosPedidos = $pedidosModel->obtenerTodos();
+$pedidosRecientes = array_slice($todosPedidos, 0, 5);
+
+$clientes = (new Cliente())->obtenerTodos();
+$productos = (new Producto())->obtenerTodos();
+$stockBajo = count(array_filter($productos, fn($p) => $p['stock_actual'] <= 20));
+
 $pageTitle = 'ShopOnline Huila - Panel de Control';
 $activePage = 'dashboard';
 $searchPlaceholder = 'Buscar pedidos, inventario...';
@@ -20,7 +34,7 @@ include __DIR__ . '/../layouts/header.php';
             <span class="material-symbols-outlined text-primary-container p-2 bg-primary/10 rounded-lg">payments</span>
         </div>
         <div class="z-10">
-            <h3 class="font-headline-md text-headline-md text-on-background">$124,500</h3>
+            <h3 class="font-headline-md text-headline-md text-on-background">$<?= number_format($kpis['total_ingresos'], 0, ',', '.') ?></h3>
             <p class="font-label-sm text-label-sm text-primary flex items-center gap-1 mt-1">
                 <span class="material-symbols-outlined text-[14px]">arrow_upward</span> +12.5% este mes
             </p>
@@ -34,7 +48,7 @@ include __DIR__ . '/../layouts/header.php';
             <span class="material-symbols-outlined text-secondary p-2 bg-secondary/10 rounded-lg">shopping_bag</span>
         </div>
         <div class="z-10">
-            <h3 class="font-headline-md text-headline-md text-on-background">1,842</h3>
+            <h3 class="font-headline-md text-headline-md text-on-background"><?= count($todosPedidos) ?></h3>
             <p class="font-label-sm text-label-sm text-primary flex items-center gap-1 mt-1">
                 <span class="material-symbols-outlined text-[14px]">arrow_upward</span> +5.2% este mes
             </p>
@@ -48,7 +62,7 @@ include __DIR__ . '/../layouts/header.php';
             <span class="material-symbols-outlined text-tertiary p-2 bg-tertiary/10 rounded-lg">group</span>
         </div>
         <div class="z-10">
-            <h3 class="font-headline-md text-headline-md text-on-background">3,490</h3>
+            <h3 class="font-headline-md text-headline-md text-on-background"><?= count($clientes) ?></h3>
             <p class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1 mt-1">
                 <span class="material-symbols-outlined text-[14px]">horizontal_rule</span> Estable
             </p>
@@ -62,7 +76,7 @@ include __DIR__ . '/../layouts/header.php';
             <span class="material-symbols-outlined text-error p-2 bg-error/10 rounded-lg">warning</span>
         </div>
         <div class="z-10">
-            <h3 class="font-headline-md text-headline-md text-on-background">14</h3>
+            <h3 class="font-headline-md text-headline-md text-on-background"><?= $stockBajo ?></h3>
             <p class="font-label-sm text-label-sm text-error flex items-center gap-1 mt-1">
                 <span class="material-symbols-outlined text-[14px]">arrow_downward</span> Requiere atención
             </p>
@@ -93,70 +107,41 @@ include __DIR__ . '/../layouts/header.php';
                     </tr>
                 </thead>
                 <tbody class="font-table-data text-table-data">
-                    <tr class="border-b border-outline-variant/30 hover:bg-primary/5 transition-colors group">
-                        <td class="p-4 flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-sm">MC</div>
-                            <span class="text-on-background font-medium">Maria Camila</span>
-                        </td>
-                        <td class="p-4 text-on-surface-variant">24 Oct, 2023</td>
-                        <td class="p-4 text-right font-medium">$340.50</td>
-                        <td class="p-4 text-center">
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-label-sm text-label-sm bg-primary/10 text-primary-container border border-primary/20">Enviado</span>
-                        </td>
-                        <td class="p-4 text-center">
-                            <button class="text-secondary hover:text-primary transition-colors opacity-0 group-hover:opacity-100">
-                                <span class="material-symbols-outlined">more_horiz</span>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr class="bg-surface-container-lowest border-b border-outline-variant/30 hover:bg-primary/5 transition-colors group">
-                        <td class="p-4 flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-tertiary-container text-on-tertiary-container flex items-center justify-center font-bold text-sm">JR</div>
-                            <span class="text-on-background font-medium">Juan Restrepo</span>
-                        </td>
-                        <td class="p-4 text-on-surface-variant">24 Oct, 2023</td>
-                        <td class="p-4 text-right font-medium">$1,250.00</td>
-                        <td class="p-4 text-center">
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-label-sm text-label-sm bg-surface-variant text-on-surface-variant border border-outline-variant/50">Pendiente</span>
-                        </td>
-                        <td class="p-4 text-center">
-                            <button class="text-secondary hover:text-primary transition-colors opacity-0 group-hover:opacity-100">
-                                <span class="material-symbols-outlined">more_horiz</span>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr class="border-b border-outline-variant/30 hover:bg-primary/5 transition-colors group">
-                        <td class="p-4 flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-sm">AP</div>
-                            <span class="text-on-background font-medium">Ana Perez</span>
-                        </td>
-                        <td class="p-4 text-on-surface-variant">23 Oct, 2023</td>
-                        <td class="p-4 text-right font-medium">$85.20</td>
-                        <td class="p-4 text-center">
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-label-sm text-label-sm bg-secondary-container/50 text-secondary border border-secondary/20">Pagado</span>
-                        </td>
-                        <td class="p-4 text-center">
-                            <button class="text-secondary hover:text-primary transition-colors opacity-0 group-hover:opacity-100">
-                                <span class="material-symbols-outlined">more_horiz</span>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr class="bg-surface-container-lowest border-b border-outline-variant/30 hover:bg-primary/5 transition-colors group">
-                        <td class="p-4 flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-tertiary-container text-on-tertiary-container flex items-center justify-center font-bold text-sm">LG</div>
-                            <span class="text-on-background font-medium">Luis Gomez</span>
-                        </td>
-                        <td class="p-4 text-on-surface-variant">23 Oct, 2023</td>
-                        <td class="p-4 text-right font-medium">$450.00</td>
-                        <td class="p-4 text-center">
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-label-sm text-label-sm bg-primary/10 text-primary-container border border-primary/20">Enviado</span>
-                        </td>
-                        <td class="p-4 text-center">
-                            <button class="text-secondary hover:text-primary transition-colors opacity-0 group-hover:opacity-100">
-                                <span class="material-symbols-outlined">more_horiz</span>
-                            </button>
-                        </td>
-                    </tr>
+                    <?php if (empty($pedidosRecientes)): ?>
+                        <tr><td colspan="5" class="p-4 text-center text-on-surface-variant">No hay pedidos recientes.</td></tr>
+                    <?php else: ?>
+                        <?php foreach ($pedidosRecientes as $index => $p): 
+                            $estadoId = (int)$p['id_estado'];
+                            $estadoClass = 'bg-surface-variant text-on-surface-variant border border-outline-variant/50';
+                            
+                            if ($estadoId == 1) {
+                                $estadoClass = 'bg-error/10 text-error border border-error/20';
+                            } elseif ($estadoId == 2) {
+                                $estadoClass = 'bg-primary-fixed text-on-primary-fixed border border-primary-fixed-dim';
+                            } elseif ($estadoId == 3) {
+                                $estadoClass = 'bg-secondary-container text-on-secondary-container border border-secondary/20';
+                            }
+                            
+                            $iniciales = strtoupper(substr($p['nombre_cliente'], 0, 2));
+                        ?>
+                        <tr class="border-b border-outline-variant/30 hover:bg-primary/5 transition-colors group <?= $index % 2 != 0 ? 'bg-surface-container-lowest' : '' ?>">
+                            <td class="p-4 flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-sm"><?= $iniciales ?></div>
+                                <span class="text-on-background font-medium"><?= htmlspecialchars($p['nombre_cliente']) ?></span>
+                            </td>
+                            <td class="p-4 text-on-surface-variant"><?= date('d M, Y', strtotime($p['fecha_creacion'])) ?></td>
+                            <td class="p-4 text-right font-medium">$<?= number_format($p['total'], 0, ',', '.') ?></td>
+                            <td class="p-4 text-center">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-label-sm text-label-sm <?= $estadoClass ?>"><?= htmlspecialchars($p['nombre_estado']) ?></span>
+                            </td>
+                            <td class="p-4 text-center">
+                                <a href="/ShopOnline_Huila/views/pedidos/" class="text-secondary hover:text-primary transition-colors opacity-0 group-hover:opacity-100" title="Ver pedido">
+                                    <span class="material-symbols-outlined">arrow_forward</span>
+                                </a>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </tbody>
             </table>
         </div>

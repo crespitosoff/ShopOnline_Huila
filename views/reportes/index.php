@@ -1,4 +1,9 @@
 <?php
+require_once __DIR__ . '/../../models/Reporte.php';
+$objReporte = new Reporte();
+$kpis = $objReporte->obtenerMapeoKPIs();
+$ventas = $objReporte->obtenerVentasPorProducto();
+
 $pageTitle = 'Reportes y Analítica - ShopOnline Huila';
 $activePage = 'reportes';
 $searchPlaceholder = 'Buscar reportes...';
@@ -14,7 +19,7 @@ include __DIR__ . '/../layouts/header.php';
     <!-- Date Picker Filter -->
     <button class="flex items-center gap-2 bg-surface-container-lowest border border-outline-variant hover:border-primary px-4 py-2 rounded-lg shadow-sm transition-colors group">
         <span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">calendar_month</span>
-        <span class="font-label-md text-label-md text-on-surface">1 Oct, 2023 - 31 Oct, 2023</span>
+        <span class="font-label-md text-label-md text-on-surface">Histórico Completo</span>
         <span class="material-symbols-outlined text-on-surface-variant">arrow_drop_down</span>
     </button>
 </div>
@@ -50,7 +55,7 @@ include __DIR__ . '/../layouts/header.php';
         </div>
         <div>
             <p class="font-label-md text-label-md text-on-surface-variant mb-1">Total Ingresos</p>
-            <p class="font-headline-md text-headline-md text-on-surface">$145,200.00</p>
+            <p class="font-headline-md text-headline-md text-on-surface">$<?= number_format($kpis['total_ingresos'], 2, ',', '.') ?></p>
         </div>
     </div>
     <!-- KPI Card 2 -->
@@ -62,7 +67,7 @@ include __DIR__ . '/../layouts/header.php';
         </div>
         <div>
             <p class="font-label-md text-label-md text-on-surface-variant mb-1">Unidades Vendidas</p>
-            <p class="font-headline-md text-headline-md text-on-surface">3,482</p>
+            <p class="font-headline-md text-headline-md text-on-surface"><?= number_format($kpis['unidades_vendidas'], 0, ',', '.') ?></p>
         </div>
     </div>
     <!-- KPI Card 3 -->
@@ -74,7 +79,7 @@ include __DIR__ . '/../layouts/header.php';
         </div>
         <div>
             <p class="font-label-md text-label-md text-on-surface-variant mb-1">Producto Estrella</p>
-            <p class="font-headline-sm text-headline-sm text-on-surface truncate">Café Especial Huila 500g</p>
+            <p class="font-headline-sm text-headline-sm text-on-surface truncate" title="<?= htmlspecialchars($kpis['producto_estrella']) ?>"><?= htmlspecialchars($kpis['producto_estrella']) ?></p>
         </div>
     </div>
 </div>
@@ -100,47 +105,25 @@ include __DIR__ . '/../layouts/header.php';
                 </tr>
             </thead>
             <tbody class="font-table-data text-table-data text-on-surface">
-                <tr class="border-b border-outline-variant hover:bg-surface-bright transition-colors">
-                    <td class="py-4 px-6 font-mono text-sm text-on-surface-variant">PRD-001</td>
-                    <td class="py-4 px-6 font-medium">Café Especial Huila 500g</td>
-                    <td class="py-4 px-6 text-right text-on-surface-variant">Cafés</td>
-                    <td class="py-4 px-6 text-right">1,240</td>
-                    <td class="py-4 px-6 text-right font-medium text-primary">$18,600.00</td>
-                </tr>
-                <tr class="border-b border-outline-variant hover:bg-surface-bright transition-colors bg-surface-container-lowest">
-                    <td class="py-4 px-6 font-mono text-sm text-on-surface-variant">PRD-042</td>
-                    <td class="py-4 px-6 font-medium">Cacao Premium Garzón</td>
-                    <td class="py-4 px-6 text-right text-on-surface-variant">Chocolates</td>
-                    <td class="py-4 px-6 text-right">850</td>
-                    <td class="py-4 px-6 text-right font-medium text-primary">$10,200.00</td>
-                </tr>
-                <tr class="border-b border-outline-variant hover:bg-surface-bright transition-colors">
-                    <td class="py-4 px-6 font-mono text-sm text-on-surface-variant">PRD-105</td>
-                    <td class="py-4 px-6 font-medium">Achiras del Huila Tradicional</td>
-                    <td class="py-4 px-6 text-right text-on-surface-variant">Snacks</td>
-                    <td class="py-4 px-6 text-right">2,100</td>
-                    <td class="py-4 px-6 text-right font-medium text-primary">$6,300.00</td>
-                </tr>
-                <tr class="border-b border-outline-variant hover:bg-surface-bright transition-colors bg-surface-container-lowest">
-                    <td class="py-4 px-6 font-mono text-sm text-on-surface-variant">PRD-088</td>
-                    <td class="py-4 px-6 font-medium">Panela Orgánica Pitalito</td>
-                    <td class="py-4 px-6 text-right text-on-surface-variant">Endulzantes</td>
-                    <td class="py-4 px-6 text-right">620</td>
-                    <td class="py-4 px-6 text-right font-medium text-primary">$3,100.00</td>
-                </tr>
-                <tr class="hover:bg-surface-bright transition-colors">
-                    <td class="py-4 px-6 font-mono text-sm text-on-surface-variant">PRD-015</td>
-                    <td class="py-4 px-6 font-medium">Miel de Abejas Macizo</td>
-                    <td class="py-4 px-6 text-right text-on-surface-variant">Endulzantes</td>
-                    <td class="py-4 px-6 text-right">415</td>
-                    <td class="py-4 px-6 text-right font-medium text-primary">$4,980.00</td>
-                </tr>
+                <?php if (empty($ventas)): ?>
+                    <tr><td colspan="5" class="text-center py-4 text-on-surface-variant">No hay datos de ventas disponibles.</td></tr>
+                <?php else: ?>
+                    <?php foreach ($ventas as $index => $v): ?>
+                    <tr class="border-b border-outline-variant hover:bg-surface-bright transition-colors <?= $index % 2 != 0 ? 'bg-surface-container-lowest' : '' ?>">
+                        <td class="py-4 px-6 font-mono text-sm text-on-surface-variant">PRD-<?= str_pad($v['id_producto'], 3, '0', STR_PAD_LEFT) ?></td>
+                        <td class="py-4 px-6 font-medium"><?= htmlspecialchars($v['nombre']) ?></td>
+                        <td class="py-4 px-6 text-right text-on-surface-variant"><?= htmlspecialchars($v['categoria']) ?></td>
+                        <td class="py-4 px-6 text-right"><?= number_format($v['cant_vendida'], 0, ',', '.') ?></td>
+                        <td class="py-4 px-6 text-right font-medium text-primary">$<?= number_format($v['ingreso_total'], 2, ',', '.') ?></td>
+                    </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </tbody>
         </table>
     </div>
     <!-- Pagination Footer -->
     <div class="p-4 border-t border-outline-variant bg-surface-container-lowest flex items-center justify-between">
-        <span class="font-body-sm text-body-sm text-on-surface-variant">Mostrando 1 a 5 de 45 productos</span>
+        <span class="font-body-sm text-body-sm text-on-surface-variant">Total registros: <?= count($ventas) ?></span>
         <div class="flex gap-2">
             <button class="p-2 rounded border border-outline-variant text-on-surface-variant hover:bg-surface-container-low transition-colors disabled:opacity-50" disabled>
                 <span class="material-symbols-outlined text-[20px]">chevron_left</span>
