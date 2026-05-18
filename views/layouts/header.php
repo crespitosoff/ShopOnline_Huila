@@ -1,28 +1,37 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShopOnline Huila</title>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="/ShopOnline_Huila/assets/css.css">
-</head>
-<body>
-    <nav class="glass-nav">
-        <div class="nav-container">
-            <a href="/ShopOnline_Huila/views/index.php" class="nav-logo">
-                🛍️ ShopOnline <span>Huila</span>
-            </a>
-            <div class="nav-links">
-                <a href="/ShopOnline_Huila/views/clientes/">Clientes</a>
-                <a href="/ShopOnline_Huila/views/empleados/">Empleados</a>
-                <a href="/ShopOnline_Huila/views/productos/">Productos</a>
-                <a href="/ShopOnline_Huila/views/pedidos/">Pedidos</a>
-            </div>
-        </div>
-    </nav>
-    <main class="main-content">
+<?php
+/**
+ * Master Layout Wrapper
+ * 
+ * Usage in any page:
+ *   $pageTitle = 'My Page - ShopOnline Huila';
+ *   $activePage = 'dashboard';
+ *   $searchPlaceholder = 'Buscar pedidos...';
+ *   include __DIR__ . '/../layouts/header.php';
+ *   // ... your page content here ...
+ *   include __DIR__ . '/../layouts/footer.php';
+ * 
+ * This file assembles: head.php → sidebar.php → topbar.php → opens <main>
+ */
+
+// Defaults
+$pageTitle = $pageTitle ?? 'ShopOnline Huila';
+$activePage = $activePage ?? '';
+$searchPlaceholder = $searchPlaceholder ?? 'Buscar...';
+
+// 1. Head (HTML open, meta, Tailwind config, body open)
+include __DIR__ . '/head.php';
+
+// 2. Sidebar
+include __DIR__ . '/sidebar.php';
+?>
+
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col md:ml-64 w-full h-screen overflow-hidden">
+
+<?php
+// 3. TopBar
+include __DIR__ . '/topbar.php';
+?>
+
+    <!-- Page Content (each module fills this) -->
+    <main class="flex-1 p-margin-mobile md:p-margin-desktop bg-background overflow-y-auto">
