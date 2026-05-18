@@ -37,7 +37,10 @@ CREATE TABLE clientes (
     id_cliente INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
-    telefono VARCHAR(20)
+    password VARCHAR(255) NOT NULL,
+    telefono VARCHAR(20),
+    activo BOOLEAN DEFAULT TRUE,
+    fecha_registro DATETIME DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
 CREATE TABLE cargos (
@@ -48,9 +51,12 @@ CREATE TABLE cargos (
 CREATE TABLE empleados (
     id_empleado INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
     id_cargo INT NOT NULL,
     salario DECIMAL(10,2) NOT NULL,
     fecha_ingreso DATE NOT NULL,
+    activo BOOLEAN DEFAULT TRUE,
     
     INDEX idx_emp_cargo (id_cargo),
 
@@ -91,10 +97,11 @@ CREATE TABLE pedidos (
     id_pedido INT AUTO_INCREMENT PRIMARY KEY,
     id_cliente INT NOT NULL,
     fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP,
+    direccion_envio TEXT NOT NULL,
     
     -- Denormalización controlada:
     -- Se almacena para mantener histórico y mejorar rendimiento
-    total DECIMAL(10,2) NOT NULL,
+    total DECIMAL(10,2) NOT NULL DEFAULT 0.00,
     
     id_estado INT NOT NULL DEFAULT 1,
     
@@ -171,9 +178,8 @@ CREATE TABLE detalle_pedidos (
 
 CREATE TABLE envios (
     id_envio INT AUTO_INCREMENT PRIMARY KEY,
-    id_pedido INT NOT NULL,
+    id_pedido INT NOT NULL UNIQUE,
     id_empleado INT NOT NULL,
-    direccion_envio TEXT NOT NULL,
     fecha_envio DATETIME DEFAULT CURRENT_TIMESTAMP,
     fecha_entrega DATETIME,
     guia_rastreo VARCHAR(100),
@@ -195,6 +201,23 @@ CREATE TABLE envios (
         FOREIGN KEY (id_estado) 
         REFERENCES estado_envio(id_estado)
 ) ENGINE=InnoDB;
+
+-- ============================================
+-- TRIGGERS PARA INVENTARIO
+-- ============================================
+
+DELIMITER //
+
+CREATE TRIGGER after_detalle_pedido_insert
+AFTER INSERT ON detalle_pedidos
+FOR EACH ROW
+BEGIN
+    UPDATE productos 
+    SET stock = stock - NEW.cantidad 
+    WHERE id_producto = NEW.id_producto;
+END//
+
+DELIMITER ;
 
 -- ============================================
 -- DATOS INICIALES (recomendado para pruebas)
