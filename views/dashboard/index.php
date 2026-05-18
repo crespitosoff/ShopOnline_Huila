@@ -11,7 +11,7 @@ $pedidosRecientes = array_slice($todosPedidos, 0, 5);
 
 $clientes = (new Cliente())->obtenerTodos();
 $productos = (new Producto())->obtenerTodos();
-$stockBajo = count(array_filter($productos, fn($p) => $p['stock_actual'] <= 20));
+$stockBajo = count(array_filter($productos, fn($p) => $p['stock'] <= 20));
 
 $pageTitle = 'ShopOnline Huila - Panel de Control';
 $activePage = 'dashboard';

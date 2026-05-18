@@ -29,22 +29,22 @@ INSERT IGNORE INTO categorias (id_categoria, nombre) VALUES
 (1, 'Cafés Especiales'), (2, 'Cacaos y Chocolates'), (3, 'Artesanías'), (4, 'Snacks Tradicionales'), (5, 'Bebidas Naturales');
 
 -- 4. PRODUCTOS (15 productos)
-INSERT IGNORE INTO productos (id_producto, nombre, descripcion, precio, stock_actual, stock_minimo, id_categoria) VALUES
-(1, 'Café Huila Origen 500g', 'Café especial tostado medio', 25000, 50, 10, 1),
-(2, 'Café Garzón Premium 250g', 'Café especial tostado oscuro', 15000, 30, 5, 1),
-(3, 'Café Pitalito Suave 500g', 'Café con notas cítricas', 24000, 40, 10, 1),
-(4, 'Chocolate 70% Cacao 100g', 'Chocolate amargo artesanal', 12000, 100, 20, 2),
-(5, 'Cacao en polvo 250g', '100% puro para repostería', 18000, 15, 20, 2), -- Stock bajo
-(6, 'Bombones rellenos caja 12', 'Rellenos de maracuyá y café', 22000, 25, 10, 2),
-(7, 'Sombrero Suaza Tradicional', 'Hecho a mano', 85000, 5, 5, 3), -- Stock bajo
-(8, 'Mochila de Fique', 'Colores variados', 45000, 12, 10, 3),
-(9, 'Chiva de Barro Pequeña', 'Artesanía de Pitalito', 25000, 45, 15, 3),
-(10, 'Achiras Tradicionales 500g', 'Bizcocho de achira', 16000, 200, 50, 4),
-(11, 'Achiras Picantes 250g', 'Con toque de ají', 9000, 80, 20, 4),
-(12, 'Panela Cuadrada 1kg', 'Orgánica campesina', 6000, 150, 40, 4),
-(13, 'Jugo de Cholupa 1L', 'Bebida exótica del Huila', 14000, 35, 10, 5),
-(14, 'Vino de Naranja Artesanal', 'Fermentado natural', 35000, 20, 5, 5),
-(15, 'Miel de Abejas Macizo 500g', 'Miel pura de flora silvestre', 18000, 60, 15, 5);
+INSERT IGNORE INTO productos (id_producto, nombre, descripcion, precio, stock, id_categoria) VALUES
+(1, 'Café Huila Origen 500g', 'Café especial tostado medio', 25000, 50, 1),
+(2, 'Café Garzón Premium 250g', 'Café especial tostado oscuro', 15000, 30, 1),
+(3, 'Café Pitalito Suave 500g', 'Café con notas cítricas', 24000, 40, 1),
+(4, 'Chocolate 70% Cacao 100g', 'Chocolate amargo artesanal', 12000, 100, 2),
+(5, 'Cacao en polvo 250g', '100% puro para repostería', 18000, 15, 2), -- Stock bajo
+(6, 'Bombones rellenos caja 12', 'Rellenos de maracuyá y café', 22000, 25, 2),
+(7, 'Sombrero Suaza Tradicional', 'Hecho a mano', 85000, 5, 3), -- Stock bajo
+(8, 'Mochila de Fique', 'Colores variados', 45000, 12, 3),
+(9, 'Chiva de Barro Pequeña', 'Artesanía de Pitalito', 25000, 45, 3),
+(10, 'Achiras Tradicionales 500g', 'Bizcocho de achira', 16000, 200, 4),
+(11, 'Achiras Picantes 250g', 'Con toque de ají', 9000, 80, 4),
+(12, 'Panela Cuadrada 1kg', 'Orgánica campesina', 6000, 150, 4),
+(13, 'Jugo de Cholupa 1L', 'Bebida exótica del Huila', 14000, 35, 5),
+(14, 'Vino de Naranja Artesanal', 'Fermentado natural', 35000, 20, 5),
+(15, 'Miel de Abejas Macizo 500g', 'Miel pura de flora silvestre', 18000, 60, 5);
 
 -- 5. PEDIDOS (10 pedidos simulados)
 -- Se asume que el Trigger restará los stocks al insertar el detalle.
