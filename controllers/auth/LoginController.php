@@ -15,7 +15,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $db = Conexion::conectar();
         
         // Buscar empleado por email
-        $sql = "SELECT e.*, c.nombre as nombre_cargo 
+        $sql = "SELECT e.*, 
+                       TRIM(CONCAT_WS(' ', NULLIF(e.primer_nombre,''), NULLIF(e.segundo_nombre,''), NULLIF(e.primer_apellido,''), NULLIF(e.segundo_apellido,''))) as nombre,
+                       c.nombre as nombre_cargo 
                 FROM empleados e 
                 INNER JOIN cargos c ON e.id_cargo = c.id_cargo
                 WHERE e.email = :email AND e.activo = 1";
@@ -37,7 +39,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($isValid) {
                 // Iniciar sesión
                 $_SESSION['empleado_id'] = $user['id_empleado'];
-                $_SESSION['empleado_nombre'] = $user['nombre'];
+                $_SESSION['empleado_primer_nombre'] = $user['primer_nombre'];
+                $_SESSION['empleado_primer_apellido'] = $user['primer_apellido'];
                 $_SESSION['empleado_cargo'] = $user['nombre_cargo'];
                 $_SESSION['empleado_id_cargo'] = $user['id_cargo'];
                 

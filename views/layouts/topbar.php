@@ -5,8 +5,9 @@
  * Receives: $searchPlaceholder (string) — placeholder text for the search input.
  */
 $searchPlaceholder = $searchPlaceholder ?? 'Buscar...';
-$usuarioNombre = $_SESSION['empleado_nombre'] ?? 'Usuario';
-$iniciales = strtoupper(substr($usuarioNombre, 0, 2));
+$usuarioPrimerNombre = $_SESSION['empleado_primer_nombre'] ?? 'Usuario';
+$usuarioApellido = $_SESSION['empleado_primer_apellido'] ?? '';
+$iniciales = strtoupper(substr($usuarioPrimerNombre, 0, 2));
 ?>
 
 <!-- TopNavBar -->
@@ -30,7 +31,7 @@ $iniciales = strtoupper(substr($usuarioNombre, 0, 2));
     <!-- Right: Actions & Profile -->
     <div class="flex items-center gap-md">
         <div class="flex items-center gap-2">
-            <span class="hidden md:block font-label-sm text-label-sm text-on-surface font-medium"><?= htmlspecialchars($usuarioNombre) ?></span>
+            <span class="hidden md:block font-label-sm text-label-sm text-on-surface font-medium"><?= htmlspecialchars($usuarioPrimerNombre . ' ' . $usuarioApellido) ?></span>
             <div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container border border-outline-variant overflow-hidden font-bold text-xs" title="<?= htmlspecialchars($usuarioNombre) ?>">
                 <?= $iniciales ?>
             </div>
