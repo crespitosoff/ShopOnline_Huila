@@ -64,9 +64,9 @@ include __DIR__ . '/../layouts/header.php';
                 <span class="material-symbols-outlined text-[18px]">download</span> Exportar
             </a>
         </div>
-        <button class="text-on-surface-variant hover:text-on-surface p-2 rounded-lg hover:bg-surface-container-low transition-colors">
+        <!-- <button class="text-on-surface-variant hover:text-on-surface p-2 rounded-lg hover:bg-surface-container-low transition-colors">
             <span class="material-symbols-outlined">more_vert</span>
-        </button>
+        </button> -->
     </div>
     <!-- Table -->
     <div class="overflow-x-auto flex-1">

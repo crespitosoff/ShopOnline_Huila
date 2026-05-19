@@ -50,10 +50,10 @@ include __DIR__ . '/../layouts/header.php';
             <label class="block font-label-sm text-label-sm text-on-surface-variant mb-2">Filtro de Categoría</label>
             <select data-filter-type="categoria" class="filter-select w-full px-4 py-2 border border-outline-variant rounded-lg bg-surface text-on-surface font-body-sm text-body-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary appearance-none">
                 <option value="all">Todas las Categorías</option>
-                <option value="coffee">Café Premium</option>
-                <option value="cacao">Productos de Cacao</option>
-                <option value="crafts">Artesanías</option>
-                <option value="honey">Miel Local</option>
+                <option value="café premium">Café Premium</option>
+                <option value="productos de cacao">Productos de Cacao</option>
+                <option value="artesanías">Artesanías</option>
+                <option value="miel local">Miel Local</option>
             </select>
         </div>
         <div class="w-full md:w-48">

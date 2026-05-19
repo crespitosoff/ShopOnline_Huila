@@ -46,7 +46,7 @@ class Empleado
             $sql = "SELECT e.*, 
                            TRIM(CONCAT_WS(' ', NULLIF(e.primer_nombre,''), NULLIF(e.segundo_nombre,''), NULLIF(e.primer_apellido,''), NULLIF(e.segundo_apellido,''))) as nombre,
                            c.nombre as nombre_cargo, 
-                           (SELECT COUNT(*) FROM envios WHERE id_empleado = e.id_empleado) as cantidad_despachos
+                           (SELECT COUNT(*) FROM envios WHERE id_empleado = e.id_empleado AND id_estado = 2) as cantidad_despachos
                 FROM empleados e 
                 INNER JOIN cargos c ON e.id_cargo = c.id_cargo
                 WHERE e.activo = 1";

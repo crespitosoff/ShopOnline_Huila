@@ -106,9 +106,9 @@ include __DIR__ . '/../layouts/header.php';
 <div class="bg-surface-container-lowest border border-outline-variant rounded-xl flex-1 flex flex-col overflow-hidden">
     <div class="px-6 py-4 border-b border-surface-variant flex justify-between items-center bg-surface-bright">
         <h3 class="font-headline-sm text-headline-sm text-on-surface">Pedidos Listos para Despacho</h3>
-        <button class="text-primary font-label-sm text-label-sm hover:underline flex items-center gap-1">
+        <!-- <button class="text-primary font-label-sm text-label-sm hover:underline flex items-center gap-1">
             Ver Todo <span class="material-symbols-outlined text-[16px]">chevron_right</span>
-        </button>
+        </button> -->
     </div>
     <div class="overflow-x-auto flex-1">
         <table class="w-full text-left border-collapse min-w-[1000px]">

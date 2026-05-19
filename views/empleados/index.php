@@ -143,7 +143,7 @@ include __DIR__ . '/../layouts/header.php';
                         <th class="py-3 px-6 font-label-sm text-label-sm text-on-surface-variant font-semibold">Cargo</th>
                         <th class="py-3 px-6 font-label-sm text-label-sm text-on-surface-variant font-semibold text-right">Salario (COP)</th>
                         <th class="py-3 px-6 font-label-sm text-label-sm text-on-surface-variant font-semibold">Fecha Ingreso</th>
-                        <th class="py-3 px-6 font-label-sm text-label-sm text-on-surface-variant font-semibold text-center">Despachos</th>
+                        <th class="py-3 px-6 font-label-sm text-label-sm text-on-surface-variant font-semibold text-center">Entregas Activas</th>
                         <th class="py-3 px-6 font-label-sm text-label-sm text-on-surface-variant font-semibold text-right">Acciones</th>
                     </tr>
                 </thead>

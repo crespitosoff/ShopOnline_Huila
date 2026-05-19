@@ -10,11 +10,18 @@ class Reporte
         $this->db = Conexion::conectar();
     }
 
-    public function obtenerMapeoKPIs()
+    public function obtenerMapeoKPIs($periodo = 'all')
     {
         try {
+            $dateFilter = "";
+            if ($periodo == 'today') {
+                $dateFilter = " AND DATE(p.fecha_creacion) = CURDATE()";
+            } elseif ($periodo == 'month') {
+                $dateFilter = " AND MONTH(p.fecha_creacion) = MONTH(CURDATE()) AND YEAR(p.fecha_creacion) = YEAR(CURDATE())";
+            }
+
             // Total Ingresos (Solo pedidos pagados o enviados)
-            $stmt1 = $this->db->prepare("SELECT SUM(total) as total_ingresos FROM pedidos WHERE id_estado IN (2, 3)");
+            $stmt1 = $this->db->prepare("SELECT SUM(total) as total_ingresos FROM pedidos p WHERE id_estado IN (2, 3)" . $dateFilter);
             $stmt1->execute();
             $totalIngresos = $stmt1->fetchColumn() ?: 0;
 
@@ -22,7 +29,7 @@ class Reporte
             $stmt2 = $this->db->prepare("SELECT SUM(dp.cantidad) as unidades 
                                          FROM detalle_pedidos dp 
                                          INNER JOIN pedidos p ON dp.id_pedido = p.id_pedido 
-                                         WHERE p.id_estado IN (2, 3)");
+                                         WHERE p.id_estado IN (2, 3)" . $dateFilter);
             $stmt2->execute();
             $unidadesVendidas = $stmt2->fetchColumn() ?: 0;
 
@@ -31,7 +38,7 @@ class Reporte
                                          FROM detalle_pedidos dp 
                                          INNER JOIN productos pr ON dp.id_producto = pr.id_producto 
                                          INNER JOIN pedidos p ON dp.id_pedido = p.id_pedido 
-                                         WHERE p.id_estado IN (2, 3) 
+                                         WHERE p.id_estado IN (2, 3)" . $dateFilter . " 
                                          GROUP BY pr.id_producto 
                                          ORDER BY SUM(dp.cantidad) DESC LIMIT 1");
             $stmt3->execute();
@@ -52,9 +59,16 @@ class Reporte
         }
     }
 
-    public function obtenerVentasPorProducto()
+    public function obtenerVentasPorProducto($periodo = 'all')
     {
         try {
+            $dateFilter = "";
+            if ($periodo == 'today') {
+                $dateFilter = " AND DATE(p.fecha_creacion) = CURDATE()";
+            } elseif ($periodo == 'month') {
+                $dateFilter = " AND MONTH(p.fecha_creacion) = MONTH(CURDATE()) AND YEAR(p.fecha_creacion) = YEAR(CURDATE())";
+            }
+
             $sql = "SELECT pr.id_producto, pr.SKU_producto, pr.nombre, c.nombre as categoria, 
                            SUM(dp.cantidad) as cant_vendida, 
                            SUM(dp.cantidad * dp.precio_unitario) as ingreso_total 
@@ -62,7 +76,7 @@ class Reporte
                     INNER JOIN productos pr ON dp.id_producto = pr.id_producto 
                     INNER JOIN categorias c ON pr.id_categoria = c.id_categoria 
                     INNER JOIN pedidos p ON dp.id_pedido = p.id_pedido 
-                    WHERE p.id_estado IN (2, 3) 
+                    WHERE p.id_estado IN (2, 3)" . $dateFilter . " 
                     GROUP BY pr.id_producto 
                     ORDER BY ingreso_total DESC";
             $stmt = $this->db->prepare($sql);

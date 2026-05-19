@@ -1,8 +1,9 @@
 <?php
 require_once __DIR__ . '/../../models/Reporte.php';
 $objReporte = new Reporte();
-$kpis = $objReporte->obtenerMapeoKPIs();
-$ventas = $objReporte->obtenerVentasPorProducto();
+$periodo = $_GET['periodo'] ?? 'all';
+$kpis = $objReporte->obtenerMapeoKPIs($periodo);
+$ventas = $objReporte->obtenerVentasPorProducto($periodo);
 
 $pageTitle = 'Reportes y Analítica - ShopOnline Huila';
 $activePage = 'reportes';
@@ -17,11 +18,14 @@ include __DIR__ . '/../layouts/header.php';
         <p class="font-body-md text-body-md text-on-surface-variant mt-1">Revise las métricas operativas y el rendimiento del negocio.</p>
     </div>
     <!-- Date Picker Filter -->
-    <button class="flex items-center gap-2 bg-surface-container-lowest border border-outline-variant hover:border-primary px-4 py-2 rounded-lg shadow-sm transition-colors group">
+    <form method="GET" class="flex items-center gap-2 bg-surface-container-lowest border border-outline-variant hover:border-primary px-3 py-1.5 rounded-lg shadow-sm transition-colors group">
         <span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">calendar_month</span>
-        <span class="font-label-md text-label-md text-on-surface">Histórico Completo</span>
-        <span class="material-symbols-outlined text-on-surface-variant">arrow_drop_down</span>
-    </button>
+        <select name="periodo" onchange="this.form.submit()" class="font-label-md text-label-md text-on-surface bg-transparent focus:outline-none appearance-none cursor-pointer pr-4">
+            <option value="all" <?= $periodo == 'all' ? 'selected' : '' ?>>Histórico Completo</option>
+            <option value="month" <?= $periodo == 'month' ? 'selected' : '' ?>>Este Mes</option>
+            <option value="today" <?= $periodo == 'today' ? 'selected' : '' ?>>Hoy</option>
+        </select>
+    </form>
 </div>
 
 <!-- Predefined Query Tabs -->

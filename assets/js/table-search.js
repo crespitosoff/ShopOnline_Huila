@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (tbody) {
                 tbody.querySelectorAll('tr').forEach(row => {
-                    const rowValue = row.dataset[filterType]?.toLowerCase() || '';
+                    const rowValue = row.getAttribute('data-' + filterType)?.toLowerCase() || '';
                     if (!filterValue || filterValue === 'all') {
                         row.style.display = '';
                     } else {
