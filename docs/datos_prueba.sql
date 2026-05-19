@@ -9,42 +9,42 @@ USE shoponline;
 INSERT IGNORE INTO cargos (id_cargo, nombre) VALUES 
 (1, 'Administrador'), (2, 'Vendedor'), (3, 'Logística'), (4, 'Soporte'), (5, 'Contador');
 
-INSERT IGNORE INTO empleados (id_empleado, nombre, email, telefono, id_cargo, password_hash) VALUES
-(1, 'Carlos Huertas', 'carlos.h@shop.com', '3100000001', 1, '$2y$10$xyz'),
-(2, 'Maria Lopez', 'maria.l@shop.com', '3100000002', 2, '$2y$10$xyz'),
-(3, 'Fernando Moto', 'fer.m@shop.com', '3100000003', 3, '$2y$10$xyz'),
-(4, 'Camila Rivas', 'cami.r@shop.com', '3100000004', 3, '$2y$10$xyz'),
-(5, 'Jorge Perez', 'jorge.p@shop.com', '3100000005', 4, '$2y$10$xyz');
+INSERT IGNORE INTO empleados (id_empleado, nombre, email, id_cargo, password, salario, fecha_ingreso, activo) VALUES
+(1, 'Carlos Huertas', 'carlos.h@shop.com', 1, '12345678', 1000000, '2023-10-26', 1),
+(2, 'Maria Lopez', 'maria.l@shop.com', 2, '12345678', 2000000, '2023-10-26', 1),
+(3, 'Fernando Moto', 'fer.m@shop.com', 3, '12345678', 3000000, '2023-10-26', 1),
+(4, 'Camila Rivas', 'cami.r@shop.com', 3, '12345678', 4000000, '2023-10-26', 1),
+(5, 'Jorge Perez', 'jorge.p@shop.com', 4, '12345678', 5000000, '2023-10-26', 1);
 
 -- 2. CLIENTES (5 clientes)
-INSERT IGNORE INTO clientes (id_cliente, nombre, email, telefono) VALUES
-(1, 'Ana Rodriguez', 'ana.r@mail.com', '3201112233'),
-(2, 'Luis Gomez', 'luis.g@mail.com', '3202223344'),
-(3, 'Sofía Castro', 'sofia.c@mail.com', '3203334455'),
-(4, 'Miguel Diaz', 'miguel.d@mail.com', '3204445566'),
-(5, 'Laura Muñoz', 'laura.m@mail.com', '3205556677');
+INSERT IGNORE INTO clientes (id_cliente, nombre, email, telefono, activo, fecha_registro) VALUES
+(1, 'Ana Rodriguez', 'ana.r@mail.com', '3201112233', 1, '2023-10-26'),
+(2, 'Luis Gomez', 'luis.g@mail.com', '3202223344', 1, '2023-10-26'),
+(3, 'Sofía Castro', 'sofia.c@mail.com', '3203334455', 1, '2023-10-26'),
+(4, 'Miguel Diaz', 'miguel.d@mail.com', '3204445566', 1, '2023-10-26'),
+(5, 'Laura Muñoz', 'laura.m@mail.com', '3205556677', 1, '2023-10-26');
 
 -- 3. CATEGORÍAS (5 categorías)
 INSERT IGNORE INTO categorias (id_categoria, nombre) VALUES
 (1, 'Cafés Especiales'), (2, 'Cacaos y Chocolates'), (3, 'Artesanías'), (4, 'Snacks Tradicionales'), (5, 'Bebidas Naturales');
 
 -- 4. PRODUCTOS (15 productos)
-INSERT IGNORE INTO productos (id_producto, nombre, descripcion, precio, stock, id_categoria) VALUES
-(1, 'Café Huila Origen 500g', 'Café especial tostado medio', 25000, 50, 1),
-(2, 'Café Garzón Premium 250g', 'Café especial tostado oscuro', 15000, 30, 1),
-(3, 'Café Pitalito Suave 500g', 'Café con notas cítricas', 24000, 40, 1),
-(4, 'Chocolate 70% Cacao 100g', 'Chocolate amargo artesanal', 12000, 100, 2),
-(5, 'Cacao en polvo 250g', '100% puro para repostería', 18000, 15, 2), -- Stock bajo
-(6, 'Bombones rellenos caja 12', 'Rellenos de maracuyá y café', 22000, 25, 2),
-(7, 'Sombrero Suaza Tradicional', 'Hecho a mano', 85000, 5, 3), -- Stock bajo
-(8, 'Mochila de Fique', 'Colores variados', 45000, 12, 3),
-(9, 'Chiva de Barro Pequeña', 'Artesanía de Pitalito', 25000, 45, 3),
-(10, 'Achiras Tradicionales 500g', 'Bizcocho de achira', 16000, 200, 4),
-(11, 'Achiras Picantes 250g', 'Con toque de ají', 9000, 80, 4),
-(12, 'Panela Cuadrada 1kg', 'Orgánica campesina', 6000, 150, 4),
-(13, 'Jugo de Cholupa 1L', 'Bebida exótica del Huila', 14000, 35, 5),
-(14, 'Vino de Naranja Artesanal', 'Fermentado natural', 35000, 20, 5),
-(15, 'Miel de Abejas Macizo 500g', 'Miel pura de flora silvestre', 18000, 60, 5);
+INSERT IGNORE INTO productos (id_producto, nombre, descripcion, precio, stock, id_categoria, imagen, activo) VALUES
+(1, 'Café Huila Origen 500g', 'Café especial tostado medio', 25000, 50, 1, 'img/cafe.jpg', 1),
+(2, 'Café Garzón Premium 250g', 'Café especial tostado oscuro', 15000, 30, 1, 'img/cafe.jpg', 1),
+(3, 'Café Pitalito Suave 500g', 'Café con notas cítricas', 24000, 40, 1, 'img/cafe.jpg', 1),
+(4, 'Chocolate 70% Cacao 100g', 'Chocolate amargo artesanal', 12000, 100, 2, 'img/chocolate.jpg', 1),
+(5, 'Cacao en polvo 250g', '100% puro para repostería', 18000, 15, 2, 'img/cacao.jpg', 1), -- Stock bajo
+(6, 'Bombones rellenos caja 12', 'Rellenos de maracuyá y café', 22000, 25, 2, 'img/bombones.jpg', 1),
+(7, 'Sombrero Suaza Tradicional', 'Hecho a mano', 85000, 5, 3, 'img/sombrero.jpg', 1), -- Stock bajo
+(8, 'Mochila de Fique', 'Colores variados', 45000, 12, 3, 'img/mochila.jpg', 1),
+(9, 'Chiva de Barro Pequeña', 'Artesanía de Pitalito', 25000, 45, 3, 'img/chiva.jpg', 1),
+(10, 'Achiras Tradicionales 500g', 'Bizcocho de achira', 16000, 200, 4, 'img/achiras.jpg', 1),
+(11, 'Achiras Picantes 250g', 'Con toque de ají', 9000, 80, 4, 'img/achiras.jpg', 1),
+(12, 'Panela Cuadrada 1kg', 'Orgánica campesina', 6000, 150, 4, 'img/panela.jpg', 1),
+(13, 'Jugo de Cholupa 1L', 'Bebida exótica del Huila', 14000, 35, 5, 'img/cholupa.jpg', 1),
+(14, 'Vino de Naranja Artesanal', 'Fermentado natural', 35000, 20, 5, 'img/vino.jpg', 1),
+(15, 'Miel de Abejas Macizo 500g', 'Miel pura de flora silvestre', 18000, 60, 5, 'img/miel.jpg', 1);
 
 -- 5. PEDIDOS (10 pedidos simulados)
 -- Se asume que el Trigger restará los stocks al insertar el detalle.
