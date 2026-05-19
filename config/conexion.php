@@ -1,6 +1,8 @@
 <?php
 class Conexion {
     public static function conectar() {
+        // Fijar zona horaria de Colombia para date() y funciones de PHP
+        date_default_timezone_set('America/Bogota');
         $host = "localhost";
         $db   = "shoponline"; // Asegúrate de usar el nuevo nombre de tu BD
         $user = "root";
@@ -16,7 +18,10 @@ class Conexion {
         ];
 
         try {
-            return new PDO($dsn, $user, $pass, $options);
+            $pdo = new PDO($dsn, $user, $pass, $options);
+            // Fijar zona horaria en MySQL para CURRENT_TIMESTAMP y NOW()
+            $pdo->exec("SET time_zone = '-05:00'");
+            return $pdo;
         } catch (\PDOException $e) {
             throw new \PDOException($e->getMessage(), (int)$e->getCode());
         }
