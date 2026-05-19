@@ -55,11 +55,14 @@ include __DIR__ . '/../layouts/header.php';
         <div class="flex items-center gap-3 w-full sm:w-auto">
             <div class="relative w-full sm:w-64">
                 <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
-                <input class="w-full pl-10 pr-4 py-2 border border-outline-variant rounded-lg font-body-sm text-body-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-surface-container-lowest" placeholder="Buscar por nombre o ID..." type="text">
+                <input class="local-search-input w-full pl-10 pr-4 py-2 border border-outline-variant rounded-lg font-body-sm text-body-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-surface-container-lowest" placeholder="Buscar por nombre o ID..." type="text">
             </div>
             <button class="px-4 py-2 border border-outline-variant rounded-lg font-label-md text-label-md text-on-surface flex items-center gap-2 hover:bg-surface-container-low transition-colors whitespace-nowrap">
                 <span class="material-symbols-outlined text-[18px]">filter_list</span> Filtros
             </button>
+            <a href="/ShopOnline_Huila/controllers/exportar/ExportarController.php?modulo=clientes" class="px-4 py-2 border border-outline-variant rounded-lg font-label-md text-label-md text-on-surface flex items-center gap-2 hover:bg-surface-container-low transition-colors whitespace-nowrap">
+                <span class="material-symbols-outlined text-[18px]">download</span> Exportar
+            </a>
         </div>
         <button class="text-on-surface-variant hover:text-on-surface p-2 rounded-lg hover:bg-surface-container-low transition-colors">
             <span class="material-symbols-outlined">more_vert</span>

@@ -43,13 +43,13 @@ include __DIR__ . '/../layouts/header.php';
             <label class="block font-label-sm text-label-sm text-on-surface-variant mb-2">Buscar Productos</label>
             <div class="relative">
                 <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
-                <input class="w-full pl-10 pr-4 py-2 border border-outline-variant rounded-lg bg-surface text-on-surface font-body-sm text-body-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" placeholder="Buscar por ID, Nombre o SKU" type="text">
+                <input class="local-search-input w-full pl-10 pr-4 py-2 border border-outline-variant rounded-lg bg-surface text-on-surface font-body-sm text-body-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" placeholder="Buscar por ID, Nombre o SKU" type="text">
             </div>
         </div>
         <div class="w-full md:w-64">
             <label class="block font-label-sm text-label-sm text-on-surface-variant mb-2">Filtro de Categoría</label>
-            <select class="w-full px-4 py-2 border border-outline-variant rounded-lg bg-surface text-on-surface font-body-sm text-body-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary appearance-none">
-                <option value="">Todas las Categorías</option>
+            <select data-filter-type="categoria" class="filter-select w-full px-4 py-2 border border-outline-variant rounded-lg bg-surface text-on-surface font-body-sm text-body-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary appearance-none">
+                <option value="all">Todas las Categorías</option>
                 <option value="coffee">Café Premium</option>
                 <option value="cacao">Productos de Cacao</option>
                 <option value="crafts">Artesanías</option>
@@ -58,17 +58,17 @@ include __DIR__ . '/../layouts/header.php';
         </div>
         <div class="w-full md:w-48">
             <label class="block font-label-sm text-label-sm text-on-surface-variant mb-2">Estado</label>
-            <select class="w-full px-4 py-2 border border-outline-variant rounded-lg bg-surface text-on-surface font-body-sm text-body-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary appearance-none">
-                <option value="">Todos los Estados</option>
-                <option value="available">Disponible</option>
-                <option value="out_of_stock">Agotado</option>
-                <option value="low_stock">Stock Bajo</option>
+            <select data-filter-type="stock-status" class="filter-select w-full px-4 py-2 border border-outline-variant rounded-lg bg-surface text-on-surface font-body-sm text-body-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary appearance-none">
+                <option value="all">Todos los Estados</option>
+                <option value="disponible">Disponible</option>
+                <option value="agotado">Agotado</option>
+                <option value="stock bajo">Stock Bajo</option>
             </select>
         </div>
-        <button class="w-full md:w-auto bg-surface border border-outline-variant text-on-surface font-label-md text-label-md px-4 py-2 rounded-lg flex items-center justify-center gap-2 hover:bg-surface-container-low transition-colors h-[42px]">
-            <span class="material-symbols-outlined text-sm">filter_list</span>
-            Más Filtros
-        </button>
+        <a href="/ShopOnline_Huila/controllers/exportar/ExportarController.php?modulo=productos" class="w-full md:w-auto bg-surface border border-outline-variant text-on-surface font-label-md text-label-md px-4 py-2 rounded-lg flex items-center justify-center gap-2 hover:bg-surface-container-low transition-colors h-[42px]">
+            <span class="material-symbols-outlined text-[18px]">download</span>
+            Exportar CSV
+        </a>
     </div>
 </div>
 
@@ -106,7 +106,7 @@ include __DIR__ . '/../layouts/header.php';
                             $stockTextClass = 'text-yellow-600 font-medium';
                         }
                     ?>
-                    <tr class="border-b border-surface-variant hover:bg-primary/5 transition-colors">
+                    <tr data-categoria="<?= strtolower($p['nombre_categoria']) ?>" data-stock-status="<?= strtolower($stockLabel) ?>" class="border-b border-surface-variant hover:bg-primary/5 transition-colors">
                         <td class="px-6 py-4 font-medium"><?= $p['SKU_producto'] ?></td>
                         <td class="px-6 py-4"><?= htmlspecialchars($p['nombre']) ?></td>
                         <td class="px-6 py-4 text-on-surface-variant"><?= htmlspecialchars($p['nombre_categoria']) ?></td>

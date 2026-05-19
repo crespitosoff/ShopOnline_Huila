@@ -119,13 +119,20 @@ include __DIR__ . '/../layouts/header.php';
     <div class="xl:col-span-8 bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm overflow-hidden flex flex-col">
         <div class="p-6 border-b border-outline-variant/50 flex justify-between items-center bg-surface-container-lowest">
             <h3 class="font-headline-sm text-headline-sm text-on-background">Directorio de Personal</h3>
-            <div class="flex gap-2">
-                <button class="border border-outline-variant text-on-surface-variant px-3 py-1.5 rounded-md font-label-sm text-label-sm hover:bg-surface-container-low transition-colors flex items-center gap-1">
-                    <span class="material-symbols-outlined text-[16px]">filter_list</span> Filtrar
-                </button>
-                <button class="border border-outline-variant text-on-surface-variant px-3 py-1.5 rounded-md font-label-sm text-label-sm hover:bg-surface-container-low transition-colors flex items-center gap-1">
+            <div class="flex flex-col sm:flex-row gap-2">
+                <div class="relative">
+                    <span class="material-symbols-outlined absolute left-2 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+                    <input type="text" class="local-search-input pl-8 pr-3 py-1.5 border border-outline-variant rounded-md text-body-sm font-body-sm bg-surface-container-lowest focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" placeholder="Buscar empleado...">
+                </div>
+                <select data-filter-type="cargo" class="filter-select border border-outline-variant rounded-md px-3 py-1.5 text-body-sm font-body-sm bg-surface-container-lowest focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary appearance-none pr-8 relative">
+                    <option value="all">Todos los cargos</option>
+                    <?php foreach ($cargos as $c): ?>
+                        <option value="<?= htmlspecialchars($c['nombre']) ?>"><?= htmlspecialchars($c['nombre']) ?></option>
+                    <?php endforeach; ?>
+                </select>
+                <a href="/ShopOnline_Huila/controllers/exportar/ExportarController.php?modulo=empleados" class="border border-outline-variant text-on-surface-variant px-3 py-1.5 rounded-md font-label-sm text-label-sm hover:bg-surface-container-low transition-colors flex items-center gap-1 justify-center">
                     <span class="material-symbols-outlined text-[16px]">download</span> Exportar
-                </button>
+                </a>
             </div>
         </div>
         <div class="overflow-x-auto">
@@ -147,7 +154,7 @@ include __DIR__ . '/../layouts/header.php';
                         <?php foreach ($empleados as $e): 
                             $iniciales = strtoupper(substr($e['nombre'], 0, 2));
                         ?>
-                        <tr class="hover:bg-surface/50 transition-colors group">
+                        <tr data-cargo="<?= htmlspecialchars($e['nombre_cargo']) ?>" class="hover:bg-surface/50 transition-colors group">
                             <td class="py-4 px-6">
                                 <div class="flex items-center gap-3">
                                     <div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-label-md"><?= $iniciales ?></div>

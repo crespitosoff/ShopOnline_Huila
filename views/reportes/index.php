@@ -85,10 +85,10 @@ include __DIR__ . '/../layouts/header.php';
 <div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm overflow-hidden flex flex-col">
     <div class="p-6 border-b border-outline-variant flex justify-between items-center">
         <h3 class="font-headline-sm text-headline-sm text-on-surface">Resumen de Ventas por Producto</h3>
-        <button class="font-label-md text-label-md text-primary border border-primary px-4 py-1.5 rounded-lg hover:bg-primary hover:text-on-primary transition-colors flex items-center gap-2">
+        <a href="/ShopOnline_Huila/controllers/exportar/ExportarController.php?modulo=reportes" class="font-label-md text-label-md text-primary border border-primary px-4 py-1.5 rounded-lg hover:bg-primary hover:text-on-primary transition-colors flex items-center gap-2">
             <span class="material-symbols-outlined text-[18px]">download</span>
             Exportar CSV
-        </button>
+        </a>
     </div>
     <div class="overflow-x-auto">
         <table class="w-full text-left border-collapse">

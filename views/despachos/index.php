@@ -21,10 +21,14 @@ include __DIR__ . '/../layouts/header.php';
         <p class="font-body-md text-body-md text-on-surface-variant mt-1">Administre y asigne envíos listos para su cumplimiento.</p>
     </div>
     <div class="flex gap-3">
-        <button class="bg-surface-container-lowest border border-outline text-on-surface font-label-md text-label-md px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-surface-container-low transition-colors">
+        <div class="relative">
+            <span class="material-symbols-outlined absolute left-2 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+            <input type="text" class="local-search-input pl-8 pr-3 py-2 border border-outline-variant rounded-lg text-body-sm font-body-sm bg-surface-container-lowest focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary w-64" placeholder="Buscar despacho...">
+        </div>
+        <a href="/ShopOnline_Huila/controllers/exportar/ExportarController.php?modulo=despachos" class="bg-surface-container-lowest border border-outline text-on-surface font-label-md text-label-md px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-surface-container-low transition-colors">
             <span class="material-symbols-outlined text-[18px]">download</span>
             Exportar Manifiesto
-        </button>
+        </a>
     </div>
 </div>
 
@@ -44,8 +48,20 @@ include __DIR__ . '/../layouts/header.php';
 <?php endif; ?>
 
 <!-- Bento Grid Metrics -->
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-lg">
-    <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 flex flex-col justify-between">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-lg">
+    <!-- All Card (Added for resetting filter) -->
+    <div data-status-id="all" class="filter-tab cursor-pointer hover:bg-surface-container-high transition-colors bg-surface-container-lowest border border-outline-variant rounded-xl p-6 flex flex-col justify-between">
+        <div class="flex justify-between items-start mb-4">
+            <div class="p-2 bg-primary-container text-on-primary-container rounded-lg">
+                <span class="material-symbols-outlined">list</span>
+            </div>
+        </div>
+        <div>
+            <p class="font-display-lg text-display-lg text-on-surface"><?= count($despachos) ?></p>
+            <p class="font-body-md text-body-md text-on-surface-variant">Todos los Despachos</p>
+        </div>
+    </div>
+    <div data-status-id="1" class="filter-tab cursor-pointer hover:bg-surface-container-high transition-colors bg-surface-container-lowest border border-outline-variant rounded-xl p-6 flex flex-col justify-between">
         <div class="flex justify-between items-start mb-4">
             <div class="p-2 bg-secondary-container text-on-secondary-container rounded-lg">
                 <span class="material-symbols-outlined">hourglass_top</span>
@@ -62,7 +78,7 @@ include __DIR__ . '/../layouts/header.php';
             <p class="font-body-md text-body-md text-on-surface-variant">Pendientes de Despacho</p>
         </div>
     </div>
-    <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 flex flex-col justify-between">
+    <div data-status-id="2" class="filter-tab cursor-pointer hover:bg-surface-container-high transition-colors bg-surface-container-lowest border border-outline-variant rounded-xl p-6 flex flex-col justify-between">
         <div class="flex justify-between items-start mb-4">
             <div class="p-2 bg-tertiary-container text-on-tertiary-container rounded-lg">
                 <span class="material-symbols-outlined">local_shipping</span>
@@ -73,7 +89,7 @@ include __DIR__ . '/../layouts/header.php';
             <p class="font-body-md text-body-md text-on-surface-variant">En Tránsito</p>
         </div>
     </div>
-    <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 flex flex-col justify-between">
+    <div data-status-id="3" class="filter-tab cursor-pointer hover:bg-surface-container-high transition-colors bg-surface-container-lowest border border-outline-variant rounded-xl p-6 flex flex-col justify-between">
         <div class="flex justify-between items-start mb-4">
             <div class="p-2 bg-surface-variant text-on-surface-variant rounded-lg">
                 <span class="material-symbols-outlined">inventory_2</span>
@@ -127,7 +143,7 @@ include __DIR__ . '/../layouts/header.php';
                         // Generar iniciales del cliente
                         $iniciales = strtoupper(substr($d['nombre_cliente'], 0, 2));
                     ?>
-                    <tr class="hover:bg-primary-fixed/10 transition-colors group <?= $estadoId == 1 ? 'bg-surface-container-lowest' : '' ?>">
+                    <tr data-estado="<?= $estadoId ?>" class="hover:bg-primary-fixed/10 transition-colors group <?= $estadoId == 1 ? 'bg-surface-container-lowest' : '' ?>">
                         <td class="py-4 px-6 font-medium text-primary"><?= $d['SKU_pedido'] ?></td>
                         <td class="py-4 px-6">
                             <div class="flex items-center gap-3">

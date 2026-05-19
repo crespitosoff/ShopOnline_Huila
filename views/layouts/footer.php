@@ -40,5 +40,6 @@
     <?php if (!empty($extraScripts)): ?>
     <script><?php echo $extraScripts; ?></script>
     <?php endif; ?>
+    <script src="/ShopOnline_Huila/assets/js/table-search.js"></script>
 </body>
 </html>

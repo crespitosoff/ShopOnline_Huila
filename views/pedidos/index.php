@@ -44,15 +44,18 @@ include __DIR__ . '/../layouts/header.php';
             $procesando = count(array_filter($pedidos, fn($p) => $p['id_estado'] == 2));
             $enviados = count(array_filter($pedidos, fn($p) => $p['id_estado'] >= 3));
         ?>
-        <button class="px-4 py-2 bg-primary/10 text-primary font-label-md text-label-md rounded-lg font-medium transition-colors">Todos (<?= count($pedidos) ?>)</button>
-        <button class="px-4 py-2 text-on-surface-variant hover:bg-surface-container-low font-label-md text-label-md rounded-lg transition-colors">Pendiente Pago (<?= $pendientes ?>)</button>
-        <button class="px-4 py-2 text-on-surface-variant hover:bg-surface-container-low font-label-md text-label-md rounded-lg transition-colors">Procesando (<?= $procesando ?>)</button>
-        <button class="px-4 py-2 text-on-surface-variant hover:bg-surface-container-low font-label-md text-label-md rounded-lg transition-colors">Enviados (<?= $enviados ?>)</button>
+        <button data-status-id="all" class="filter-tab px-4 py-2 bg-primary text-on-primary font-label-md text-label-md rounded-lg font-medium transition-colors">Todos (<?= count($pedidos) ?>)</button>
+        <button data-status-id="1" class="filter-tab px-4 py-2 bg-surface-container-high text-on-surface-variant hover:bg-surface-container-highest font-label-md text-label-md rounded-lg transition-colors">Pendiente Pago (<?= $pendientes ?>)</button>
+        <button data-status-id="2" class="filter-tab px-4 py-2 bg-surface-container-high text-on-surface-variant hover:bg-surface-container-highest font-label-md text-label-md rounded-lg transition-colors">Procesando (<?= $procesando ?>)</button>
+        <button data-status-id="3" class="filter-tab px-4 py-2 bg-surface-container-high text-on-surface-variant hover:bg-surface-container-highest font-label-md text-label-md rounded-lg transition-colors">Enviados (<?= $enviados ?>)</button>
     </div>
     <div class="flex gap-2 w-full md:w-auto">
         <button class="border border-outline-variant text-on-surface-variant px-3 py-1.5 rounded-md font-label-sm text-label-sm hover:bg-surface-container-low transition-colors flex items-center gap-1 w-full md:w-auto justify-center">
             <span class="material-symbols-outlined text-[16px]">filter_list</span> Filtros Avanzados
         </button>
+        <a href="/ShopOnline_Huila/controllers/exportar/ExportarController.php?modulo=pedidos" class="border border-outline-variant text-on-surface-variant px-3 py-1.5 rounded-md font-label-sm text-label-sm hover:bg-surface-container-low transition-colors flex items-center gap-1 w-full md:w-auto justify-center">
+            <span class="material-symbols-outlined text-[16px]">download</span> Exportar
+        </a>
     </div>
 </div>
 
@@ -95,7 +98,7 @@ include __DIR__ . '/../layouts/header.php';
                             $estadoClass = 'bg-secondary-container text-on-secondary-container border-secondary/20';
                         }
                     ?>
-                    <tr class="hover:bg-primary/5 transition-colors group <?= $estadoId == 2 ? 'bg-surface-container-lowest' : '' ?>">
+                    <tr data-estado="<?= $estadoId ?>" class="hover:bg-primary/5 transition-colors group <?= $estadoId == 2 ? 'bg-surface-container-lowest' : '' ?>">
                         <td class="px-6 py-4 font-medium text-primary cursor-pointer hover:underline"><?= $p['SKU_pedido'] ?></td>
                         <td class="px-6 py-4 text-on-surface-variant"><?= date('d M, h:i A', strtotime($p['fecha_creacion'])) ?></td>
                         <td class="px-6 py-4">
