@@ -15,10 +15,10 @@ include __DIR__ . '/../layouts/header.php';
         <h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-background">Centro de Pedidos</h2>
         <p class="font-body-md text-body-md text-on-surface-variant mt-1">Gestione las compras, valide pagos y prepare pedidos para despacho.</p>
     </div>
-    <button class="bg-primary hover:bg-primary/90 text-on-primary font-label-md text-label-md px-6 py-2.5 rounded-lg flex items-center gap-2 transition-colors shadow-sm">
+    <a href="/ShopOnline_Huila/views/pedidos/crear.php" class="bg-primary hover:bg-primary/90 text-on-primary font-label-md text-label-md px-6 py-2.5 rounded-lg flex items-center gap-2 transition-colors shadow-sm">
         <span class="material-symbols-outlined text-[18px]">add_shopping_cart</span>
         Nuevo Pedido Manual
-    </button>
+    </a>
 </div>
 
 <!-- Alertas -->

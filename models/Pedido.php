@@ -90,4 +90,59 @@ class Pedido
             return false;
         }
     }
+    public function crearManual($id_cliente, $direccion_envio, $productos)
+    {
+        try {
+            $this->db->beginTransaction();
+
+            // Insertar pedido base
+            $sqlPedido = "INSERT INTO pedidos (id_cliente, direccion_envio, total, id_estado) VALUES (:id_cliente, :direccion, 0, 1)";
+            $stmtPedido = $this->db->prepare($sqlPedido);
+            $stmtPedido->bindParam(':id_cliente', $id_cliente, PDO::PARAM_INT);
+            $stmtPedido->bindParam(':direccion', $direccion_envio);
+            $stmtPedido->execute();
+            
+            $id_pedido = $this->db->lastInsertId();
+            $total_pedido = 0;
+
+            // Insertar detalles
+            $sqlDetalle = "INSERT INTO detalle_pedidos (id_pedido, id_producto, cantidad, precio_unitario) VALUES (:id_pedido, :id_producto, :cantidad, :precio)";
+            $stmtDetalle = $this->db->prepare($sqlDetalle);
+
+            foreach ($productos as $prod) {
+                if ($prod['cantidad'] <= 0) continue;
+
+                // Obtener precio
+                $stmtPrecio = $this->db->prepare("SELECT precio FROM productos WHERE id_producto = ?");
+                $stmtPrecio->execute([$prod['id_producto']]);
+                $precio_unitario = $stmtPrecio->fetchColumn();
+
+                $stmtDetalle->bindParam(':id_pedido', $id_pedido, PDO::PARAM_INT);
+                $stmtDetalle->bindParam(':id_producto', $prod['id_producto'], PDO::PARAM_INT);
+                $stmtDetalle->bindParam(':cantidad', $prod['cantidad'], PDO::PARAM_INT);
+                $stmtDetalle->bindParam(':precio', $precio_unitario);
+                $stmtDetalle->execute();
+
+                $total_pedido += ($precio_unitario * $prod['cantidad']);
+            }
+
+            if ($total_pedido == 0) {
+                throw new Exception("El pedido debe tener al menos un producto.");
+            }
+
+            // Actualizar el total del pedido
+            $sqlUpdate = "UPDATE pedidos SET total = :total WHERE id_pedido = :id_pedido";
+            $stmtUpdate = $this->db->prepare($sqlUpdate);
+            $stmtUpdate->bindParam(':total', $total_pedido);
+            $stmtUpdate->bindParam(':id_pedido', $id_pedido, PDO::PARAM_INT);
+            $stmtUpdate->execute();
+
+            $this->db->commit();
+            return true;
+        } catch (Exception $e) {
+            $this->db->rollBack();
+            error_log("Error en Pedido::crearManual -> " . $e->getMessage());
+            return false;
+        }
+    }
 }
