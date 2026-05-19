@@ -51,7 +51,7 @@ include __DIR__ . '/../layouts/header.php';
                 </div>
                 <div class="bg-surface p-4 rounded-lg border border-outline-variant/30">
                     <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Entregas Activas</p>
-                    <p class="font-display-lg text-display-lg text-tertiary">--</p>
+                    <p class="font-display-lg text-display-lg text-tertiary"><?= array_sum(array_column($empleados, 'cantidad_despachos')) ?></p>
                 </div>
             </div>
         </div>

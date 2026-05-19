@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../../models/Producto.php';
 $objProducto = new Producto();
 $productos = $objProducto->obtenerTodos();
+$categorias = $objProducto->obtenerCategorias();
 
 $pageTitle = 'Inventario de Productos - ShopOnline Huila';
 $activePage = 'inventario';
@@ -50,10 +51,9 @@ include __DIR__ . '/../layouts/header.php';
             <label class="block font-label-sm text-label-sm text-on-surface-variant mb-2">Filtro de Categoría</label>
             <select data-filter-type="categoria" class="filter-select w-full px-4 py-2 border border-outline-variant rounded-lg bg-surface text-on-surface font-body-sm text-body-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary appearance-none">
                 <option value="all">Todas las Categorías</option>
-                <option value="café premium">Café Premium</option>
-                <option value="productos de cacao">Productos de Cacao</option>
-                <option value="artesanías">Artesanías</option>
-                <option value="miel local">Miel Local</option>
+                <?php foreach ($categorias as $cat): ?>
+                    <option value="<?= htmlspecialchars(strtolower($cat['nombre'])) ?>"><?= htmlspecialchars($cat['nombre']) ?></option>
+                <?php endforeach; ?>
             </select>
         </div>
         <div class="w-full md:w-48">
