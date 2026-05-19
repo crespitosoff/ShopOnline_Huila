@@ -1,4 +1,9 @@
 <?php
+session_start();
+if (!isset($_SESSION['empleado_id'])) {
+    header("Location: /ShopOnline_Huila/views/login.php");
+    exit;
+}
 /**
  * Master Layout Wrapper
  * 

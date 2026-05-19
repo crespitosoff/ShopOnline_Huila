@@ -52,7 +52,7 @@ $navItems = [
     <!-- Footer Links -->
     <div class="mt-auto px-2 space-y-2 border-t border-secondary-container pt-4">
         <!-- Solo mantenemos Cerrar Sesión -->
-        <a class="text-on-secondary flex items-center px-4 py-3 opacity-80 hover:bg-primary/20 transition-all font-label-md text-label-md rounded-lg" href="#">
+        <a class="text-on-secondary flex items-center px-4 py-3 opacity-80 hover:bg-primary/20 transition-all font-label-md text-label-md rounded-lg" href="/ShopOnline_Huila/controllers/auth/LogoutController.php">
             <span class="material-symbols-outlined mr-3">logout</span>
             <span>Cerrar Sesión</span>
         </a>
