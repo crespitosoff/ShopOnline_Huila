@@ -26,7 +26,7 @@ include __DIR__ . '/../layouts/header.php';
 
 <!-- Predefined Query Tabs -->
 <!-- NOTE: "Pedidos por Cliente" tab links to the Clientes management view -->
-<div class="flex flex-wrap gap-3 border-b border-outline-variant pb-1 mb-xl">
+<!-- <div class="flex flex-wrap gap-3 border-b border-outline-variant pb-1 mb-xl">
     <button class="px-5 py-2.5 rounded-t-lg bg-surface-container-low border-b-2 border-primary font-label-md text-label-md text-primary bg-primary/5 transition-colors flex items-center gap-2">
         <span class="material-symbols-outlined text-[18px]">inventory</span>
         Ventas por Producto
@@ -39,7 +39,7 @@ include __DIR__ . '/../layouts/header.php';
         <span class="material-symbols-outlined text-[18px]">fact_check</span>
         Auditoría de Despachos
     </button>
-</div>
+</div> -->
 
 <!-- Bento Grid: Summary KPIs -->
 <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter mb-xl">
@@ -49,9 +49,6 @@ include __DIR__ . '/../layouts/header.php';
             <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
                 <span class="material-symbols-outlined">payments</span>
             </div>
-            <span class="font-label-sm text-label-sm text-primary flex items-center bg-primary/10 px-2 py-1 rounded-full">
-                <span class="material-symbols-outlined text-[14px] mr-1">trending_up</span> 12.5%
-            </span>
         </div>
         <div>
             <p class="font-label-md text-label-md text-on-surface-variant mb-1">Total Ingresos</p>

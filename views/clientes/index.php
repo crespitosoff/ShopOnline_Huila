@@ -46,57 +46,7 @@ include __DIR__ . '/../layouts/header.php';
 </div>
 <?php endif; ?>
 
-<!-- KPI Cards -->
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-lg">
-    <!-- Card 1 -->
-    <div class="bg-surface-container-lowest border border-surface-container-high rounded-xl p-6 shadow-sm">
-        <div class="flex justify-between items-start">
-            <div>
-                <p class="font-label-md text-label-md text-on-surface-variant mb-1">Total Clientes</p>
-                <h3 class="font-headline-lg text-headline-lg text-on-surface"><?= count($clientes) ?></h3>
-            </div>
-            <div class="p-2 bg-primary-fixed rounded-lg text-primary-container">
-                <span class="material-symbols-outlined">group</span>
-            </div>
-        </div>
-        <div class="mt-4 flex items-center text-primary-container">
-            <span class="material-symbols-outlined text-[16px] mr-1">trending_up</span>
-            <span class="font-label-sm text-label-sm">+12% vs mes anterior</span>
-        </div>
-    </div>
-    <!-- Card 2 -->
-    <div class="bg-surface-container-lowest border border-surface-container-high rounded-xl p-6 shadow-sm">
-        <div class="flex justify-between items-start">
-            <div>
-                <p class="font-label-md text-label-md text-on-surface-variant mb-1">Activos Este Mes</p>
-                <h3 class="font-headline-lg text-headline-lg text-on-surface">845</h3>
-            </div>
-            <div class="p-2 bg-tertiary-fixed rounded-lg text-tertiary-container">
-                <span class="material-symbols-outlined">how_to_reg</span>
-            </div>
-        </div>
-        <div class="mt-4 flex items-center text-primary-container">
-            <span class="material-symbols-outlined text-[16px] mr-1">trending_up</span>
-            <span class="font-label-sm text-label-sm">+5% vs mes anterior</span>
-        </div>
-    </div>
-    <!-- Card 3 -->
-    <div class="bg-surface-container-lowest border border-surface-container-high rounded-xl p-6 shadow-sm">
-        <div class="flex justify-between items-start">
-            <div>
-                <p class="font-label-md text-label-md text-on-surface-variant mb-1">Valor Promedio de Vida</p>
-                <h3 class="font-headline-lg text-headline-lg text-on-surface">$450k</h3>
-            </div>
-            <div class="p-2 bg-secondary-container rounded-lg text-secondary">
-                <span class="material-symbols-outlined">payments</span>
-            </div>
-        </div>
-        <div class="mt-4 flex items-center text-on-surface-variant">
-            <span class="material-symbols-outlined text-[16px] mr-1">horizontal_rule</span>
-            <span class="font-label-sm text-label-sm">Estable</span>
-        </div>
-    </div>
-</div>
+
 
 <!-- Table Section -->
 <div class="bg-surface-container-lowest rounded-xl border border-surface-container-high shadow-sm overflow-hidden flex-1 flex flex-col">
@@ -120,11 +70,11 @@ include __DIR__ . '/../layouts/header.php';
         <table class="w-full text-left border-collapse">
             <thead>
                 <tr class="border-b border-surface-container-high bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm">
-                    <th class="px-6 py-4 font-semibold">ID Cliente</th>
+                    <th class="px-6 py-4 font-semibold text-center">ID</th>
                     <th class="px-6 py-4 font-semibold">Nombre</th>
                     <th class="px-6 py-4 font-semibold">Correo Electrónico</th>
                     <th class="px-6 py-4 font-semibold">Teléfono</th>
-                    <th class="px-6 py-4 font-semibold text-right">Pedidos Totales</th>
+                    <th class="px-6 py-4 font-semibold text-center">Pedidos</th>
                     <th class="px-6 py-4"></th>
                 </tr>
             </thead>
@@ -134,11 +84,11 @@ include __DIR__ . '/../layouts/header.php';
                 <?php else: ?>
                     <?php foreach ($clientes as $c): ?>
                     <tr class="hover:bg-primary/5 transition-colors group bg-surface-container-lowest">
-                        <td class="px-6 py-4 whitespace-nowrap text-on-surface-variant">#CLI-<?= str_pad($c['id_cliente'], 3, '0', STR_PAD_LEFT) ?></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-on-surface-variant text-center font-medium"><?= $c['id_cliente'] ?></td>
                         <td class="px-6 py-4 whitespace-nowrap font-medium"><?= htmlspecialchars($c['nombre']) ?></td>
                         <td class="px-6 py-4 whitespace-nowrap text-on-surface-variant"><?= htmlspecialchars($c['email']) ?></td>
                         <td class="px-6 py-4 whitespace-nowrap"><?= htmlspecialchars($c['telefono']) ?></td>
-                        <td class="px-6 py-4 whitespace-nowrap text-right font-medium">--</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-center font-medium"><?= $c['cantidad_pedidos'] ?></td>
                         <td class="px-6 py-4 whitespace-nowrap text-right">
                             <a href="/ShopOnline_Huila/views/clientes/editar.php?id=<?= $c['id_cliente'] ?>" class="text-tertiary hover:text-tertiary-container transition-colors p-1" title="Editar"><span class="material-symbols-outlined text-[20px]">edit</span></a>
                             

@@ -40,7 +40,8 @@ class Empleado
     public function obtenerTodos()
     {
         try {
-            $sql = "SELECT e.*, c.nombre as nombre_cargo 
+            $sql = "SELECT e.*, c.nombre as nombre_cargo, 
+                           (SELECT COUNT(*) FROM envios WHERE id_empleado = e.id_empleado) as cantidad_despachos
                 FROM empleados e 
                 INNER JOIN cargos c ON e.id_cargo = c.id_cargo
                 WHERE e.activo = 1";

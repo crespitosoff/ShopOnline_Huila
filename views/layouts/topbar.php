@@ -27,13 +27,7 @@ $searchPlaceholder = $searchPlaceholder ?? 'Buscar...';
     </div>
     <!-- Right: Actions & Profile -->
     <div class="flex items-center gap-md">
-        <button class="text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors relative">
-            <span class="material-symbols-outlined">notifications</span>
-            <span class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
-        </button>
-        <button class="text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors hidden sm:block">
-            <span class="material-symbols-outlined">settings</span>
-        </button>
+
         <div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container border border-outline-variant overflow-hidden ml-sm">
             <span class="material-symbols-outlined text-[20px]">person</span>
         </div>

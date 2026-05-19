@@ -25,7 +25,8 @@ $navItems = [
 <nav id="sidebar" class="bg-secondary shadow-md fixed left-0 top-0 h-full flex flex-col pt-8 pb-4 z-50 w-64 hidden md:flex">
     <!-- Brand Header -->
     <div class="px-6 mb-8">
-        <h1 class="font-headline-sm text-headline-sm font-black text-on-primary-fixed">ShopOnline Huila</h1>
+        <h1 class="font-headline-lg text-headline-lg font-black text-on-secondary">ShopOnline</h1>
+        <h2 class="font-headline-lg text-headline-lg font-black text-on-primary-fixed">Huila</h2>
         <p class="font-label-sm text-label-sm text-on-secondary opacity-70 mt-1">Portal de Gestión</p>
     </div>
 
@@ -50,10 +51,7 @@ $navItems = [
 
     <!-- Footer Links -->
     <div class="mt-auto px-2 space-y-2 border-t border-secondary-container pt-4">
-        <a class="text-on-secondary flex items-center px-4 py-3 opacity-80 hover:bg-primary/20 transition-all font-label-md text-label-md rounded-lg" href="#">
-            <span class="material-symbols-outlined mr-3">help</span>
-            <span>Centro de Ayuda</span>
-        </a>
+        <!-- Solo mantenemos Cerrar Sesión -->
         <a class="text-on-secondary flex items-center px-4 py-3 opacity-80 hover:bg-primary/20 transition-all font-label-md text-label-md rounded-lg" href="#">
             <span class="material-symbols-outlined mr-3">logout</span>
             <span>Cerrar Sesión</span>

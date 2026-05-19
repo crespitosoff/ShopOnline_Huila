@@ -139,7 +139,7 @@ include __DIR__ . '/../layouts/header.php';
                                     <div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-label-md"><?= $iniciales ?></div>
                                     <div>
                                         <p class="font-table-data text-table-data font-medium text-on-background"><?= htmlspecialchars($e['nombre']) ?></p>
-                                        <p class="font-body-sm text-body-sm text-on-surface-variant/70 text-xs">ID: EMP-<?= str_pad($e['id_empleado'], 3, '0', STR_PAD_LEFT) ?></p>
+                                        <p class="font-body-sm text-body-sm text-on-surface-variant/70 text-xs">ID: <?= $e['id_empleado'] ?></p>
                                     </div>
                                 </div>
                             </td>
@@ -149,7 +149,7 @@ include __DIR__ . '/../layouts/header.php';
                             <td class="py-4 px-6 font-table-data text-table-data text-right text-on-surface">$ <?= number_format($e['salario'], 0, ',', '.') ?></td>
                             <td class="py-4 px-6 font-table-data text-table-data text-on-surface-variant"><?= date('d M Y', strtotime($e['fecha_ingreso'])) ?></td>
                             <td class="py-4 px-6 text-center">
-                                <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-surface-variant text-on-surface-variant font-label-sm text-label-sm">--</span>
+                                <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-surface-variant text-on-surface-variant font-label-sm text-label-sm"><?= $e['cantidad_despachos'] ?></span>
                             </td>
                             <td class="py-4 px-6 text-right whitespace-nowrap">
                                 <a href="/ShopOnline_Huila/views/empleados/editar.php?id=<?= $e['id_empleado'] ?>" class="text-tertiary hover:text-tertiary-container transition-colors p-1" title="Editar">
