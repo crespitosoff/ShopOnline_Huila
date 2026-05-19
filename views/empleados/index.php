@@ -16,10 +16,10 @@ include __DIR__ . '/../layouts/header.php';
         <h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-background">Directorio de Empleados</h2>
         <p class="font-body-md text-body-md text-on-surface-variant mt-1">Administre el personal de operaciones y rastree asignaciones.</p>
     </div>
-    <button class="bg-primary text-on-primary px-6 py-2.5 rounded-lg font-label-md text-label-md flex items-center gap-2 hover:bg-primary/90 transition-colors shadow-sm">
+    <!-- <button class="bg-primary text-on-primary px-6 py-2.5 rounded-lg font-label-md text-label-md flex items-center gap-2 hover:bg-primary/90 transition-colors shadow-sm">
         <span class="material-symbols-outlined text-[18px]">add</span>
         Agregar Empleado
-    </button>
+    </button> -->
 </div>
 
 <!-- Alertas -->

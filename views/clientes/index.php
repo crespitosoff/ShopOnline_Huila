@@ -17,11 +17,11 @@ include __DIR__ . '/../layouts/header.php';
 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-lg">
     <div>
         <!-- Breadcrumb -->
-        <nav class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant mb-2">
+        <!-- <nav class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant mb-2">
             <a href="/ShopOnline_Huila/views/reportes/" class="hover:text-primary transition-colors">Reportes</a>
             <span class="material-symbols-outlined text-[16px]">chevron_right</span>
             <span class="text-on-surface">Pedidos por Cliente</span>
-        </nav>
+        </nav> -->
         <h2 class="font-headline-lg text-headline-lg text-on-surface">Directorio de Clientes</h2>
         <p class="font-body-md text-body-md text-on-surface-variant mt-1">Gestione la información y el historial de pedidos de sus clientes.</p>
     </div>
