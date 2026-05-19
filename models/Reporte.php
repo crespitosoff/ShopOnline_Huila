@@ -55,7 +55,7 @@ class Reporte
     public function obtenerVentasPorProducto()
     {
         try {
-            $sql = "SELECT pr.id_producto, pr.nombre, c.nombre as categoria, 
+            $sql = "SELECT pr.id_producto, pr.codigo_producto, pr.nombre, c.nombre as categoria, 
                            SUM(dp.cantidad) as cant_vendida, 
                            SUM(dp.cantidad * dp.precio_unitario) as ingreso_total 
                     FROM detalle_pedidos dp 

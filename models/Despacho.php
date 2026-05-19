@@ -13,7 +13,7 @@ class Despacho
     public function obtenerTodos()
     {
         try {
-            $sql = "SELECT e.id_envio, e.id_pedido, e.id_empleado, e.fecha_envio, e.fecha_entrega, e.guia_rastreo, e.id_estado,
+            $sql = "SELECT e.id_envio, e.codigo_envio, e.id_pedido, p.codigo_pedido, e.id_empleado, e.fecha_envio, e.fecha_entrega, e.guia_rastreo, e.id_estado,
                            p.direccion_envio, c.nombre as nombre_cliente, emp.nombre as nombre_empleado
                     FROM envios e
                     INNER JOIN pedidos p ON e.id_pedido = p.id_pedido

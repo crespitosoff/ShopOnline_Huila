@@ -96,7 +96,7 @@ include __DIR__ . '/../layouts/header.php';
                         }
                     ?>
                     <tr class="hover:bg-primary/5 transition-colors group <?= $estadoId == 2 ? 'bg-surface-container-lowest' : '' ?>">
-                        <td class="px-6 py-4 font-medium text-primary cursor-pointer hover:underline">#ORD-<?= str_pad($p['id_pedido'], 4, '0', STR_PAD_LEFT) ?></td>
+                        <td class="px-6 py-4 font-medium text-primary cursor-pointer hover:underline"><?= $p['codigo_pedido'] ?></td>
                         <td class="px-6 py-4 text-on-surface-variant"><?= date('d M, h:i A', strtotime($p['fecha_creacion'])) ?></td>
                         <td class="px-6 py-4">
                             <div class="font-medium"><?= htmlspecialchars($p['nombre_cliente']) ?></div>

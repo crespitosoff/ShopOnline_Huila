@@ -84,7 +84,7 @@ include __DIR__ . '/../layouts/header.php';
                 <?php else: ?>
                     <?php foreach ($clientes as $c): ?>
                     <tr class="hover:bg-primary/5 transition-colors group bg-surface-container-lowest">
-                        <td class="px-6 py-4 whitespace-nowrap text-on-surface-variant text-center font-medium"><?= $c['id_cliente'] ?></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-on-surface-variant text-center font-medium"><?= $c['codigo_cliente'] ?></td>
                         <td class="px-6 py-4 whitespace-nowrap font-medium"><?= htmlspecialchars($c['nombre']) ?></td>
                         <td class="px-6 py-4 whitespace-nowrap text-on-surface-variant"><?= htmlspecialchars($c['email']) ?></td>
                         <td class="px-6 py-4 whitespace-nowrap"><?= htmlspecialchars($c['telefono']) ?></td>

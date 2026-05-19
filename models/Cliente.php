@@ -32,7 +32,7 @@ class Cliente
     public function obtenerTodos()
     {
         try {
-            $sql = "SELECT id_cliente, nombre, email, telefono, 
+            $sql = "SELECT id_cliente, codigo_cliente, nombre, email, telefono, 
                            (SELECT COUNT(*) FROM pedidos WHERE id_cliente = c.id_cliente) as cantidad_pedidos 
                     FROM clientes c WHERE activo = 1";
             $stmt = $this->db->prepare($sql);

@@ -107,7 +107,7 @@ include __DIR__ . '/../layouts/header.php';
                         }
                     ?>
                     <tr class="border-b border-surface-variant hover:bg-primary/5 transition-colors">
-                        <td class="px-6 py-4 font-medium">PRD-<?= str_pad($p['id_producto'], 4, '0', STR_PAD_LEFT) ?></td>
+                        <td class="px-6 py-4 font-medium"><?= $p['codigo_producto'] ?></td>
                         <td class="px-6 py-4"><?= htmlspecialchars($p['nombre']) ?></td>
                         <td class="px-6 py-4 text-on-surface-variant"><?= htmlspecialchars($p['nombre_categoria']) ?></td>
                         <td class="px-6 py-4">$ <?= number_format($p['precio'], 0, ',', '.') ?></td>
