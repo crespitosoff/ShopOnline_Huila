@@ -83,7 +83,7 @@ Para desplegar este sistema localmente, sigue los siguientes pasos:
 2.  **Servidor Web y BD:** Enciende los servicios de **Apache** y **MySQL** en XAMPP.
 3.  **Crear la Base de Datos:**
     *   Ve a *phpMyAdmin* (`http://localhost/phpmyadmin`).
-    *   Crea una base de datos en blanco (se recomienda `shoponline_huila`).
+    *   Crea una base de datos en blanco (se recomienda `shoponline`).
     *   Ve a la pestaña "Importar" y carga el script principal ubicado en `docs/Script.sql`.
     *   (Opcional) Para tener información ficticia con qué interactuar, importa luego el script `docs/datos_prueba.sql`.
 4.  **Configurar Conexión:**
