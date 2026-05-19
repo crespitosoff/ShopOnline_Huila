@@ -18,9 +18,16 @@ Table "metodo_pago" {
 
 Table "clientes" {
   "id_cliente" INT [pk, increment]
-  "nombre" VARCHAR(100) [not null]
+  "primer_nombre" VARCHAR(50) [not null, default: '']
+  "segundo_nombre" VARCHAR(50)
+  "primer_apellido" VARCHAR(50) [not null, default: '']
+  "segundo_apellido" VARCHAR(50)
   "email" VARCHAR(100) [unique, not null]
+  "password" VARCHAR(255) [not null]
   "telefono" VARCHAR(20)
+  "activo" BOOLEAN [default: TRUE]
+  "fecha_registro" DATETIME [default: `CURRENT_TIMESTAMP`]
+  "SKU_cliente" VARCHAR(10)
 }
 
 Table "cargos" {
@@ -30,10 +37,17 @@ Table "cargos" {
 
 Table "empleados" {
   "id_empleado" INT [pk, increment]
-  "nombre" VARCHAR(100) [not null]
+  "primer_nombre" VARCHAR(50) [not null, default: '']
+  "segundo_nombre" VARCHAR(50)
+  "primer_apellido" VARCHAR(50) [not null, default: '']
+  "segundo_apellido" VARCHAR(50)
+  "email" VARCHAR(100) [unique, not null]
+  "password" VARCHAR(255) [not null]
   "id_cargo" INT [not null]
   "salario" DECIMAL(10,2) [not null]
   "fecha_ingreso" DATE [not null]
+  "activo" BOOLEAN [default: TRUE]
+  "SKU_empleado" VARCHAR(10)
 
   Indexes {
     id_cargo [name: "idx_emp_cargo"]
@@ -54,6 +68,7 @@ Table "productos" {
   "descripcion" TEXT
   "imagen" VARCHAR(255)
   "activo" BOOLEAN [default: TRUE]
+  "SKU_producto" VARCHAR(10)
 
   Indexes {
     id_categoria [name: "idx_prod_categoria"]
@@ -64,8 +79,10 @@ Table "pedidos" {
   "id_pedido" INT [pk, increment]
   "id_cliente" INT [not null]
   "fecha_creacion" DATETIME [default: `CURRENT_TIMESTAMP`]
-  "total" DECIMAL(10,2) [not null]
+  "direccion_envio" TEXT [not null]
+  "total" DECIMAL(10,2) [not null, default: 0.00]
   "id_estado" INT [not null, default: 1]
+  "SKU_pedido" VARCHAR(10)
 
   Indexes {
     id_cliente [name: "idx_ped_cliente"]
@@ -79,6 +96,7 @@ Table "pagos" {
   "monto" DECIMAL(10,2) [not null, check: `monto > 0`]
   "fecha_pago" DATETIME [default: `CURRENT_TIMESTAMP`]
   "id_metodo" INT [not null]
+  "SKU_pago" VARCHAR(10)
 
   Indexes {
     id_pedido [name: "idx_pago_pedido"]
@@ -86,10 +104,9 @@ Table "pagos" {
   }
 }
 
-Table "detalle_pedido" {
+Table "detalle_pedidos" {
   "id_pedido" INT [not null]
   "id_producto" INT [not null]
-
   "cantidad" INT [not null]
   "precio_unitario" DECIMAL(10,2) [not null]
 
@@ -101,13 +118,13 @@ Table "detalle_pedido" {
 
 Table "envios" {
   "id_envio" INT [pk, increment]
-  "id_pedido" INT [not null]
+  "id_pedido" INT [unique, not null]
   "id_empleado" INT [not null]
-  "direccion_envio" TEXT [not null]
   "fecha_envio" DATETIME [default: `CURRENT_TIMESTAMP`]
   "fecha_entrega" DATETIME
   "guia_rastreo" VARCHAR(100)
   "id_estado" INT [not null, default: 1]
+  "SKU_envio" VARCHAR(10)
 
   Indexes {
     id_pedido [name: "idx_env_pedido"]
@@ -120,20 +137,39 @@ Ref "fk_emp_cargo":"cargos"."id_cargo" < "empleados"."id_cargo" [update: cascade
 
 Ref "fk_prod_cat":"categorias"."id_categoria" < "productos"."id_categoria"
 
-Ref "fk_ped_est":"estado_pedido"."id_estado" < "pedidos"."id_estado"
-
 Ref "fk_ped_cli":"clientes"."id_cliente" < "pedidos"."id_cliente" [update: cascade, delete: restrict]
 
-Ref "fk_pago_met":"metodo_pago"."id_metodo" < "pagos"."id_metodo"
+Ref "fk_ped_est":"estado_pedido"."id_estado" < "pedidos"."id_estado"
 
 Ref "fk_pago_ped":"pedidos"."id_pedido" < "pagos"."id_pedido"
 
-Ref "fk_det_ped":"pedidos"."id_pedido" < "detalle_pedido"."id_pedido"
+Ref "fk_pago_met":"metodo_pago"."id_metodo" < "pagos"."id_metodo"
 
-Ref "fk_det_prod":"productos"."id_producto" < "detalle_pedido"."id_producto"
+Ref "fk_det_ped":"pedidos"."id_pedido" < "detalle_pedidos"."id_pedido"
 
-Ref "fk_env_est":"estado_envio"."id_estado" < "envios"."id_estado"
+Ref "fk_det_prod":"productos"."id_producto" < "detalle_pedidos"."id_producto"
 
 Ref "fk_env_ped":"pedidos"."id_pedido" < "envios"."id_pedido"
 
 Ref "fk_env_emp":"empleados"."id_empleado" < "envios"."id_empleado"
+
+Ref "fk_env_est":"estado_envio"."id_estado" < "envios"."id_estado"
+
+Records estado_pedido(nombre) {
+  'Pendiente'
+  'Pagado'
+  'Enviado'
+  'Cancelado'
+}
+
+Records estado_envio(nombre) {
+  'En preparación'
+  'En camino'
+  'Entregado'
+}
+
+Records metodo_pago(nombre) {
+  'Efectivo'
+  'Tarjeta'
+  'Transferencia'
+}
