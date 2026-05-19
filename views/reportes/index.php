@@ -107,7 +107,7 @@ include __DIR__ . '/../layouts/header.php';
                 <?php else: ?>
                     <?php foreach ($ventas as $index => $v): ?>
                     <tr class="border-b border-outline-variant hover:bg-surface-bright transition-colors <?= $index % 2 != 0 ? 'bg-surface-container-lowest' : '' ?>">
-                        <td class="py-4 px-6 font-mono text-sm text-on-surface-variant"><?= $v['codigo_producto'] ?></td>
+                        <td class="py-4 px-6 font-mono text-sm text-on-surface-variant"><?= $v['SKU_producto'] ?></td>
                         <td class="py-4 px-6 font-medium"><?= htmlspecialchars($v['nombre']) ?></td>
                         <td class="py-4 px-6 text-right text-on-surface-variant"><?= htmlspecialchars($v['categoria']) ?></td>
                         <td class="py-4 px-6 text-right"><?= number_format($v['cant_vendida'], 0, ',', '.') ?></td>

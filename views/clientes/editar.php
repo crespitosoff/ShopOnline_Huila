@@ -24,7 +24,7 @@ include __DIR__ . '/../layouts/header.php';
         <a href="/ShopOnline_Huila/views/clientes/" class="text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center p-2 rounded-full hover:bg-surface-container-high">
             <span class="material-symbols-outlined">arrow_back</span>
         </a>
-        <h2 class="font-headline-lg text-headline-lg text-on-surface">Editar Cliente <?= $cliente['codigo_cliente'] ?></h2>
+        <h2 class="font-headline-lg text-headline-lg text-on-surface">Editar Cliente <?= $cliente['SKU_cliente'] ?></h2>
     </div>
 
     <div class="bg-surface-container-lowest border border-surface-container-high rounded-xl p-6 shadow-sm">

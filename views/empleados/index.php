@@ -153,7 +153,7 @@ include __DIR__ . '/../layouts/header.php';
                                     <div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-label-md"><?= $iniciales ?></div>
                                     <div>
                                         <p class="font-table-data text-table-data font-medium text-on-background"><?= htmlspecialchars($e['nombre']) ?></p>
-                                        <p class="font-body-sm text-body-sm text-on-surface-variant/70 text-xs"><?= $e['codigo_empleado'] ?></p>
+                                        <p class="font-body-sm text-body-sm text-on-surface-variant/70 text-xs"><?= $e['SKU_empleado'] ?></p>
                                     </div>
                                 </div>
                             </td>

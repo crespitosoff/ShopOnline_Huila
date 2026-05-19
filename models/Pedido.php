@@ -13,7 +13,7 @@ class Pedido
     public function obtenerTodos()
     {
         try {
-            $sql = "SELECT p.*, c.nombre as nombre_cliente, ep.nombre as nombre_estado 
+            $sql = "SELECT p.*, TRIM(CONCAT_WS(' ', NULLIF(c.primer_nombre,''), NULLIF(c.segundo_nombre,''), NULLIF(c.primer_apellido,''), NULLIF(c.segundo_apellido,''))) as nombre_cliente, ep.nombre as nombre_estado 
                     FROM pedidos p 
                     INNER JOIN clientes c ON p.id_cliente = c.id_cliente 
                     INNER JOIN estado_pedido ep ON p.id_estado = ep.id_estado

@@ -43,7 +43,9 @@ class Empleado
     public function obtenerTodos()
     {
         try {
-            $sql = "SELECT e.*, c.nombre as nombre_cargo, 
+            $sql = "SELECT e.*, 
+                           TRIM(CONCAT_WS(' ', NULLIF(e.primer_nombre,''), NULLIF(e.segundo_nombre,''), NULLIF(e.primer_apellido,''), NULLIF(e.segundo_apellido,''))) as nombre,
+                           c.nombre as nombre_cargo, 
                            (SELECT COUNT(*) FROM envios WHERE id_empleado = e.id_empleado) as cantidad_despachos
                 FROM empleados e 
                 INNER JOIN cargos c ON e.id_cargo = c.id_cargo
@@ -64,7 +66,7 @@ class Empleado
     public function obtenerPorId($id)
     {
         try {
-            $sql = "SELECT * FROM empleados WHERE id_empleado = :id";
+            $sql = "SELECT *, TRIM(CONCAT_WS(' ', NULLIF(primer_nombre,''), NULLIF(segundo_nombre,''), NULLIF(primer_apellido,''), NULLIF(segundo_apellido,''))) as nombre FROM empleados WHERE id_empleado = :id";
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt->execute();

@@ -13,8 +13,10 @@ class Despacho
     public function obtenerTodos()
     {
         try {
-            $sql = "SELECT e.id_envio, e.codigo_envio, e.id_pedido, p.codigo_pedido, e.id_empleado, e.fecha_envio, e.fecha_entrega, e.guia_rastreo, e.id_estado,
-                           p.direccion_envio, c.nombre as nombre_cliente, emp.nombre as nombre_empleado
+            $sql = "SELECT e.id_envio, e.SKU_envio, e.id_pedido, p.SKU_pedido, e.id_empleado, e.fecha_envio, e.fecha_entrega, e.guia_rastreo, e.id_estado,
+                           p.direccion_envio, 
+                           TRIM(CONCAT_WS(' ', NULLIF(c.primer_nombre,''), NULLIF(c.segundo_nombre,''), NULLIF(c.primer_apellido,''), NULLIF(c.segundo_apellido,''))) as nombre_cliente, 
+                           TRIM(CONCAT_WS(' ', NULLIF(emp.primer_nombre,''), NULLIF(emp.segundo_nombre,''), NULLIF(emp.primer_apellido,''), NULLIF(emp.segundo_apellido,''))) as nombre_empleado
                     FROM envios e
                     INNER JOIN pedidos p ON e.id_pedido = p.id_pedido
                     INNER JOIN clientes c ON p.id_cliente = c.id_cliente

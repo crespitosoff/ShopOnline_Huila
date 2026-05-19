@@ -128,7 +128,7 @@ include __DIR__ . '/../layouts/header.php';
                         $iniciales = strtoupper(substr($d['nombre_cliente'], 0, 2));
                     ?>
                     <tr class="hover:bg-primary-fixed/10 transition-colors group <?= $estadoId == 1 ? 'bg-surface-container-lowest' : '' ?>">
-                        <td class="py-4 px-6 font-medium text-primary"><?= $d['codigo_pedido'] ?></td>
+                        <td class="py-4 px-6 font-medium text-primary"><?= $d['SKU_pedido'] ?></td>
                         <td class="py-4 px-6">
                             <div class="flex items-center gap-3">
                                 <div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface-variant font-bold text-xs"><?= $iniciales ?></div>

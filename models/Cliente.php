@@ -35,7 +35,10 @@ class Cliente
     public function obtenerTodos()
     {
         try {
-            $sql = "SELECT id_cliente, codigo_cliente, nombre, email, telefono, 
+            $sql = "SELECT id_cliente, SKU_cliente, 
+                           TRIM(CONCAT_WS(' ', NULLIF(primer_nombre,''), NULLIF(segundo_nombre,''), NULLIF(primer_apellido,''), NULLIF(segundo_apellido,''))) as nombre,
+                           primer_nombre, segundo_nombre, primer_apellido, segundo_apellido,
+                           email, telefono, 
                            (SELECT COUNT(*) FROM pedidos WHERE id_cliente = c.id_cliente) as cantidad_pedidos 
                     FROM clientes c WHERE activo = 1";
             $stmt = $this->db->prepare($sql);
@@ -51,7 +54,7 @@ class Cliente
     public function obtenerPorId($id)
     {
         try {
-            $sql = "SELECT * FROM clientes WHERE id_cliente = :id";
+            $sql = "SELECT *, TRIM(CONCAT_WS(' ', NULLIF(primer_nombre,''), NULLIF(segundo_nombre,''), NULLIF(primer_apellido,''), NULLIF(segundo_apellido,''))) as nombre FROM clientes WHERE id_cliente = :id";
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt->execute();

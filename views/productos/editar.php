@@ -29,7 +29,7 @@ include __DIR__ . '/../layouts/header.php';
         <a href="/ShopOnline_Huila/views/productos/" class="text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center p-2 rounded-full hover:bg-surface-container-high">
             <span class="material-symbols-outlined">arrow_back</span>
         </a>
-        <h2 class="font-headline-lg text-headline-lg text-on-surface">Editar Producto <?= $producto['codigo_producto'] ?></h2>
+        <h2 class="font-headline-lg text-headline-lg text-on-surface">Editar Producto <?= $producto['SKU_producto'] ?></h2>
     </div>
 
     <!-- Alertas -->
