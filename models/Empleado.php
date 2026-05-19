@@ -11,16 +11,19 @@ class Empleado
     }
 
 
-    public function registrar($nombre, $email, $password, $id_cargo, $salario, $fecha_ingreso)
+    public function registrar($primer_nombre, $segundo_nombre, $primer_apellido, $segundo_apellido, $email, $password, $id_cargo, $salario, $fecha_ingreso)
     {
         try {
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            $sql = "INSERT INTO empleados (nombre, email, password, id_cargo, salario, fecha_ingreso) 
-                    VALUES (:nombre, :email, :password, :id_cargo, :salario, :fecha_ingreso)";
+            $sql = "INSERT INTO empleados (primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, email, password, id_cargo, salario, fecha_ingreso) 
+                    VALUES (:primer_nombre, :segundo_nombre, :primer_apellido, :segundo_apellido, :email, :password, :id_cargo, :salario, :fecha_ingreso)";
 
             $stmt = $this->db->prepare($sql);
 
-            $stmt->bindParam(':nombre', $nombre);
+            $stmt->bindParam(':primer_nombre', $primer_nombre);
+            $stmt->bindParam(':segundo_nombre', $segundo_nombre);
+            $stmt->bindParam(':primer_apellido', $primer_apellido);
+            $stmt->bindParam(':segundo_apellido', $segundo_apellido);
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':password', $hashed_password);
             $stmt->bindParam(':id_cargo', $id_cargo, PDO::PARAM_INT);
@@ -72,13 +75,16 @@ class Empleado
             return null;
         }
     }
-    public function actualizar($id, $nombre, $email, $id_cargo, $salario)
+    public function actualizar($id, $primer_nombre, $segundo_nombre, $primer_apellido, $segundo_apellido, $email, $id_cargo, $salario)
     {
         try {
-            $sql = "UPDATE empleados SET nombre = :nom, email = :email, id_cargo = :car, salario = :sal 
+            $sql = "UPDATE empleados SET primer_nombre = :pn, segundo_nombre = :sn, primer_apellido = :pa, segundo_apellido = :sa, email = :email, id_cargo = :car, salario = :sal 
                 WHERE id_empleado = :id";
             $stmt = $this->db->prepare($sql);
-            $stmt->bindParam(':nom', $nombre);
+            $stmt->bindParam(':pn', $primer_nombre);
+            $stmt->bindParam(':sn', $segundo_nombre);
+            $stmt->bindParam(':pa', $primer_apellido);
+            $stmt->bindParam(':sa', $segundo_apellido);
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':car', $id_cargo, PDO::PARAM_INT);
             $stmt->bindParam(':sal', $salario);

@@ -63,9 +63,23 @@ include __DIR__ . '/../layouts/header.php';
                 <span class="material-symbols-outlined text-primary">person_add</span>
             </div>
             <form class="space-y-4" action="/ShopOnline_Huila/controllers/empleados/CrearEmpleadoController.php" method="POST">
-                <div>
-                    <label class="block font-label-sm text-label-sm text-on-surface-variant mb-1">Nombre Completo</label>
-                    <input name="nombre" class="w-full bg-surface-container-lowest border border-outline-variant rounded-md px-3 py-2 text-body-sm font-body-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" placeholder="ej. Maria Gonzalez" type="text" required>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-label-sm text-label-sm text-on-surface-variant mb-1">Primer Nombre</label>
+                        <input name="primer_nombre" class="w-full bg-surface-container-lowest border border-outline-variant rounded-md px-3 py-2 text-body-sm font-body-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" placeholder="ej. Maria" type="text" required>
+                    </div>
+                    <div>
+                        <label class="block font-label-sm text-label-sm text-on-surface-variant mb-1">Segundo Nombre</label>
+                        <input name="segundo_nombre" class="w-full bg-surface-container-lowest border border-outline-variant rounded-md px-3 py-2 text-body-sm font-body-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" placeholder="" type="text">
+                    </div>
+                    <div>
+                        <label class="block font-label-sm text-label-sm text-on-surface-variant mb-1">Primer Apellido</label>
+                        <input name="primer_apellido" class="w-full bg-surface-container-lowest border border-outline-variant rounded-md px-3 py-2 text-body-sm font-body-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" placeholder="ej. Gonzalez" type="text" required>
+                    </div>
+                    <div>
+                        <label class="block font-label-sm text-label-sm text-on-surface-variant mb-1">Segundo Apellido</label>
+                        <input name="segundo_apellido" class="w-full bg-surface-container-lowest border border-outline-variant rounded-md px-3 py-2 text-body-sm font-body-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" placeholder="" type="text">
+                    </div>
                 </div>
                 <div>
                     <label class="block font-label-sm text-label-sm text-on-surface-variant mb-1">Correo Electrónico</label>

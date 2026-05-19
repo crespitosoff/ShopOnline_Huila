@@ -14,9 +14,23 @@ include __DIR__ . '/../layouts/header.php';
 
     <div class="bg-surface-container-lowest border border-surface-container-high rounded-xl p-6 shadow-sm">
         <form action="/ShopOnline_Huila/controllers/clientes/CrearClienteController.php" method="POST" class="space-y-6">
-            <div>
-                <label for="nombre" class="block font-label-md text-label-md text-on-surface mb-1">Nombre Completo *</label>
-                <input type="text" id="nombre" name="nombre" required class="w-full px-4 py-2 border border-outline-variant rounded-lg font-body-md text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-surface-container-lowest">
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label for="primer_nombre" class="block font-label-md text-label-md text-on-surface mb-1">Primer Nombre *</label>
+                    <input type="text" id="primer_nombre" name="primer_nombre" required class="w-full px-4 py-2 border border-outline-variant rounded-lg font-body-md text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-surface-container-lowest">
+                </div>
+                <div>
+                    <label for="segundo_nombre" class="block font-label-md text-label-md text-on-surface mb-1">Segundo Nombre</label>
+                    <input type="text" id="segundo_nombre" name="segundo_nombre" class="w-full px-4 py-2 border border-outline-variant rounded-lg font-body-md text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-surface-container-lowest">
+                </div>
+                <div>
+                    <label for="primer_apellido" class="block font-label-md text-label-md text-on-surface mb-1">Primer Apellido *</label>
+                    <input type="text" id="primer_apellido" name="primer_apellido" required class="w-full px-4 py-2 border border-outline-variant rounded-lg font-body-md text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-surface-container-lowest">
+                </div>
+                <div>
+                    <label for="segundo_apellido" class="block font-label-md text-label-md text-on-surface mb-1">Segundo Apellido</label>
+                    <input type="text" id="segundo_apellido" name="segundo_apellido" class="w-full px-4 py-2 border border-outline-variant rounded-lg font-body-md text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-surface-container-lowest">
+                </div>
             </div>
             
             <div>

@@ -11,13 +11,16 @@ class Cliente
         $this->db = Conexion::conectar();
     }
 
-    public function registrar($nombre, $email, $password, $telefono)
+    public function registrar($primer_nombre, $segundo_nombre, $primer_apellido, $segundo_apellido, $email, $password, $telefono)
     {
         try {
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            $sql = "INSERT INTO clientes (nombre, email, password, telefono) VALUES (:nombre, :email, :password, :telefono)";
+            $sql = "INSERT INTO clientes (primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, email, password, telefono) VALUES (:primer_nombre, :segundo_nombre, :primer_apellido, :segundo_apellido, :email, :password, :telefono)";
             $stmt = $this->db->prepare($sql);
-            $stmt->bindParam(':nombre', $nombre);
+            $stmt->bindParam(':primer_nombre', $primer_nombre);
+            $stmt->bindParam(':segundo_nombre', $segundo_nombre);
+            $stmt->bindParam(':primer_apellido', $primer_apellido);
+            $stmt->bindParam(':segundo_apellido', $segundo_apellido);
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':password', $hashed_password);
             $stmt->bindParam(':telefono', $telefono);
@@ -59,13 +62,16 @@ class Cliente
         }
     }
 
-    public function actualizar($id, $nombre, $email, $telefono)
+    public function actualizar($id, $primer_nombre, $segundo_nombre, $primer_apellido, $segundo_apellido, $email, $telefono)
     {
         try {
-            $sql = "UPDATE clientes SET nombre = :nom, email = :em, telefono = :tel 
+            $sql = "UPDATE clientes SET primer_nombre = :pn, segundo_nombre = :sn, primer_apellido = :pa, segundo_apellido = :sa, email = :em, telefono = :tel 
                 WHERE id_cliente = :id";
             $stmt = $this->db->prepare($sql);
-            $stmt->bindParam(':nom', $nombre);
+            $stmt->bindParam(':pn', $primer_nombre);
+            $stmt->bindParam(':sn', $segundo_nombre);
+            $stmt->bindParam(':pa', $primer_apellido);
+            $stmt->bindParam(':sa', $segundo_apellido);
             $stmt->bindParam(':em', $email);
             $stmt->bindParam(':tel', $telefono);
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);

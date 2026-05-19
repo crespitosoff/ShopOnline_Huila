@@ -31,9 +31,23 @@ include __DIR__ . '/../layouts/header.php';
         <form action="/ShopOnline_Huila/controllers/clientes/ActualizarClienteController.php" method="POST" class="space-y-6">
             <input type="hidden" name="id_cliente" value="<?= $cliente['id_cliente'] ?>">
             
-            <div>
-                <label for="nombre" class="block font-label-md text-label-md text-on-surface mb-1">Nombre Completo *</label>
-                <input type="text" id="nombre" name="nombre" required value="<?= htmlspecialchars($cliente['nombre']) ?>" class="w-full px-4 py-2 border border-outline-variant rounded-lg font-body-md text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-surface-container-lowest">
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label for="primer_nombre" class="block font-label-md text-label-md text-on-surface mb-1">Primer Nombre *</label>
+                    <input type="text" id="primer_nombre" name="primer_nombre" required value="<?= htmlspecialchars($cliente['primer_nombre'] ?? '') ?>" class="w-full px-4 py-2 border border-outline-variant rounded-lg font-body-md text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-surface-container-lowest">
+                </div>
+                <div>
+                    <label for="segundo_nombre" class="block font-label-md text-label-md text-on-surface mb-1">Segundo Nombre</label>
+                    <input type="text" id="segundo_nombre" name="segundo_nombre" value="<?= htmlspecialchars($cliente['segundo_nombre'] ?? '') ?>" class="w-full px-4 py-2 border border-outline-variant rounded-lg font-body-md text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-surface-container-lowest">
+                </div>
+                <div>
+                    <label for="primer_apellido" class="block font-label-md text-label-md text-on-surface mb-1">Primer Apellido *</label>
+                    <input type="text" id="primer_apellido" name="primer_apellido" required value="<?= htmlspecialchars($cliente['primer_apellido'] ?? '') ?>" class="w-full px-4 py-2 border border-outline-variant rounded-lg font-body-md text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-surface-container-lowest">
+                </div>
+                <div>
+                    <label for="segundo_apellido" class="block font-label-md text-label-md text-on-surface mb-1">Segundo Apellido</label>
+                    <input type="text" id="segundo_apellido" name="segundo_apellido" value="<?= htmlspecialchars($cliente['segundo_apellido'] ?? '') ?>" class="w-full px-4 py-2 border border-outline-variant rounded-lg font-body-md text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-surface-container-lowest">
+                </div>
             </div>
             
             <div>

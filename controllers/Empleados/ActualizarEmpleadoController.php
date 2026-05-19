@@ -2,18 +2,21 @@
 require_once __DIR__ . '/../../models/Empleado.php';
 
 $id = $_POST['id_empleado'] ?? 0;
-$nombre = trim($_POST['nombre'] ?? '');
+$primer_nombre = trim($_POST['primer_nombre'] ?? '');
+$segundo_nombre = trim($_POST['segundo_nombre'] ?? '');
+$primer_apellido = trim($_POST['primer_apellido'] ?? '');
+$segundo_apellido = trim($_POST['segundo_apellido'] ?? '');
 $email = trim($_POST['email'] ?? '');
 $id_cargo = (float) ($_POST['id_cargo'] ?? '');
 $salario = trim($_POST['salario'] ?? '');
 
-if (empty($id) || empty($nombre) || empty($id_cargo) || !is_numeric($salario)) {
+if (empty($id) || empty($primer_nombre) || empty($primer_apellido) || empty($id_cargo) || !is_numeric($salario)) {
 header("Location: /ShopOnline_Huila/views/empleados/editar.php?id=$id&error=400");
     exit;
 }
 
 $objEmpleado = new Empleado();
-if ($objEmpleado->actualizar($id, $nombre, $email, $id_cargo, $salario)) {
+if ($objEmpleado->actualizar($id, $primer_nombre, $segundo_nombre, $primer_apellido, $segundo_apellido, $email, $id_cargo, $salario)) {
 header("Location: /ShopOnline_Huila/views/empleados/?success=update");
 } else {
 header("Location: /ShopOnline_Huila/views/empleados/editar.php?id=$id&error=1");
