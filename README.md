@@ -90,7 +90,7 @@ Para desplegar este sistema localmente, sigue los siguientes pasos:
     *   Si tu base de datos tiene un nombre o contraseña distintos, modifícalo en `config/conexion.php`.
 5.  **Iniciar Sesión:**
     *   Accede al sistema desde tu navegador en `http://localhost/ShopOnline_Huila`.
-    *   Utiliza las credenciales de un empleado Administrador insertado en `datos_prueba.sql` (ej. `juan@empresa.com`, contraseña `123456`).
+    *   Utiliza las credenciales de un empleado Administrador insertado en `datos_prueba.sql` (ej. `carlos.h@shop.com`, contraseña `12345678`).
 
 ---
 
