@@ -50,9 +50,9 @@ include __DIR__ . '/../layouts/header.php';
         <button data-status-id="3" class="filter-tab px-4 py-2 bg-surface-container-high text-on-surface-variant hover:bg-surface-container-highest font-label-md text-label-md rounded-lg transition-colors">Enviados (<?= $enviados ?>)</button>
     </div>
     <div class="flex gap-2 w-full md:w-auto">
-        <button class="border border-outline-variant text-on-surface-variant px-3 py-1.5 rounded-md font-label-sm text-label-sm hover:bg-surface-container-low transition-colors flex items-center gap-1 w-full md:w-auto justify-center">
+        <!-- <button class="border border-outline-variant text-on-surface-variant px-3 py-1.5 rounded-md font-label-sm text-label-sm hover:bg-surface-container-low transition-colors flex items-center gap-1 w-full md:w-auto justify-center">
             <span class="material-symbols-outlined text-[16px]">filter_list</span> Filtros Avanzados
-        </button>
+        </button> -->
         <a href="/ShopOnline_Huila/controllers/exportar/ExportarController.php?modulo=pedidos" class="border border-outline-variant text-on-surface-variant px-3 py-1.5 rounded-md font-label-sm text-label-sm hover:bg-surface-container-low transition-colors flex items-center gap-1 w-full md:w-auto justify-center">
             <span class="material-symbols-outlined text-[16px]">download</span> Exportar
         </a>
