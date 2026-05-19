@@ -9,20 +9,20 @@ USE shoponline;
 INSERT IGNORE INTO cargos (id_cargo, nombre) VALUES 
 (1, 'Administrador'), (2, 'Vendedor'), (3, 'Logística'), (4, 'Soporte'), (5, 'Contador');
 
-INSERT IGNORE INTO empleados (id_empleado, nombre, email, id_cargo, password, salario, fecha_ingreso, activo) VALUES
-(1, 'Carlos Huertas', 'carlos.h@shop.com', 1, '12345678', 1000000, '2023-10-26', 1),
-(2, 'Maria Lopez', 'maria.l@shop.com', 2, '12345678', 2000000, '2023-10-26', 1),
-(3, 'Fernando Moto', 'fer.m@shop.com', 3, '12345678', 3000000, '2023-10-26', 1),
-(4, 'Camila Rivas', 'cami.r@shop.com', 3, '12345678', 4000000, '2023-10-26', 1),
-(5, 'Jorge Perez', 'jorge.p@shop.com', 4, '12345678', 5000000, '2023-10-26', 1);
+INSERT IGNORE INTO empleados (id_empleado, primer_nombre, primer_apellido, email, id_cargo, password, salario, fecha_ingreso, activo) VALUES
+(1, 'Carlos', 'Huertas', 'carlos.h@shop.com', 1, '12345678', 1000000, '2023-10-26', 1),
+(2, 'Maria', 'Lopez', 'maria.l@shop.com', 2, '12345678', 2000000, '2023-10-26', 1),
+(3, 'Fernando', 'Moto', 'fer.m@shop.com', 3, '12345678', 3000000, '2023-10-26', 1),
+(4, 'Camila', 'Rivas', 'cami.r@shop.com', 3, '12345678', 4000000, '2023-10-26', 1),
+(5, 'Jorge', 'Perez', 'jorge.p@shop.com', 4, '12345678', 5000000, '2023-10-26', 1);
 
 -- 2. CLIENTES (5 clientes)
-INSERT IGNORE INTO clientes (id_cliente, nombre, email, telefono, activo, fecha_registro) VALUES
-(1, 'Ana Rodriguez', 'ana.r@mail.com', '3201112233', 1, '2023-10-26'),
-(2, 'Luis Gomez', 'luis.g@mail.com', '3202223344', 1, '2023-10-26'),
-(3, 'Sofía Castro', 'sofia.c@mail.com', '3203334455', 1, '2023-10-26'),
-(4, 'Miguel Diaz', 'miguel.d@mail.com', '3204445566', 1, '2023-10-26'),
-(5, 'Laura Muñoz', 'laura.m@mail.com', '3205556677', 1, '2023-10-26');
+INSERT IGNORE INTO clientes (id_cliente, primer_nombre, primer_apellido, email, telefono, activo, fecha_registro) VALUES
+(1, 'Ana', 'Rodriguez', 'ana.r@mail.com', '3201112233', 1, '2023-10-26'),
+(2, 'Luis', 'Gomez', 'luis.g@mail.com', '3202223344', 1, '2023-10-26'),
+(3, 'Sofía', 'Castro', 'sofia.c@mail.com', '3203334455', 1, '2023-10-26'),
+(4, 'Miguel', 'Diaz', 'miguel.d@mail.com', '3204445566', 1, '2023-10-26'),
+(5, 'Laura', 'Muñoz', 'laura.m@mail.com', '3205556677', 1, '2023-10-26');
 
 -- 3. CATEGORÍAS (5 categorías)
 INSERT IGNORE INTO categorias (id_categoria, nombre) VALUES

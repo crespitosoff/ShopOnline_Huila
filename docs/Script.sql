@@ -35,12 +35,16 @@ CREATE TABLE metodo_pago (
 
 CREATE TABLE clientes (
     id_cliente INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
+    primer_nombre VARCHAR(50) NOT NULL DEFAULT '',
+    segundo_nombre VARCHAR(50) DEFAULT NULL,
+    primer_apellido VARCHAR(50) NOT NULL DEFAULT '',
+    segundo_apellido VARCHAR(50) DEFAULT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     telefono VARCHAR(20),
     activo BOOLEAN DEFAULT TRUE,
-    fecha_registro DATETIME DEFAULT CURRENT_TIMESTAMP
+    fecha_registro DATETIME DEFAULT CURRENT_TIMESTAMP,
+    SKU_cliente VARCHAR(10) GENERATED ALWAYS AS (CONCAT('CLI-', LPAD(id_cliente, 4, '0'))) VIRTUAL
 ) ENGINE=InnoDB;
 
 CREATE TABLE cargos (
@@ -50,13 +54,17 @@ CREATE TABLE cargos (
 
 CREATE TABLE empleados (
     id_empleado INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
+    primer_nombre VARCHAR(50) NOT NULL DEFAULT '',
+    segundo_nombre VARCHAR(50) DEFAULT NULL,
+    primer_apellido VARCHAR(50) NOT NULL DEFAULT '',
+    segundo_apellido VARCHAR(50) DEFAULT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     id_cargo INT NOT NULL,
     salario DECIMAL(10,2) NOT NULL,
     fecha_ingreso DATE NOT NULL,
     activo BOOLEAN DEFAULT TRUE,
+    SKU_empleado VARCHAR(10) GENERATED ALWAYS AS (CONCAT('EMP-', LPAD(id_empleado, 4, '0'))) VIRTUAL,
     
     INDEX idx_emp_cargo (id_cargo),
 
@@ -81,6 +89,7 @@ CREATE TABLE productos (
     descripcion TEXT,
     imagen VARCHAR(255),
     activo BOOLEAN DEFAULT TRUE,
+    SKU_producto VARCHAR(10) GENERATED ALWAYS AS (CONCAT('PRD-', LPAD(id_producto, 4, '0'))) VIRTUAL,
     
     INDEX idx_prod_categoria (id_categoria),
     
@@ -104,6 +113,7 @@ CREATE TABLE pedidos (
     total DECIMAL(10,2) NOT NULL DEFAULT 0.00,
     
     id_estado INT NOT NULL DEFAULT 1,
+    SKU_pedido VARCHAR(10) GENERATED ALWAYS AS (CONCAT('ORD-', LPAD(id_pedido, 4, '0'))) VIRTUAL,
     
     INDEX idx_ped_cliente (id_cliente),
     INDEX idx_ped_estado (id_estado),
@@ -129,6 +139,7 @@ CREATE TABLE pagos (
     monto DECIMAL(10,2) NOT NULL CHECK (monto > 0),
     fecha_pago DATETIME DEFAULT CURRENT_TIMESTAMP,
     id_metodo INT NOT NULL,
+    SKU_pago VARCHAR(10) GENERATED ALWAYS AS (CONCAT('PAG-', LPAD(id_pago, 4, '0'))) VIRTUAL,
     
     INDEX idx_pago_pedido (id_pedido),
     INDEX idx_pago_metodo (id_metodo),
@@ -184,6 +195,7 @@ CREATE TABLE envios (
     fecha_entrega DATETIME,
     guia_rastreo VARCHAR(100),
     id_estado INT NOT NULL DEFAULT 1,
+    SKU_envio VARCHAR(10) GENERATED ALWAYS AS (CONCAT('ENV-', LPAD(id_envio, 4, '0'))) VIRTUAL,
     
     INDEX idx_env_pedido (id_pedido),
     INDEX idx_env_empleado (id_empleado),
