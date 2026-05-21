@@ -23,13 +23,6 @@ $navItems = [
 
 <!-- SideNavBar (Desktop) -->
 <nav id="sidebar" class="bg-secondary shadow-md fixed left-0 top-0 h-full flex flex-col pt-8 pb-4 z-50 w-64 hidden md:flex">
-    <!-- Brand Header -->
-    <div class="px-6 mb-8">
-        <h1 class="font-headline-lg text-headline-lg font-black text-on-secondary">ShopOnline</h1>
-        <h2 class="font-headline-lg text-headline-lg font-black text-on-primary-fixed">Huila</h2>
-        <p class="font-label-sm text-label-sm text-on-secondary opacity-70 mt-1">Portal de Gestión</p>
-    </div>
-
     <!-- Main Nav Links -->
     <div class="flex-1 overflow-y-auto px-2 space-y-2">
         <?php foreach ($navItems as $item): ?>
@@ -50,8 +43,16 @@ $navItems = [
     </div>
 
     <!-- Footer Links -->
-    <div class="mt-auto px-2 space-y-2 border-t border-secondary-container pt-4">
-        <!-- Solo mantenemos Cerrar Sesión -->
+    <div class="mt-auto px-6 pt-4">
+        <!-- Brand Logo -->
+        <div class="flex flex-col items-center py-3">
+            <img src="/ShopOnline_Huila/assets/logo.png" alt="ShopOnline Huila" class="w-24 h-24 rounded-full object-cover mb-1">
+            <h1 class="font-headline-sm text-headline-sm font-black text-on-secondary leading-tight">ShopOnline</h1>
+            <h2 class="font-headline-sm text-headline-sm font-black text-on-primary-fixed leading-tight">Huila</h2>
+            <p class="font-label-sm text-label-sm text-on-secondary opacity-70">Portal de Gestión</p>
+        </div>
+        <hr class="border-secondary-container opacity-50">
+        <!-- Cerrar Sesión -->
         <a class="text-on-secondary flex items-center px-4 py-3 opacity-80 hover:bg-primary/20 transition-all font-label-md text-label-md rounded-lg" href="/ShopOnline_Huila/controllers/auth/LogoutController.php">
             <span class="material-symbols-outlined mr-3">logout</span>
             <span>Cerrar Sesión</span>

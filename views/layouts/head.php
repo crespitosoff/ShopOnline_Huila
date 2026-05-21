@@ -4,6 +4,9 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title><?php echo $pageTitle ?? 'ShopOnline Huila'; ?></title>
+    <link rel="icon" type="image/png" href="/ShopOnline_Huila/assets/favicon.png">
+    <link rel="shortcut icon" href="/ShopOnline_Huila/assets/favicon.png">
+    <link rel="apple-touch-icon" href="/ShopOnline_Huila/assets/logo.png">
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">

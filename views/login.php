@@ -11,6 +11,9 @@ if (isset($_SESSION['empleado_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión - ShopOnline Huila</title>
+    <link rel="icon" type="image/png" href="/ShopOnline_Huila/assets/favicon.png">
+    <link rel="shortcut icon" href="/ShopOnline_Huila/assets/favicon.png">
+    <link rel="apple-touch-icon" href="/ShopOnline_Huila/assets/logo.png">
     <!-- Tailwind CSS (via CDN for standalone page) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -24,10 +27,15 @@ if (isset($_SESSION['empleado_id'])) {
 <body class="bg-gray-50 flex items-center justify-center min-h-screen">
 
     <div class="flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-2xl shadow-xl flex-col">
-        <div class="px-8 pt-10 pb-8 bg-login text-white text-center">
-            <h1 class="text-3xl font-black mb-1">ShopOnline</h1>
-            <h2 class="text-xl font-medium text-cyan-200">Huila</h2>
-            <p class="mt-2 text-sm text-cyan-100 opacity-80">Portal de Gestión Interna</p>
+        <div class="px-8 pt-10 pb-8 bg-login text-white text-center flex flex-col items-center">
+            <div class="flex items-center gap-4 mb-2">
+                <img src="/ShopOnline_Huila/assets/logo.png" alt="ShopOnline Huila" class="w-20 h-20 rounded-full object-cover flex-shrink-0">
+                <div class="text-left">
+                    <h1 class="text-3xl font-black leading-tight">ShopOnline</h1>
+                    <h2 class="text-2xl font-medium text-cyan-200 leading-tight">Huila</h2>
+                </div>
+            </div>
+            <p class="text-sm text-cyan-100 opacity-80">Portal de Gestión Interna</p>
         </div>
 
         <div class="px-8 py-8 bg-white">

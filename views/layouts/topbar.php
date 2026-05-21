@@ -19,7 +19,10 @@ $iniciales = strtoupper(substr($usuarioPrimerNombre, 0, 2));
             <span class="material-symbols-outlined">menu</span>
         </button>
         <!-- Mobile Brand -->
-        <h2 class="md:hidden font-headline-sm text-headline-sm font-bold text-primary">ShopOnline Huila</h2>
+        <div class="md:hidden flex items-center gap-2">
+            <img src="/ShopOnline_Huila/assets/logo.png" alt="ShopOnline Huila" class="w-7 h-7 rounded-full object-cover">
+            <span class="font-headline-sm text-headline-sm font-bold text-primary">ShopOnline Huila</span>
+        </div>
         <!-- Desktop Search -->
         <div class="hidden md:flex relative w-64 lg:w-96">
             <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
