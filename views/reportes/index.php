@@ -1,13 +1,20 @@
 <?php
+
 require_once __DIR__ . '/../../models/Reporte.php';
 $objReporte = new Reporte();
 $periodo = $_GET['periodo'] ?? 'all';
 $kpis = $objReporte->obtenerMapeoKPIs($periodo);
 $ventas = $objReporte->obtenerVentasPorProducto($periodo);
-
+$fecha_consulta = $_GET['fecha_consulta'] ?? date('Y-m-d');
+$pedidos_fecha = $objReporte->obtenerPedidosPorFecha($fecha_consulta);
 $pageTitle = 'Reportes y Analítica - ShopOnline Huila';
 $activePage = 'reportes';
 $searchPlaceholder = 'Buscar reportes...';
+$id_pedido_consulta = $_GET['id_pedido_consulta'] ?? '';
+$detalle_pedido = [];
+if (!empty($id_pedido_consulta) && is_numeric($id_pedido_consulta)) {
+    $detalle_pedido = $objReporte->obtenerDetallePedido($id_pedido_consulta);
+}
 include __DIR__ . '/../layouts/header.php';
 ?>
 
@@ -134,6 +141,246 @@ include __DIR__ . '/../layouts/header.php';
             </button>
         </div>
     </div>
+</div>
+
+<!-- Consulta 5: Pedidos por fecha con método de pago -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm overflow-hidden flex flex-col mt-xl">
+    <div class="p-6 border-b border-outline-variant flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <h3 class="font-headline-sm text-headline-sm text-on-surface">
+            Pedidos por Fecha con Método de Pago
+        </h3>
+        <form method="GET" class="flex items-center gap-3">
+            <?php if ($periodo): ?>
+                <input type="hidden" name="periodo" value="<?= $periodo ?>">
+            <?php endif; ?>
+            <label class="font-label-md text-label-md text-on-surface-variant">Fecha:</label>
+            <input 
+                type="date" 
+                name="fecha_consulta" 
+                value="<?= htmlspecialchars($fecha_consulta) ?>"
+                class="border border-outline-variant rounded-lg px-3 py-1.5 text-body-sm font-body-sm bg-surface-container-lowest focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-on-surface"
+            >
+            <button type="submit" class="bg-primary text-on-primary font-label-md text-label-md px-4 py-1.5 rounded-lg hover:bg-primary-container transition-colors">
+                Consultar
+            </button>
+        </form>
+    </div>
+    <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="bg-surface-container-low text-on-surface-variant border-b border-outline-variant">
+                    <th class="py-3 px-6 font-label-sm text-label-sm uppercase">ID Pedido</th>
+                    <th class="py-3 px-6 font-label-sm text-label-sm uppercase">Cliente</th>
+                    <th class="py-3 px-6 font-label-sm text-label-sm uppercase text-right">Valor Pagado</th>
+                    <th class="py-3 px-6 font-label-sm text-label-sm uppercase text-center">Método de Pago</th>
+                    <th class="py-3 px-6 font-label-sm text-label-sm uppercase text-center">Fecha</th>
+                </tr>
+            </thead>
+            <tbody class="font-table-data text-table-data text-on-surface divide-y divide-outline-variant/30">
+                <?php if (empty($pedidos_fecha)): ?>
+                    <tr>
+                        <td colspan="5" class="text-center py-8 text-on-surface-variant">
+                            <span class="material-symbols-outlined block text-[40px] mb-2 mx-auto">search_off</span>
+                            No se encontraron pedidos para la fecha 
+                            <strong><?= date('d/m/Y', strtotime($fecha_consulta)) ?></strong>.
+                        </td>
+                    </tr>
+                <?php else: ?>
+                    <?php foreach ($pedidos_fecha as $pf): 
+                        $metodoClass = match($pf['metodo_pago']) {
+                            'Efectivo'       => 'bg-primary-fixed text-on-primary-fixed',
+                            'Tarjeta'        => 'bg-tertiary-container text-on-tertiary-container',
+                            'Transferencia'  => 'bg-secondary-container text-on-secondary-container',
+                            default          => 'bg-surface-variant text-on-surface-variant'
+                        };
+                    ?>
+                    <tr class="hover:bg-primary/5 transition-colors">
+                        <td class="py-4 px-6 font-medium text-primary"><?= $pf['SKU_pedido'] ?></td>
+                        <td class="py-4 px-6"><?= htmlspecialchars($pf['cliente']) ?></td>
+                        <td class="py-4 px-6 text-right font-medium">
+                            $<?= number_format($pf['valor_pagado'], 0, ',', '.') ?>
+                        </td>
+                        <td class="py-4 px-6 text-center">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-label-sm text-label-sm <?= $metodoClass ?>">
+                                <?= htmlspecialchars($pf['metodo_pago']) ?>
+                            </span>
+                        </td>
+                        <td class="py-4 px-6 text-center text-on-surface-variant">
+                            <?= date('d/m/Y', strtotime($pf['fecha'])) ?>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+    <?php if (!empty($pedidos_fecha)): ?>
+    <div class="p-4 border-t border-outline-variant bg-surface-container-lowest">
+        <span class="font-body-sm text-body-sm text-on-surface-variant">
+            <?= count($pedidos_fecha) ?> pedido(s) encontrado(s) para el 
+            <?= date('d/m/Y', strtotime($fecha_consulta)) ?>
+        </span>
+    </div>
+    <?php endif; ?>
+</div>
+
+<!-- Consulta 4: Detalle de pedido específico -->
+<div class="bg-surface-container-lowest border border-outline-variant 
+            rounded-xl shadow-sm overflow-hidden flex flex-col mt-xl">
+    
+    <div class="p-6 border-b border-outline-variant flex flex-col 
+                md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+            <h3 class="font-headline-sm text-headline-sm text-on-surface">
+                Detalle de Pedido
+            </h3>
+            <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+                Consulta el nombre del cliente y los productos de un pedido.
+            </p>
+        </div>
+        <form method="GET" class="flex items-center gap-3">
+            <?php if ($periodo): ?>
+                <input type="hidden" name="periodo" value="<?= $periodo ?>">
+            <?php endif; ?>
+            <?php if ($fecha_consulta): ?>
+                <input type="hidden" name="fecha_consulta" 
+                       value="<?= htmlspecialchars($fecha_consulta) ?>">
+            <?php endif; ?>
+            <label class="font-label-md text-label-md text-on-surface-variant 
+                          whitespace-nowrap">
+                ID Pedido:
+            </label>
+            <input
+                type="number"
+                name="id_pedido_consulta"
+                value="<?= htmlspecialchars($id_pedido_consulta) ?>"
+                min="1"
+                placeholder="Ej: 1"
+                class="border border-outline-variant rounded-lg px-3 py-1.5 
+                       text-body-sm font-body-sm bg-surface-container-lowest 
+                       focus:outline-none focus:border-primary focus:ring-1 
+                       focus:ring-primary text-on-surface w-28"
+            >
+            <button type="submit"
+                    class="bg-primary text-on-primary font-label-md text-label-md 
+                           px-4 py-1.5 rounded-lg hover:bg-primary-container 
+                           transition-colors">
+                Consultar
+            </button>
+        </form>
+    </div>
+
+    <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="bg-surface-container-low text-on-surface-variant 
+                           border-b border-outline-variant">
+                    <th class="py-3 px-6 font-label-sm text-label-sm uppercase">
+                        SKU Pedido
+                    </th>
+                    <th class="py-3 px-6 font-label-sm text-label-sm uppercase">
+                        Cliente
+                    </th>
+                    <th class="py-3 px-6 font-label-sm text-label-sm uppercase">
+                        Producto
+                    </th>
+                    <th class="py-3 px-6 font-label-sm text-label-sm 
+                               uppercase text-center">
+                        Cantidad
+                    </th>
+                    <th class="py-3 px-6 font-label-sm text-label-sm 
+                               uppercase text-right">
+                        Precio Unitario
+                    </th>
+                    <th class="py-3 px-6 font-label-sm text-label-sm 
+                               uppercase text-right">
+                        Subtotal
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="font-table-data text-table-data text-on-surface 
+                          divide-y divide-outline-variant/30">
+
+                <?php if (empty($id_pedido_consulta)): ?>
+                    <tr>
+                        <td colspan="6" class="text-center py-8 text-on-surface-variant">
+                            <span class="material-symbols-outlined block text-[40px] 
+                                         mb-2 mx-auto">
+                                search
+                            </span>
+                            Ingrese un ID de pedido para ver su detalle.
+                        </td>
+                    </tr>
+
+                <?php elseif (empty($detalle_pedido)): ?>
+                    <tr>
+                        <td colspan="6" class="text-center py-8 text-on-surface-variant">
+                            <span class="material-symbols-outlined block text-[40px] 
+                                         mb-2 mx-auto">
+                                search_off
+                            </span>
+                            No se encontró ningún pedido con ID 
+                            <strong><?= htmlspecialchars($id_pedido_consulta) ?></strong>.
+                        </td>
+                    </tr>
+
+                <?php else: ?>
+                    <?php 
+                        $total_pedido = 0;
+                        foreach ($detalle_pedido as $index => $d): 
+                            $total_pedido += $d['subtotal'];
+                    ?>
+                    <tr class="hover:bg-primary/5 transition-colors">
+                        <td class="py-4 px-6 font-medium text-primary">
+                            <?= htmlspecialchars($d['SKU_pedido']) ?>
+                        </td>
+                        <td class="py-4 px-6">
+                            <?= htmlspecialchars($d['cliente']) ?>
+                        </td>
+                        <td class="py-4 px-6 font-medium">
+                            <?= htmlspecialchars($d['producto']) ?>
+                        </td>
+                        <td class="py-4 px-6 text-center">
+                            <?= $d['cantidad'] ?>
+                        </td>
+                        <td class="py-4 px-6 text-right text-on-surface-variant">
+                            $<?= number_format($d['precio_unitario'], 0, ',', '.') ?>
+                        </td>
+                        <td class="py-4 px-6 text-right font-medium text-primary">
+                            $<?= number_format($d['subtotal'], 0, ',', '.') ?>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+
+                    <!-- Fila de total -->
+                    <tr class="bg-surface-container-low font-medium">
+                        <td colspan="5" class="py-3 px-6 text-right 
+                                               font-label-md text-label-md 
+                                               text-on-surface-variant">
+                            TOTAL DEL PEDIDO:
+                        </td>
+                        <td class="py-3 px-6 text-right font-headline-sm 
+                                   text-headline-sm text-primary">
+                            $<?= number_format($total_pedido, 0, ',', '.') ?>
+                        </td>
+                    </tr>
+                <?php endif; ?>
+
+            </tbody>
+        </table>
+    </div>
+
+    <?php if (!empty($detalle_pedido)): ?>
+    <div class="p-4 border-t border-outline-variant bg-surface-container-lowest 
+                flex items-center justify-between">
+        <span class="font-body-sm text-body-sm text-on-surface-variant">
+            <?= count($detalle_pedido) ?> producto(s) en el pedido 
+            <strong><?= htmlspecialchars($detalle_pedido[0]['SKU_pedido']) ?></strong>
+            — Cliente: 
+            <strong><?= htmlspecialchars($detalle_pedido[0]['cliente']) ?></strong>
+        </span>
+    </div>
+    <?php endif; ?>
 </div>
 
 <?php include __DIR__ . '/../layouts/footer.php'; ?>

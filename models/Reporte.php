@@ -59,6 +59,58 @@ class Reporte
         }
     }
 
+    public function obtenerPedidosPorFecha($fecha)
+{
+    try {
+        $sql = "SELECT 
+                    p.id_pedido,
+                    p.SKU_pedido,
+                    CONCAT(c.primer_nombre, ' ', c.primer_apellido) AS cliente,
+                    pg.monto AS valor_pagado,
+                    mp.nombre AS metodo_pago,
+                    DATE(pg.fecha_pago) AS fecha
+                FROM pedidos p
+                INNER JOIN pagos pg ON p.id_pedido = pg.id_pedido
+                INNER JOIN metodo_pago mp ON pg.id_metodo = mp.id_metodo
+                INNER JOIN clientes c ON p.id_cliente = c.id_cliente
+                WHERE DATE(pg.fecha_pago) = :fecha
+                ORDER BY pg.fecha_pago DESC";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':fecha', $fecha);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        error_log("Error en Reporte::obtenerPedidosPorFecha -> " . $e->getMessage());
+        return [];
+    }
+}
+
+public function obtenerDetallePedido($id_pedido)
+{
+    try {
+        $sql = "SELECT
+                    p.id_pedido,
+                    p.SKU_pedido,
+                    CONCAT(c.primer_nombre, ' ', c.primer_apellido) AS cliente,
+                    pr.nombre AS producto,
+                    dp.cantidad,
+                    dp.precio_unitario,
+                    (dp.cantidad * dp.precio_unitario) AS subtotal
+                FROM pedidos p
+                INNER JOIN clientes c ON p.id_cliente = c.id_cliente
+                INNER JOIN detalle_pedidos dp ON p.id_pedido = dp.id_pedido
+                INNER JOIN productos pr ON dp.id_producto = pr.id_producto
+                WHERE p.id_pedido = :id_pedido";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id_pedido', $id_pedido, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        error_log("Error en Reporte::obtenerDetallePedido -> " . $e->getMessage());
+        return [];
+    }
+}
+
     public function obtenerVentasPorProducto($periodo = 'all')
     {
         try {
